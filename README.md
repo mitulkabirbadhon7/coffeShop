@@ -9,7 +9,7 @@ A premium coffee shop website and backend service for **Chocobliss Coffee**.
 │   ├── PRD.md                  # Product Requirements Document
 │   ├── TRD.md                  # Technical Requirements Document
 │   ├── UIUX.md                 # UI/UX Design Specifications
-│   ├── TRACKING_AGENT.md       # AI Agent Workflow & Verification Rules
+│   ├── TRACKING.md             # Project Tracking & Engineering Standards
 │   └── IMPLEMENTATION.md       # Phase-by-phase Implementation Roadmap
 │
 ├── frontend/                   # Frontend Workspace (Next.js 14 App Router)

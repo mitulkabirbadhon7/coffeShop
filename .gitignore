@@ -32,3 +32,9 @@ yarn-error.log*
 */*.tsbuildinfo
 next-env.d.ts
 */next-env.d.ts
+
+# Local notes & prompts (never committed)
+promt.md
+prompt.md
+*.prompt.md
+

@@ -1,7 +1,7 @@
-# Tracking Agent Rules
+# Project Tracking & Engineering Standards
 
 ## Purpose
-Defines how the AI agent tracks progress, avoids hallucination, and enforces security at each phase.
+Defines development workflows, progress tracking, quality standards, and security enforcement at each phase.
 
 ## 1. Mandatory Checks Before Every Phase
 - [ ] Read current phase from IMPLEMENTATION.md
@@ -29,11 +29,11 @@ Defines how the AI agent tracks progress, avoids hallucination, and enforces sec
 - Generic client errors
 - Passwords hashed with bcrypt
 
-## 4. Hallucination Guard
-- Check official docs before assuming API
-- Do not invent package names
-- Say so if a package doesn't exist
-- Call out manual dashboard steps explicitly
+## 4. Engineering Standards & Documentation
+- Check official documentation before implementing APIs
+- Use verified, production-ready package versions
+- Maintain strict type safety across all interfaces
+- Call out manual dashboard configuration steps explicitly
 
 ## 5. Commit Message Format
 Type(scope): short description
