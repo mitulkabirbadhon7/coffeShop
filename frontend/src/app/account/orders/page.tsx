@@ -109,14 +109,24 @@ export default async function AccountOrdersPage() {
                   )}
                 </div>
 
-                {/* Total */}
-                <div className="flex items-center justify-between pt-3 border-t border-[#8A8179]/15">
-                  <span className="text-xs uppercase tracking-wider text-[#8A8179]">
-                    Total (Pickup Counter)
-                  </span>
-                  <span className="font-serif text-lg font-bold text-[#2C221E]">
-                    {formatBdt(order.total_minor)}
-                  </span>
+                {/* Total & Action */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[#8A8179]/15">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs uppercase tracking-wider text-[#8A8179]">
+                      Total (Pickup Counter):
+                    </span>
+                    <span className="font-serif text-lg font-bold text-[#2C221E]">
+                      {formatBdt(order.total_minor)}
+                    </span>
+                  </div>
+
+                  <Link
+                    href={`/account/orders/${order.id}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#D4A373] hover:text-[#2C221E] transition-colors"
+                  >
+                    <span>View Receipt &amp; Status</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </div>
             );

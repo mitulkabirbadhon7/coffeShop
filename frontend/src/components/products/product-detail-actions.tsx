@@ -3,23 +3,46 @@
 import * as React from "react";
 import { Plus, Minus, ShoppingBag, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/lib/cart/cart-context";
 
 export interface ProductDetailActionsProps {
+  productId: string;
   productName: string;
+  slug: string;
+  priceMinor: number;
+  imageUrl?: string | null;
+  categoryName?: string;
   isAvailable: boolean;
 }
 
 export function ProductDetailActions({
+  productId,
   productName,
+  slug,
+  priceMinor,
+  imageUrl,
+  categoryName,
   isAvailable,
 }: ProductDetailActionsProps) {
+  const { addItem, openCart } = useCart();
   const [quantity, setQuantity] = React.useState<number>(1);
   const [added, setAdded] = React.useState<boolean>(false);
 
-  const increment = () => setQuantity((q) => Math.min(10, q + 1));
+  const increment = () => setQuantity((q) => Math.min(20, q + 1));
   const decrement = () => setQuantity((q) => Math.max(1, q - 1));
 
   const handleOrder = () => {
+    addItem(
+      {
+        productId,
+        name: productName,
+        slug,
+        priceMinor,
+        imageUrl,
+        categoryName,
+      },
+      quantity
+    );
     setAdded(true);
     setTimeout(() => setAdded(false), 2500);
   };
@@ -52,7 +75,7 @@ export function ProductDetailActions({
           <button
             type="button"
             onClick={increment}
-            disabled={quantity >= 10}
+            disabled={quantity >= 20}
             aria-label="Increase quantity"
             className="p-1.5 text-[#5C4A3D] hover:text-[#2C221E] disabled:opacity-30 disabled:pointer-events-none transition-colors"
           >
@@ -83,9 +106,16 @@ export function ProductDetailActions({
       </div>
 
       {added && (
-        <p className="text-xs text-[#4ADE80] font-sans animate-fade-in">
-          ✓ {quantity}x {productName} marked for your Dhaka pickup order.
-        </p>
+        <div className="flex items-center justify-between text-xs text-[#4ADE80] font-sans animate-fade-in">
+          <span>✓ {quantity}x {productName} added to your selection bag.</span>
+          <button
+            type="button"
+            onClick={openCart}
+            className="underline font-semibold text-[#D4A373] hover:text-[#2C221E] transition-colors"
+          >
+            View Bag &amp; Checkout →
+          </button>
+        </div>
       )}
     </div>
   );

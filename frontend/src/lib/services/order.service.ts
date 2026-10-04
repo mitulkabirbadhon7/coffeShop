@@ -45,3 +45,61 @@ export function assertValidOrderTransition(
     );
   }
 }
+
+/**
+ * Checks whether an order can be cancelled by the placing customer.
+ * Only orders that have not yet entered preparation can be cancelled.
+ */
+export function canUserCancelOrder(status: OrderStatus): boolean {
+  return status === "PENDING" || status === "CONFIRMED";
+}
+
+/**
+ * Linear fulfillment flow for tracking UI
+ */
+export const ORDER_FULFILLMENT_STEPS: OrderStatus[] = [
+  "PENDING",
+  "CONFIRMED",
+  "PREPARING",
+  "READY",
+  "COMPLETED",
+];
+
+export interface OrderStatusMeta {
+  label: string;
+  description: string;
+  badgeClass: string;
+}
+
+export const ORDER_STATUS_DETAILS: Record<OrderStatus, OrderStatusMeta> = {
+  PENDING: {
+    label: "Order Placed",
+    description: "Your order is received and waiting for atelier confirmation.",
+    badgeClass: "bg-[#D4A373]/15 text-[#D4A373] border-[#D4A373]/30",
+  },
+  CONFIRMED: {
+    label: "Confirmed",
+    description: "Our baristas confirmed your order and scheduled preparation.",
+    badgeClass: "bg-[#38BDF8]/15 text-[#38BDF8] border-[#38BDF8]/30",
+  },
+  PREPARING: {
+    label: "Preparing",
+    description: "Your espresso or confections are being crafted at the brew bar.",
+    badgeClass: "bg-[#F59E0B]/15 text-[#F59E0B] border-[#F59E0B]/30",
+  },
+  READY: {
+    label: "Ready for Pickup",
+    description: "Your order is packaged and waiting at the Banani atelier counter.",
+    badgeClass: "bg-[#4ADE80]/15 text-[#4ADE80] border-[#4ADE80]/30",
+  },
+  COMPLETED: {
+    label: "Collected",
+    description: "Order completed and collected. Thank you for visiting Chocobliss!",
+    badgeClass: "bg-[#A8A29E]/15 text-[#A8A29E] border-[#A8A29E]/30",
+  },
+  CANCELLED: {
+    label: "Cancelled",
+    description: "This order has been cancelled.",
+    badgeClass: "bg-[#F87171]/15 text-[#F87171] border-[#F87171]/30",
+  },
+};

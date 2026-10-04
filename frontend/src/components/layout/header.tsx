@@ -6,10 +6,12 @@ import { usePathname } from "next/navigation";
 import { Coffee, ShoppingBag, User, Menu, X } from "lucide-react";
 import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/utils/cn";
+import { useCart } from "@/lib/cart/cart-context";
 
 export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const { openCart, totalItems } = useCart();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#5C4A3D]/40 bg-[#1A1613]/90 backdrop-blur-md transition-all">
@@ -59,14 +61,19 @@ export function Header() {
 
         {/* Actions (Cart & Account) */}
         <div className="flex items-center gap-3">
-          <Link
-            href="/products"
+          <button
+            type="button"
+            onClick={openCart}
             className="p-2.5 rounded-full text-[#FDFBF7] hover:text-[#D4A373] hover:bg-[#2C221E] transition-colors relative focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A373]"
-            aria-label="Order Cart"
+            aria-label={`Order Cart (${totalItems} items)`}
           >
             <ShoppingBag className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#D4A373]" />
-          </Link>
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#D4A373] text-[#1A1613] text-[10px] font-bold flex items-center justify-center border-2 border-[#1A1613] animate-fade-in">
+                {totalItems > 99 ? "99+" : totalItems}
+              </span>
+            )}
+          </button>
 
           <Link
             href="/account"

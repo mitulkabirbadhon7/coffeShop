@@ -155,6 +155,13 @@ These decisions guide every phase. The agent must respect them.
 - **Commit:** Pending owner manual commit
 - **Notes:** Account profile editing with Zod validation (`profileSchema`), full address management with `addressSchema` (add address, delete address with confirmation modal, set default location), user order history list with dynamic status pills and BDT pricing; Server Actions strictly enforce anti-IDOR security via `.eq("user_id", user.id)` alongside Supabase RLS; 7 new security & schema tests (92/92 total vitest tests passing across 13 suites); Next.js production build 18/18 routes passing cleanly.
 
+### Phase 8 — Orders & Pickup Checkout Domain
+- **Status:** ✅ Complete
+- **Started:** 2026-10-04
+- **Completed:** 2026-10-04
+- **Commit:** Pending owner manual commit
+- **Notes:** Cart context (`CartProvider`) with localStorage persistence, slide-over `CartDrawer` with live BDT subtotal, item stepper, notes input, and counter pickup guidelines; `placeOrderAction` Server Action executing atomic `place_order` PostgreSQL RPC with server-side price calculation and item snapshot immutability; `CancelOrderButton` and `cancelCustomerOrderAction` with strict state transition enforcement and anti-IDOR verification; dynamic Order Receipt & Tracking page (`/account/orders/[id]`) with 5-stage fulfillment timeline; 18 new unit & domain tests (110/110 total vitest tests passing across 14 suites); Next.js production build 19/19 routes passing cleanly.
+
 *(Repeat for all 15 phases)*
 
 ---

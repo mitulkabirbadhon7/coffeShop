@@ -227,7 +227,12 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
             {/* Action Bar (Quantity + Order Button) */}
             <ProductDetailActions
+              productId={product.id}
               productName={product.name}
+              slug={product.slug}
+              priceMinor={product.price_minor}
+              imageUrl={product.image_path}
+              categoryName={categoryName}
               isAvailable={product.is_available}
             />
 
