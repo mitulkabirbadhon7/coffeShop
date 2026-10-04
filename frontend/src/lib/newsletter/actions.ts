@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/client";
 import { newsletterSchema } from "@/lib/validation/newsletter.schema";
+import { checkRateLimit, getClientIp } from "@/lib/security/rate-limit";
 
 export interface NewsletterActionResult {
   success: boolean;
@@ -31,6 +32,23 @@ export async function subscribeNewsletterAction(
     return {
       success: true,
       message: "Thank you for joining our private roastery dispatch!",
+    };
+  }
+
+  // Rate limit public newsletter subscriptions
+  let clientIp = "127.0.0.1";
+  try {
+    const { headers } = await import("next/headers");
+    clientIp = getClientIp(headers());
+  } catch {
+    // Test environment fallback
+  }
+
+  const rl = await checkRateLimit("publicMutation", clientIp);
+  if (!rl.success) {
+    return {
+      success: false,
+      error: "Too many subscription attempts. Please try again in a few minutes.",
     };
   }
 

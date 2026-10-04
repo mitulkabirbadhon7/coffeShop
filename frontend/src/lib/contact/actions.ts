@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/client";
 import { contactSchema, type ContactInput } from "@/lib/validation/contact.schema";
+import { checkRateLimit, getClientIp } from "@/lib/security/rate-limit";
 
 export interface ContactActionResult {
   success: boolean;
@@ -35,6 +36,23 @@ export async function sendContactMessageAction(
     return {
       success: true,
       message: "Thank you for reaching out! We will review your message shortly.",
+    };
+  }
+
+  // Rate limit public contact messages
+  let clientIp = "127.0.0.1";
+  try {
+    const { headers } = await import("next/headers");
+    clientIp = getClientIp(headers());
+  } catch {
+    // Test environment fallback
+  }
+
+  const rl = await checkRateLimit("publicMutation", clientIp);
+  if (!rl.success) {
+    return {
+      success: false,
+      error: "Too many messages sent. Please wait a few minutes before sending another inquiry.",
     };
   }
 

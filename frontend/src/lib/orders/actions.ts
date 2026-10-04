@@ -13,6 +13,7 @@ import {
   assertValidOrderTransition,
   type OrderStatus,
 } from "@/lib/services/order.service";
+import { checkRateLimit } from "@/lib/security/rate-limit";
 
 export type PlaceOrderResult = {
   success: boolean;
@@ -53,6 +54,16 @@ export async function placeOrderAction(
         success: false,
         error: "Please sign in or create an account to place a pickup order.",
         requiresAuth: true,
+      };
+    }
+
+    // Rate limit order submissions per authenticated user
+    const rl = await checkRateLimit("order", user.id);
+    if (!rl.success) {
+      return {
+        success: false,
+        error:
+          "You have placed multiple orders recently. Please wait a few minutes before placing another order.",
       };
     }
 

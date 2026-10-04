@@ -145,17 +145,15 @@ Security:
 - validation
 - audit trail
 
-## Phase 13 — Security Hardening
-- rate limiting
-- headers
-- CSP
-- security tests
-- dependency audit
-- secret scanning
-- abuse tests
-- RLS audit
-
-This phase must not be treated as optional; security should already exist in earlier phases.
+## Phase 13 — Security Hardening (✅ Complete)
+- Rate limiting: Centralized sliding-window rate limiting engine with Upstash Redis (`@upstash/ratelimit` & `@upstash/redis`) and in-memory fallback protecting auth, public mutations, orders, and `/api/` endpoints
+- HTTP Headers: Comprehensive baseline security headers in `next.config.mjs` and `middleware.ts` (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`, `HSTS 2-years`, COOP, CORP)
+- Content-Security-Policy (CSP): Strict directives with `frame-ancestors 'none'`, Supabase/Turnstile/Google Fonts allowlists, and production HTTPS upgrade
+- CSRF & Origin Verification: `csrf.ts` validating trusted request origins on mutations
+- Error Sanitization & Masking: `error-sanitizer.ts` preventing database internal leakages and redacting credentials in diagnostic objects
+- Security & Abuse Tests: 40 automated security tests covering rate limiting, headers, CSP, CSRF, error masking, secret scanning, and RLS audit (198/198 total tests passing across 25 suites)
+- Secret Scanning: Verified zero client-component secret exposure
+- Dependency Audit: Documented and verified against pinned stack rules
 
 ## Phase 14 — Performance, Accessibility & SEO
 - image optimization

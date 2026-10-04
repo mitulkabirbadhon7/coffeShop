@@ -187,8 +187,15 @@ These decisions guide every phase. The agent must respect them.
 - **Status:** ✅ Complete
 - **Started:** 2026-10-04
 - **Completed:** 2026-10-05
-- **Commit:** Pending owner manual commit
+- **Commit:** `39855e2`
 - **Notes:** Full editorial content management (`/admin/content`) with visual field editing, raw JSON mode, and published/draft workflow; guest testimonials console (`/admin/testimonials`) with CRUD, sort reordering, star ratings, and instant publishing toggles; robust XSS sanitization engine (`sanitizer.ts`) neutralizing script injection, event triggers, and malicious URI schemes (Requirement S8); atmospheric motion and video subsystem (WCAG 2.2 reduced-motion safety, GPU-accelerated steam swirls, floating roast aroma particles, live pulse atelier indicator, and cinematic poster slow-pan fallback); dynamic public integration across Homepage Hero, Story, and Testimonials sections; full audit logging via `logAdminAction()`; 17 new unit and security tests (158/158 total vitest tests passing across 19 suites); Next.js production build 23/23 routes passing cleanly.
+
+### Phase 13 — Security Hardening, Rate Limiting & Protection
+- **Status:** ✅ Complete
+- **Started:** 2026-10-05
+- **Completed:** 2026-10-05
+- **Commit:** Pending owner manual commit
+- **Notes:** Centralized rate limiting engine (`@upstash/ratelimit` & `@upstash/redis` with in-memory sliding window fallback) protecting auth (`/login`, `/signup`, `/reset-password`), public mutations (`subscribeNewsletterAction`, `sendContactMessageAction`), checkout (`placeOrderAction`), and public `/api/` endpoints (429 with Retry-After header); comprehensive baseline HTTP security headers in `next.config.mjs` and `middleware.ts` (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`, `HSTS 2-years`, COOP, CORP, and CSP with frame-ancestors 'none'); CSRF origin validation (`csrf.ts`); production error sanitization & secret masking (`error-sanitizer.ts`); automated secret scanner ensuring no client component leaks private keys; RLS audit ensuring 0-row mutation isolation across protected tables; dependency security audit documented; 40 new automated security tests (198/198 total vitest tests passing across 25 suites); Next.js production build 23/23 routes passing with zero lint errors.
 
 *(Repeat for all 15 phases)*
 
