@@ -15,6 +15,14 @@ export interface VideoBackgroundProps {
   priority?: boolean;
 }
 
+/**
+ * Atmospheric background video / cinematic image component with strict WCAG 2.2 accessibility.
+ * Requirements:
+ * - Falls back to still image + CSS motion when no video exists.
+ * - Respects prefers-reduced-motion and navigator.connection.saveData / 2G.
+ * - IntersectionObserver ensures video only initializes when visible in viewport.
+ * - The poster image is the LCP element (no layout shift).
+ */
 export function VideoBackground({
   src,
   poster,
@@ -24,9 +32,11 @@ export function VideoBackground({
   className,
   priority = false,
 }: VideoBackgroundProps) {
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = React.useState<boolean>(true);
   const [canPlayVideo, setCanPlayVideo] = React.useState<boolean>(false);
+  const [isVisible, setIsVisible] = React.useState<boolean>(false);
   const [hasError, setHasError] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -54,10 +64,36 @@ export function VideoBackground({
       }
     }
 
-    if (src) {
+    if (src && src.trim() !== "") {
       setCanPlayVideo(true);
     }
   }, [src]);
+
+  // 3. IntersectionObserver: only load video when in viewport
+  React.useEffect(() => {
+    if (!containerRef.current || !canPlayVideo) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            if (videoRef.current && isPlaying) {
+              videoRef.current.play().catch(() => {});
+            }
+          } else {
+            if (videoRef.current) {
+              videoRef.current.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [canPlayVideo, isPlaying]);
 
   const togglePlayback = () => {
     if (!videoRef.current) return;
@@ -70,36 +106,42 @@ export function VideoBackground({
     }
   };
 
+  const isVideoActive = canPlayVideo && isVisible && !hasError && src;
+
   return (
     <div
+      ref={containerRef}
       className={cn(
         "relative w-full overflow-hidden bg-[#1A1613]",
         className
       )}
     >
-      {/* Fallback & Pre-load Poster Image */}
-      <Image
-        src={poster}
-        alt={posterAlt}
-        fill
-        priority={priority}
-        sizes="100vw"
-        className={cn(
-          "object-cover object-center transition-opacity duration-700",
-          canPlayVideo && !hasError && isPlaying ? "opacity-40" : "opacity-90"
-        )}
-      />
+      {/* High-Res Poster Image with Cinematic CSS Pan motion if video is inactive */}
+      <div className={cn("absolute inset-0 overflow-hidden", !isVideoActive && "animate-cinematic-pan")}>
+        <Image
+          src={poster}
+          alt={posterAlt}
+          fill
+          priority={priority}
+          sizes="100vw"
+          className={cn(
+            "object-cover object-center transition-opacity duration-700",
+            isVideoActive && isPlaying ? "opacity-30" : "opacity-85"
+          )}
+        />
+      </div>
 
-      {/* Video Element when supported & enabled */}
+      {/* Video Element when supported, in-viewport & enabled */}
       {canPlayVideo && !hasError && src && (
         <video
           ref={videoRef}
-          src={src}
+          src={isVisible ? src : undefined}
           poster={poster}
           autoPlay
           muted
           loop
           playsInline
+          preload="none"
           aria-hidden="true"
           onError={() => setHasError(true)}
           className="absolute inset-0 w-full h-full object-cover object-center"
@@ -116,7 +158,7 @@ export function VideoBackground({
       <div className="relative z-10">{children}</div>
 
       {/* Accessible Video Control (WCAG 2.2 AA) */}
-      {canPlayVideo && !hasError && src && (
+      {isVideoActive && (
         <div className="absolute bottom-4 right-4 z-20">
           <button
             type="button"

@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Coffee, ShieldCheck, HeartHandshake, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import { getPublishedContent } from "@/lib/data/content.data";
 
 export async function StorySection() {
@@ -24,19 +23,19 @@ export async function StorySection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Asymmetric Left Image Showcase (5 cols) */}
           <div className="lg:col-span-5 relative">
-            <div className="relative aspect-[4/5] rounded-lg overflow-hidden border border-[#8A8179]/30 shadow-md">
+            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-[#8A8179]/30 shadow-2xl bg-[#1A1613] group">
               <Image
                 src="/images/story-craft.jpg"
                 alt="Artisan roaster inspecting single-origin green coffee beans"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover object-center transition-transform duration-700 hover:scale-105"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
               <div
-                className="absolute inset-0 bg-gradient-to-t from-[#1A1613]/80 via-transparent to-transparent"
+                className="absolute inset-0 bg-gradient-to-t from-[#1A1613]/80 via-transparent to-transparent pointer-events-none"
                 aria-hidden="true"
               />
-              <div className="absolute bottom-6 left-6 right-6 text-[#FDFBF7]">
+              <div className="absolute bottom-6 left-6 right-6 text-[#FDFBF7] pointer-events-none">
                 <p className="text-xs uppercase tracking-widest text-[#D4A373] font-medium">
                   The Atelier • Dhaka
                 </p>

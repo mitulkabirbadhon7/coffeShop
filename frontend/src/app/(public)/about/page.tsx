@@ -12,6 +12,7 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { StoryVideoCard } from "@/components/home/story-video-card";
 
 export const metadata: Metadata = {
   title: "Our Story, Craft & Philosophy | Chocobliss Coffee Roastery",
@@ -85,26 +86,20 @@ export default function AboutPage() {
         {/* Narrative & Visual Showcase (Asymmetric 5/7 split) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <div className="lg:col-span-5 relative">
-            <div className="relative aspect-[4/5] rounded-lg overflow-hidden border border-[#8A8179]/30 shadow-md">
-              <Image
-                src="/images/story-craft.jpg"
-                alt="Roastery craft Green Coffee Inspection in Dhaka"
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover object-center"
-              />
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-[#1A1613]/80 via-transparent to-transparent"
-                aria-hidden="true"
-              />
-              <div className="absolute bottom-6 left-6 right-6 text-[#FDFBF7]">
-                <p className="text-xs uppercase tracking-widest text-[#D4A373] font-medium">
-                  Dhaka Roastery Counter
-                </p>
-                <p className="font-serif text-lg font-bold">
-                  Small-batch drum roasting twice weekly
-                </p>
+            <StoryVideoCard
+              poster="/images/story-craft.jpg"
+              videoSrc="/videos/Ingredients.mp4"
+              autoPlay={true}
+              captionTitle="Our Roastery • Dhaka"
+              captionSubtitle="Pure ingredients, direct-trade cacao & specialty beans"
+            />
+
+            {/* Decorative Offset Badge */}
+            <div className="hidden sm:flex absolute -bottom-5 -right-5 p-4 rounded-lg bg-[#2C221E] text-[#FDFBF7] shadow-xl border border-[#D4A373]/30 items-center gap-3 z-20">
+              <Coffee className="w-6 h-6 text-[#D4A373] shrink-0" />
+              <div>
+                <p className="font-serif text-sm font-bold">100% Traceable</p>
+                <p className="text-[11px] text-[#8A8179]">Direct-Trade Specialty Origins</p>
               </div>
             </div>
           </div>

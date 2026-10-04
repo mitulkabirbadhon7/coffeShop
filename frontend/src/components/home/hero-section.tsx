@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Coffee, ArrowRight, Sparkles, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VideoBackground } from "@/components/ui/video-background";
-
+import { SteamSwirl } from "@/components/motion/steam-swirl";
+import { AmbientAroma } from "@/components/motion/ambient-aroma";
 import { getPublishedContent } from "@/lib/data/content.data";
 
 export async function HeroSection() {
@@ -22,21 +23,30 @@ export async function HeroSection() {
     (dynamicContent?.secondary_cta_text as string) || "Our Craft Story";
   const secondaryCtaLink =
     (dynamicContent?.secondary_cta_link as string) || "/about";
+
   return (
     <VideoBackground
+      src="/videos/CoffePour.mp4"
       poster="/images/hero-poster.jpg"
-      src="/videos/hero-pour.mp4"
       posterAlt="Artisanal espresso extraction with golden crema at Chocobliss Roastery"
       overlayClassName="bg-gradient-to-r from-[#1A1613]/95 via-[#1A1613]/85 to-[#1A1613]/60"
-      className="min-h-[88vh] flex items-center"
+      className="min-h-[88vh] flex items-center relative"
       priority
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full">
+      {/* Ambient Roast Aroma Particles */}
+      <AmbientAroma count={10} />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full relative z-20">
         {/* Editorial Asymmetric Grid (7/5 split) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Editorial Headline & Narrative (7 cols) */}
           <div className="lg:col-span-7 space-y-8 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D4A373]/40 bg-[#2C221E]/60 backdrop-blur-md text-[#D4A373] text-xs font-medium tracking-widest uppercase">
+            {/* Roastery Badge with Live Pulse Indicator */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-[#D4A373]/40 bg-[#2C221E]/70 backdrop-blur-md text-[#D4A373] text-xs font-medium tracking-widest uppercase">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-open-ping absolute inline-flex h-full w-full rounded-full bg-[#4ADE80] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4ADE80]" />
+              </span>
               <Coffee className="w-3.5 h-3.5 text-[#D4A373]" />
               <span>Small-Batch Roastery & Atelier • Dhaka</span>
             </div>
@@ -55,7 +65,7 @@ export async function HeroSection() {
                 <Button
                   variant="primary"
                   size="lg"
-                  className="btn-cup-fill bg-[#D4A373] text-[#1A1613] hover:text-[#1A1613] font-medium tracking-wide border-0 shadow-md inline-flex items-center gap-2 rounded-md h-12 px-7"
+                  className="btn-cup-fill bg-[#D4A373] text-[#1A1613] hover:text-[#1A1613] font-medium tracking-wide border-0 shadow-md inline-flex items-center gap-2 rounded-md h-12 px-7 transition-transform hover:-translate-y-0.5 active:translate-y-0"
                 >
                   <span>{ctaText}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -66,7 +76,7 @@ export async function HeroSection() {
                 <Button
                   variant="secondary"
                   size="lg"
-                  className="bg-[#2C221E]/80 text-[#FDFBF7] hover:bg-[#3A2D26] border border-[#5C4A3D] font-medium tracking-wide rounded-md h-12 px-7"
+                  className="bg-[#2C221E]/80 text-[#FDFBF7] hover:bg-[#3A2D26] border border-[#5C4A3D] font-medium tracking-wide rounded-md h-12 px-7 transition-transform hover:-translate-y-0.5 active:translate-y-0"
                 >
                   <span>{secondaryCtaText}</span>
                 </Button>
@@ -104,9 +114,14 @@ export async function HeroSection() {
             </div>
           </div>
 
-          {/* Right Column: Featured Tasting Notes Card (5 cols) */}
+          {/* Right Column: Featured Tasting Notes Card with Floating Animation and Steam Swirl */}
           <div className="lg:col-span-5 lg:pl-6">
-            <div className="relative rounded-lg border border-[#D4A373]/30 bg-[#2C221E]/85 backdrop-blur-md p-7 shadow-lg space-y-6">
+            <div className="relative rounded-2xl border border-[#D4A373]/30 bg-[#2C221E]/85 backdrop-blur-md p-7 shadow-2xl space-y-6 animate-float-slow hover:border-[#D4A373]/60 transition-colors">
+              {/* Animated Steam rising from top right corner */}
+              <div className="absolute -top-7 right-8">
+                <SteamSwirl size="md" />
+              </div>
+
               {/* Badge */}
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D4A373]/15 text-[#D4A373] text-[11px] font-medium uppercase tracking-wider">
@@ -135,13 +150,13 @@ export async function HeroSection() {
                   Sensory Flavor Profile
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-2.5 py-1 rounded-md bg-[#1A1613] text-[#FDFBF7] text-xs font-sans border border-[#5C4A3D]/50">
+                  <span className="px-2.5 py-1 rounded-md bg-[#1A1613] text-[#FDFBF7] text-xs font-sans border border-[#5C4A3D]/50 hover:border-[#D4A373]/40 transition-colors">
                     Bergamot &amp; Jasmine
                   </span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#1A1613] text-[#FDFBF7] text-xs font-sans border border-[#5C4A3D]/50">
+                  <span className="px-2.5 py-1 rounded-md bg-[#1A1613] text-[#FDFBF7] text-xs font-sans border border-[#5C4A3D]/50 hover:border-[#D4A373]/40 transition-colors">
                     Candied Peach
                   </span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#1A1613] text-[#FDFBF7] text-xs font-sans border border-[#5C4A3D]/50">
+                  <span className="px-2.5 py-1 rounded-md bg-[#1A1613] text-[#FDFBF7] text-xs font-sans border border-[#5C4A3D]/50 hover:border-[#D4A373]/40 transition-colors">
                     72% Cocoa Truffle
                   </span>
                 </div>
@@ -161,7 +176,7 @@ export async function HeroSection() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-[#D4A373] text-[#D4A373] hover:bg-[#D4A373] hover:text-[#1A1613] rounded-md text-xs font-medium"
+                    className="border-[#D4A373] text-[#D4A373] hover:bg-[#D4A373] hover:text-[#1A1613] rounded-md text-xs font-medium transition-all"
                   >
                     <span>View Coffee Details</span>
                   </Button>

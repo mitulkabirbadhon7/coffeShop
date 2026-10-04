@@ -183,12 +183,12 @@ These decisions guide every phase. The agent must respect them.
 - **Commit:** Pending owner manual commit
 - **Notes:** Full operational orders fulfillment queue with status state machine enforcement (strictly forbidding illegal transitions such as cancelling preparing orders); immutable customer order item snapshots modal; user management console (`/admin/users`) with role promotion/demotion; strict privilege defense preventing self-demotion and last-administrator lockout; service-role execution for user role updates; full audit logging via `logAdminAction()`; 7 new unit and security tests (141/141 total vitest tests passing across 17 suites); Next.js production build 23/23 routes passing cleanly.
 
-### Phase 12 — Admin Content & Testimonials Management
+### Phase 12 — Admin Content, Testimonials & Atmospheric Motion
 - **Status:** ✅ Complete
 - **Started:** 2026-10-04
-- **Completed:** 2026-10-04
+- **Completed:** 2026-10-05
 - **Commit:** Pending owner manual commit
-- **Notes:** Full editorial content management (`/admin/content`) with visual field editing, raw JSON mode, and published/draft workflow; guest testimonials console (`/admin/testimonials`) with CRUD, sort reordering, star ratings, and instant publishing toggles; robust XSS sanitization engine (`sanitizer.ts`) neutralizing script injection, event triggers, and malicious URI schemes (Requirement S8); dynamic public integration across Homepage Hero, Story, and Testimonials sections; full audit logging via `logAdminAction()`; 11 new unit and security tests (152/152 total vitest tests passing across 18 suites); Next.js production build 23/23 routes passing cleanly.
+- **Notes:** Full editorial content management (`/admin/content`) with visual field editing, raw JSON mode, and published/draft workflow; guest testimonials console (`/admin/testimonials`) with CRUD, sort reordering, star ratings, and instant publishing toggles; robust XSS sanitization engine (`sanitizer.ts`) neutralizing script injection, event triggers, and malicious URI schemes (Requirement S8); atmospheric motion and video subsystem (WCAG 2.2 reduced-motion safety, GPU-accelerated steam swirls, floating roast aroma particles, live pulse atelier indicator, and cinematic poster slow-pan fallback); dynamic public integration across Homepage Hero, Story, and Testimonials sections; full audit logging via `logAdminAction()`; 17 new unit and security tests (158/158 total vitest tests passing across 19 suites); Next.js production build 23/23 routes passing cleanly.
 
 *(Repeat for all 15 phases)*
 
