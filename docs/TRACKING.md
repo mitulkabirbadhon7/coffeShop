@@ -169,6 +169,13 @@ These decisions guide every phase. The agent must respect them.
 - **Commit:** Pending owner manual commit
 - **Notes:** Non-bypassable server-side `requireAdmin()` and `assertAdmin()` guards enforcing confirmed email and database-verified ADMIN role; `logAdminAction()` service inserting immutable, sanitized audit records into `public.audit_logs`; Admin shell with sticky `AdminHeader`, `StatCard` metrics, active queue indicators, live database queries, and dedicated sub-consoles (`/admin/products`, `/admin/orders`, `/admin/content`, `/admin/messages`, `/admin/testimonials`, `/admin/audit`); `robots: noindex, nofollow` protected; 9 new security & authorization tests (119/119 total vitest tests passing across 15 suites); Next.js production build 22/22 routes passing cleanly.
 
+### Phase 10 — Admin Products & Inventory Management
+- **Status:** ✅ Complete
+- **Started:** 2026-10-04
+- **Completed:** 2026-10-04
+- **Commit:** Pending owner manual commit
+- **Notes:** Comprehensive product & category Zod validation schemas (`productSchema`, `categorySchema`); Server Action image upload service with binary magic byte validation (strictly allowing only JPEG, PNG, WebP ≤ 2MB, rejecting disguised SVGs and executables) and random UUID filenames; Server Actions for product creation, editing, in-place availability/featured toggles, soft deletion (`deleted_at = now()`), and restoration; full audit trail integration via `logAdminAction()`; interactive `AdminProductTable` with live search, category filter, active/deleted toggles, and modal creation/edit forms; 15 new unit and security tests (134/134 total vitest tests passing across 16 suites); Next.js production build 22/22 routes passing cleanly.
+
 *(Repeat for all 15 phases)*
 
 ---
