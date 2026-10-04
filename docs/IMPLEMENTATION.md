@@ -16,18 +16,18 @@ Exit:
 - [x] basic RLS tests pass
 
 ## Phase 2 — Application Architecture
-- route groups
-- layouts
-- providers
-- error/loading boundaries
-- core UI primitives
-- service/data-access structure
-- configuration
+- [x] route groups
+- [x] layouts
+- [x] providers
+- [x] error/loading boundaries
+- [x] core UI primitives
+- [x] service/data-access structure
+- [x] configuration
 
 Exit:
-- architecture established
-- no business logic in UI
-- build passes
+- [x] architecture established
+- [x] no business logic in UI
+- [x] build passes
 
 ## Phase 3 — Authentication
 - Supabase SSR auth

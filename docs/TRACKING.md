@@ -114,8 +114,11 @@ These decisions guide every phase. The agent must respect them.
 - **Notes:** 11 tables migrated with forward-only SQL, RLS enabled on all tables, 22 products seeded, 14/14 automated RLS security tests passed, build and lint zero errors.
 
 ### Phase 2 — Application Architecture
-- **Status:** ⬜ Not started
-- ...
+- **Status:** ✅ Complete
+- **Started:** 2026-10-04
+- **Completed:** 2026-10-04
+- **Commit:** Pending owner manual commit
+- **Notes:** Route groups ((public), (auth), account, admin, api) established; core UI primitives (Button, Card, Badge, Input, Skeleton); data-access & order state machine services; 41/41 vitest tests green; 14 routes statically/dynamically generated under 95 kB.
 
 *(Repeat for all 15 phases)*
 
