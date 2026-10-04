@@ -131,8 +131,15 @@ These decisions guide every phase. The agent must respect them.
 - **Status:** ✅ Complete
 - **Started:** 2026-10-04
 - **Completed:** 2026-10-04
-- **Commit:** Pending owner manual commit
+- **Commit:** `622c8c0`
 - **Notes:** Complete editorial homepage built with DESIGN.md design tokens (Espresso, Oat Milk, Latte Caramel, Cream Foam, Terracotta, Stone, Ash, Bark, Charcoal); accessible VideoBackground with poster fallback, network awareness, and reduced-motion protection; asymmetric editorial Hero with signature tasting notes card; FeaturedProductsSection fetching real DB products with BDT format; StorySection with craft showcase; CraftAtmosphereSection with roastery hours & pickup details; TestimonialsSection with authentic guest reviews; NewsletterSection with Zod validation, honeypot bot trap, and Server Action inserting into newsletter_subscribers; 70/70 vitest tests passing; Next.js production build First Load JS: 110 kB.
+
+### Phase 5 — Products Catalog & Details
+- **Status:** ✅ Complete
+- **Started:** 2026-10-04
+- **Completed:** 2026-10-04
+- **Commit:** Pending owner manual commit
+- **Notes:** Interactive ProductCatalog with real-time category tabs, search input, sort selector, in-stock toggle, and live item counter; ProductDetailPage with JSON-LD (schema.org/Product), dynamic SEO metadata, breadcrumbs, tasting notes, ProductDetailActions quantity picker with cup-fill hover, Dhaka pickup guidelines, and related product recommendations; strict soft-deletion defense in data layer; 79/79 tests green across 11 suites; Next.js production build 17/17 routes passing cleanly.
 
 *(Repeat for all 15 phases)*
 
