@@ -11,6 +11,7 @@ import {
   ArrowLeft,
   Shield,
   Star,
+  History,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
@@ -21,6 +22,7 @@ const adminNavItems = [
   { name: "Site Content", href: "/admin/content", icon: FileText },
   { name: "Testimonials", href: "/admin/testimonials", icon: Star },
   { name: "Messages", href: "/admin/messages", icon: MessageSquare },
+  { name: "Audit Trail", href: "/admin/audit", icon: History },
 ];
 
 export function AdminSidebar() {

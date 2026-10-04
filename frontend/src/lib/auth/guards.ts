@@ -70,12 +70,17 @@ export async function requireUser(returnUrl?: string): Promise<User> {
 
 /**
  * Requires the authenticated user to hold an 'ADMIN' role in public.profiles.
- * Redirects to `/account` if user is customer, or `/login` if unauthenticated.
+ * Validates session, confirmed email, and loads role directly from the database (preventing role tampering).
+ * Redirects to `/verify-email` if email is unconfirmed, `/account` if customer, or `/login` if unauthenticated.
  */
 export async function requireAdmin(): Promise<{ user: User; profile: Profile }> {
   const user = await requireUser("/admin");
-  const supabase = await createClient();
 
+  if (!user.email_confirmed_at) {
+    redirect("/verify-email");
+  }
+
+  const supabase = await createClient();
   const { data: profile, error } = await supabase
     .from("profiles")
     .select("*")
@@ -87,4 +92,17 @@ export async function requireAdmin(): Promise<{ user: User; profile: Profile }> 
   }
 
   return { user, profile };
+}
+
+/**
+ * Asserts that the user and profile hold administrative privileges.
+ * Throws an explicit AuthorizationError if non-admin or unverified (used in Server Actions).
+ */
+export function assertAdmin(user: User, profile: Profile): void {
+  if (!user.email_confirmed_at) {
+    throw new Error("Access denied: Administrator email address must be confirmed.");
+  }
+  if (profile.role !== "ADMIN") {
+    throw new Error("Forbidden: This action requires administrator privileges.");
+  }
 }

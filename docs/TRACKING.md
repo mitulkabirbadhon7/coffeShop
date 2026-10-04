@@ -162,6 +162,13 @@ These decisions guide every phase. The agent must respect them.
 - **Commit:** Pending owner manual commit
 - **Notes:** Cart context (`CartProvider`) with localStorage persistence, slide-over `CartDrawer` with live BDT subtotal, item stepper, notes input, and counter pickup guidelines; `placeOrderAction` Server Action executing atomic `place_order` PostgreSQL RPC with server-side price calculation and item snapshot immutability; `CancelOrderButton` and `cancelCustomerOrderAction` with strict state transition enforcement and anti-IDOR verification; dynamic Order Receipt & Tracking page (`/account/orders/[id]`) with 5-stage fulfillment timeline; 18 new unit & domain tests (110/110 total vitest tests passing across 14 suites); Next.js production build 19/19 routes passing cleanly.
 
+### Phase 9 — Admin Foundation & Role Guards
+- **Status:** ✅ Complete
+- **Started:** 2026-10-04
+- **Completed:** 2026-10-04
+- **Commit:** Pending owner manual commit
+- **Notes:** Non-bypassable server-side `requireAdmin()` and `assertAdmin()` guards enforcing confirmed email and database-verified ADMIN role; `logAdminAction()` service inserting immutable, sanitized audit records into `public.audit_logs`; Admin shell with sticky `AdminHeader`, `StatCard` metrics, active queue indicators, live database queries, and dedicated sub-consoles (`/admin/products`, `/admin/orders`, `/admin/content`, `/admin/messages`, `/admin/testimonials`, `/admin/audit`); `robots: noindex, nofollow` protected; 9 new security & authorization tests (119/119 total vitest tests passing across 15 suites); Next.js production build 22/22 routes passing cleanly.
+
 *(Repeat for all 15 phases)*
 
 ---
