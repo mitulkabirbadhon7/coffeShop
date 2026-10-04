@@ -1,25 +1,25 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { SignupForm } from "@/components/auth/signup-form";
+import { ResetPasswordForm } from "@/components/auth/reset-password-form";
 
 export const metadata = {
-  title: "Create Account | Chocobliss Coffee Roastery",
-  description: "Join Chocobliss for artisanal coffee ordering and tasting perks.",
+  title: "Reset Password | Chocobliss Coffee Roastery",
+  description: "Request a password reset link for your customer account.",
 };
 
-export default function SignupPage() {
+export default function ResetPasswordPage() {
   return (
     <Card className="border border-[#C89B5E]/30 bg-[#2C221E] shadow-xl">
       <CardHeader className="text-center space-y-2">
         <CardTitle className="text-2xl font-serif text-[#F5E6D3]">
-          Join the Roastery
+          Reset Password
         </CardTitle>
         <CardDescription className="text-xs text-[#F5E6D3]/70 font-sans">
-          Create an account for seamless pickup orders and tasting invitations.
+          Enter your registered email address to receive password reset instructions.
         </CardDescription>
       </CardHeader>
 
       <CardContent>
-        <SignupForm />
+        <ResetPasswordForm />
       </CardContent>
     </Card>
   );

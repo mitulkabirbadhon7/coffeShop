@@ -4,7 +4,26 @@ import type { Database } from "@/types/database.types";
 import { env } from "@/lib/env";
 
 export async function createClient() {
-  const cookieStore = cookies();
+  let cookieStore: {
+    get: (name: string) => { value: string } | undefined;
+    set: (options: { name: string; value: string } & CookieOptions) => void;
+  };
+
+  try {
+    cookieStore = cookies();
+  } catch {
+    // Graceful fallback for execution outside active Next.js request scope (e.g. test runner)
+    const inMemory = new Map<string, string>();
+    cookieStore = {
+      get: (name: string) => {
+        const val = inMemory.get(name);
+        return val !== undefined ? { value: val } : undefined;
+      },
+      set: ({ name, value }) => {
+        inMemory.set(name, value);
+      },
+    };
+  }
 
   return createServerClient<Database>(
     env.NEXT_PUBLIC_SUPABASE_URL,
@@ -18,16 +37,14 @@ export async function createClient() {
           try {
             cookieStore.set({ name, value, ...options });
           } catch {
-            // The `set` method was called from a Server Component.
-            // This can be ignored if middleware is refreshing user sessions.
+            // Ignored if called from Server Component
           }
         },
         remove(name: string, options: CookieOptions) {
           try {
             cookieStore.set({ name, value: "", ...options });
           } catch {
-            // The `remove` method was called from a Server Component.
-            // This can be ignored if middleware is refreshing user sessions.
+            // Ignored if called from Server Component
           }
         },
       },

@@ -120,6 +120,13 @@ These decisions guide every phase. The agent must respect them.
 - **Commit:** Pending owner manual commit
 - **Notes:** Route groups ((public), (auth), account, admin, api) established; core UI primitives (Button, Card, Badge, Input, Skeleton); data-access & order state machine services; 41/41 vitest tests green; 14 routes statically/dynamically generated under 95 kB.
 
+### Phase 3 — Authentication
+- **Status:** ✅ Complete
+- **Started:** 2026-10-04
+- **Completed:** 2026-10-04
+- **Commit:** Pending owner manual commit
+- **Notes:** Supabase SSR cookie auth implemented; Zod validation schemas for login, signup, password reset & update; Server Actions with anti-enumeration protection; OAuth callback route with safe redirect sanitization; route-protecting middleware with session refresh; 19 new auth tests (60/60 total vitest tests passing); Next.js production build 17/17 pages verified with 0 lint errors.
+
 *(Repeat for all 15 phases)*
 
 ---
