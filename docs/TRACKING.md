@@ -138,8 +138,15 @@ These decisions guide every phase. The agent must respect them.
 - **Status:** ✅ Complete
 - **Started:** 2026-10-04
 - **Completed:** 2026-10-04
-- **Commit:** Pending owner manual commit
+- **Commit:** `7702d28`
 - **Notes:** Interactive ProductCatalog with real-time category tabs, search input, sort selector, in-stock toggle, and live item counter; ProductDetailPage with JSON-LD (schema.org/Product), dynamic SEO metadata, breadcrumbs, tasting notes, ProductDetailActions quantity picker with cup-fill hover, Dhaka pickup guidelines, and related product recommendations; strict soft-deletion defense in data layer; 79/79 tests green across 11 suites; Next.js production build 17/17 routes passing cleanly.
+
+### Phase 6 — About & Contact
+- **Status:** ✅ Complete
+- **Started:** 2026-10-04
+- **Completed:** 2026-10-04
+- **Commit:** Pending owner manual commit
+- **Notes:** Editorial AboutPage with 4-stage roasting discipline, artisan team profiles (Master Roaster & Head Chocolatier), direct trade principles, and roastery showcase; Interactive ContactPage with Dhaka atelier counter hours (8 AM – 10 PM), Banani address, phone, and ContactForm; sendContactMessageAction Server Action with Zod validation, honeypot bot trap, and PostgreSQL contact_messages storage; 85/85 vitest tests passing across 12 suites; Next.js production build 17/17 routes passing with 0 lint errors.
 
 *(Repeat for all 15 phases)*
 
