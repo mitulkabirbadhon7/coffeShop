@@ -1,31 +1,30 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { ShoppingBag } from "lucide-react";
+import { createClient } from "@/lib/supabase/server";
+import { AdminOrderTable, type AdminOrderRecord } from "@/components/admin/orders/admin-order-table";
 
-export default function AdminOrdersPage() {
+export const metadata = {
+  title: "Order Queue & Fulfillment | Chocobliss Admin Atelier",
+};
+
+export default async function AdminOrdersPage() {
+  const supabase = await createClient();
+
+  const { data: orders } = await supabase
+    .from("orders")
+    .select("*, profiles(display_name), order_items(*)")
+    .order("created_at", { ascending: false });
+
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <h1 className="font-serif text-3xl font-bold text-[#F5E6D3]">
-          Order Management Queue
+        <h1 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#F5E6D3]">
+          Order Fulfillment Queue
         </h1>
-        <p className="text-sm text-[#F5E6D3]/70 font-sans">
-          Review incoming pickup orders and transition statuses according to state machine rules.
+        <p className="text-xs sm:text-sm text-[#F5E6D3]/60 font-sans">
+          Review incoming pickup reservations, trigger state transitions, and inspect immutable item snapshots.
         </p>
       </div>
 
-      <Card className="bg-[#2C221E] border border-[#5C4A3D]/40 p-12 text-center space-y-4">
-        <div className="w-14 h-14 rounded-full bg-[#1A1613] border border-[#D4A373]/30 flex items-center justify-center text-[#D4A373] mx-auto">
-          <ShoppingBag className="w-7 h-7" />
-        </div>
-        <div className="space-y-1 max-w-sm mx-auto">
-          <h3 className="font-serif text-xl font-bold text-[#F5E6D3]">
-            No Orders In Queue
-          </h3>
-          <p className="text-xs text-[#F5E6D3]/60 font-sans leading-relaxed">
-            New pickup orders placed through the public menu will appear here for barista confirmation and status updates.
-          </p>
-        </div>
-      </Card>
+      <AdminOrderTable initialOrders={(orders || []) as AdminOrderRecord[]} />
     </div>
   );
 }

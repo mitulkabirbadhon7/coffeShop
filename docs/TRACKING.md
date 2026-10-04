@@ -176,6 +176,13 @@ These decisions guide every phase. The agent must respect them.
 - **Commit:** Pending owner manual commit
 - **Notes:** Comprehensive product & category Zod validation schemas (`productSchema`, `categorySchema`); Server Action image upload service with binary magic byte validation (strictly allowing only JPEG, PNG, WebP ≤ 2MB, rejecting disguised SVGs and executables) and random UUID filenames; Server Actions for product creation, editing, in-place availability/featured toggles, soft deletion (`deleted_at = now()`), and restoration; full audit trail integration via `logAdminAction()`; interactive `AdminProductTable` with live search, category filter, active/deleted toggles, and modal creation/edit forms; 15 new unit and security tests (134/134 total vitest tests passing across 16 suites); Next.js production build 22/22 routes passing cleanly.
 
+### Phase 11 — Admin Orders & Users Management
+- **Status:** ✅ Complete
+- **Started:** 2026-10-04
+- **Completed:** 2026-10-04
+- **Commit:** Pending owner manual commit
+- **Notes:** Full operational orders fulfillment queue with status state machine enforcement (strictly forbidding illegal transitions such as cancelling preparing orders); immutable customer order item snapshots modal; user management console (`/admin/users`) with role promotion/demotion; strict privilege defense preventing self-demotion and last-administrator lockout; service-role execution for user role updates; full audit logging via `logAdminAction()`; 7 new unit and security tests (141/141 total vitest tests passing across 17 suites); Next.js production build 23/23 routes passing cleanly.
+
 *(Repeat for all 15 phases)*
 
 ---
