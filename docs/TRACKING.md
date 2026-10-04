@@ -148,6 +148,13 @@ These decisions guide every phase. The agent must respect them.
 - **Commit:** Pending owner manual commit
 - **Notes:** Editorial AboutPage with 4-stage roasting discipline, artisan team profiles (Master Roaster & Head Chocolatier), direct trade principles, and roastery showcase; Interactive ContactPage with Dhaka atelier counter hours (8 AM – 10 PM), Banani address, phone, and ContactForm; sendContactMessageAction Server Action with Zod validation, honeypot bot trap, and PostgreSQL contact_messages storage; 85/85 vitest tests passing across 12 suites; Next.js production build 17/17 routes passing with 0 lint errors.
 
+### Phase 7 — User Account & Profile
+- **Status:** ✅ Complete
+- **Started:** 2026-10-04
+- **Completed:** 2026-10-04
+- **Commit:** Pending owner manual commit
+- **Notes:** Account profile editing with Zod validation (`profileSchema`), full address management with `addressSchema` (add address, delete address with confirmation modal, set default location), user order history list with dynamic status pills and BDT pricing; Server Actions strictly enforce anti-IDOR security via `.eq("user_id", user.id)` alongside Supabase RLS; 7 new security & schema tests (92/92 total vitest tests passing across 13 suites); Next.js production build 18/18 routes passing cleanly.
+
 *(Repeat for all 15 phases)*
 
 ---
