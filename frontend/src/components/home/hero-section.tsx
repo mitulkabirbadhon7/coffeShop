@@ -4,7 +4,24 @@ import { Coffee, ArrowRight, Sparkles, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VideoBackground } from "@/components/ui/video-background";
 
-export function HeroSection() {
+import { getPublishedContent } from "@/lib/data/content.data";
+
+export async function HeroSection() {
+  const dynamicContent = await getPublishedContent("hero_section");
+
+  const title =
+    (dynamicContent?.title as string) ||
+    "Where Artisanal Roast Meets Pure Chocolate Indulgence";
+  const subtitle =
+    (dynamicContent?.subtitle as string) ||
+    "We roast rare single-origin coffees and hand-temper artisanal cocoa in micro-batches. Crafted for those who appreciate nuanced floral notes, velvety crema, and the ritual of slow brewing.";
+  const ctaText =
+    (dynamicContent?.cta_text as string) || "Explore Menu & Order";
+  const ctaLink = (dynamicContent?.cta_link as string) || "/products";
+  const secondaryCtaText =
+    (dynamicContent?.secondary_cta_text as string) || "Our Craft Story";
+  const secondaryCtaLink =
+    (dynamicContent?.secondary_cta_link as string) || "/about";
   return (
     <VideoBackground
       poster="/images/hero-poster.jpg"
@@ -25,35 +42,33 @@ export function HeroSection() {
             </div>
 
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#FDFBF7] leading-[1.08]">
-              Where Artisanal Roast Meets Pure Chocolate Indulgence
+              {title}
             </h1>
 
             <p className="text-base sm:text-lg text-[#FDFBF7]/85 font-sans leading-relaxed max-w-xl">
-              We roast rare single-origin coffees and hand-temper artisanal cocoa in
-              micro-batches. Crafted for those who appreciate nuanced floral notes,
-              velvety crema, and the ritual of slow brewing.
+              {subtitle}
             </p>
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <Link href="/products">
+              <Link href={ctaLink}>
                 <Button
                   variant="primary"
                   size="lg"
                   className="btn-cup-fill bg-[#D4A373] text-[#1A1613] hover:text-[#1A1613] font-medium tracking-wide border-0 shadow-md inline-flex items-center gap-2 rounded-md h-12 px-7"
                 >
-                  <span>Explore Menu & Order</span>
+                  <span>{ctaText}</span>
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
 
-              <Link href="/about">
+              <Link href={secondaryCtaLink}>
                 <Button
                   variant="secondary"
                   size="lg"
                   className="bg-[#2C221E]/80 text-[#FDFBF7] hover:bg-[#3A2D26] border border-[#5C4A3D] font-medium tracking-wide rounded-md h-12 px-7"
                 >
-                  <span>Our Craft Story</span>
+                  <span>{secondaryCtaText}</span>
                 </Button>
               </Link>
             </div>

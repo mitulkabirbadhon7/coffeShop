@@ -4,7 +4,20 @@ import Link from "next/link";
 import { Coffee, ShieldCheck, HeartHandshake, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function StorySection() {
+import { getPublishedContent } from "@/lib/data/content.data";
+
+export async function StorySection() {
+  const dynamicContent = await getPublishedContent("story_section");
+
+  const heading =
+    (dynamicContent?.heading as string) ||
+    "Coffee as an Art Form, Not a Rushed Commodity";
+  const subheading =
+    (dynamicContent?.subheading as string) || "Our Roastery Philosophy";
+  const body =
+    (dynamicContent?.body as string) ||
+    "Founded on the belief that extraordinary coffee begins long before the water touches the grounds. We partner with smallholder cooperatives across high-altitude terroirs to bring micro-lot green beans to our Dhaka roastery.";
+
   return (
     <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-[#F4F1EA] text-[#2C221E] border-t border-[#8A8179]/15">
       <div className="max-w-7xl mx-auto">
@@ -48,18 +61,16 @@ export function StorySection() {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FAEDCD] text-[#5C4A3D] text-xs font-medium tracking-widest uppercase">
                 <HeartHandshake className="w-3.5 h-3.5 text-[#E07A5F]" />
-                <span>Our Roastery Philosophy</span>
+                <span>{subheading}</span>
               </div>
 
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#2C221E] leading-[1.12]">
-                Coffee as an Art Form, Not a Rushed Commodity
+                {heading}
               </h2>
             </div>
 
             <p className="text-base text-[#5C4A3D] font-sans leading-relaxed">
-              Founded on the belief that extraordinary coffee begins long before the
-              water touches the grounds. We partner with smallholder cooperatives across
-              high-altitude terroirs to bring micro-lot green beans to our Dhaka roastery.
+              {body}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">

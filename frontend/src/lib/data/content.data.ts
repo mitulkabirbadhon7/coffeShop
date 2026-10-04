@@ -1,11 +1,13 @@
 import { createClient } from "@/lib/supabase/client";
+import { sanitizeJsonContent, sanitizeText } from "@/lib/sanitizer";
 import type { Database } from "@/types/database.types";
 
 export type SiteContent = Database["public"]["Tables"]["site_content"]["Row"];
 export type Testimonial = Database["public"]["Tables"]["testimonials"]["Row"];
 
 /**
- * Fetch a published site content item by key (e.g. 'hero_section', 'store_info').
+ * Fetch a published site content item by key (e.g. 'hero_section', 'store_info', 'story_section').
+ * Public consumers only receive rows where published = true, with sanitized content.
  */
 export async function getPublishedContent(contentKey: string): Promise<Record<string, unknown> | null> {
   const supabase = createClient();
@@ -16,14 +18,18 @@ export async function getPublishedContent(contentKey: string): Promise<Record<st
     .eq("published", true)
     .single();
 
-  if (error || !data) {
+  if (error || !data || !data.content) {
     return null;
   }
-  return (data.content as Record<string, unknown>) || null;
+
+  // Recursively sanitize all strings to neutralize any XSS payloads
+  const sanitized = sanitizeJsonContent(data.content);
+  return (sanitized as Record<string, unknown>) || null;
 }
 
 /**
  * Fetch all published testimonials ordered by sort_order.
+ * Returns only published records with sanitized strings.
  */
 export async function getPublishedTestimonials(): Promise<Testimonial[]> {
   const supabase = createClient();
@@ -37,5 +43,14 @@ export async function getPublishedTestimonials(): Promise<Testimonial[]> {
     console.error("Error fetching testimonials:", error);
     return [];
   }
-  return data || [];
+
+  if (!data) return [];
+
+  // Defense-in-depth sanitization for public display
+  return data.map((t) => ({
+    ...t,
+    name: sanitizeText(t.name, 100),
+    quote: sanitizeText(t.quote, 500),
+    role_or_context: t.role_or_context ? sanitizeText(t.role_or_context, 100) : null,
+  }));
 }
