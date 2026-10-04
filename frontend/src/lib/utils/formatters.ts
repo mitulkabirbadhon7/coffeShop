@@ -24,6 +24,16 @@ export function formatCurrency(
 }
 
 /**
+ * Convenience helper to format minor units into BDT with taka sign (৳).
+ */
+export function formatBdt(
+  minorUnits: number,
+  options?: { showDecimals?: boolean }
+): string {
+  return formatCurrency(minorUnits, "BDT", options);
+}
+
+/**
  * Format date string into editorial human-readable date.
  * Example: "2026-10-04T12:00:00Z" -> "October 4, 2026"
  */

@@ -124,8 +124,15 @@ These decisions guide every phase. The agent must respect them.
 - **Status:** ✅ Complete
 - **Started:** 2026-10-04
 - **Completed:** 2026-10-04
-- **Commit:** Pending owner manual commit
+- **Commit:** `74fc645`
 - **Notes:** Supabase SSR cookie auth implemented; Zod validation schemas for login, signup, password reset & update; Server Actions with anti-enumeration protection; OAuth callback route with safe redirect sanitization; route-protecting middleware with session refresh; 19 new auth tests (60/60 total vitest tests passing); Next.js production build 17/17 pages verified with 0 lint errors.
+
+### Phase 4 — Public Design System & Homepage
+- **Status:** ✅ Complete
+- **Started:** 2026-10-04
+- **Completed:** 2026-10-04
+- **Commit:** Pending owner manual commit
+- **Notes:** Complete editorial homepage built with DESIGN.md design tokens (Espresso, Oat Milk, Latte Caramel, Cream Foam, Terracotta, Stone, Ash, Bark, Charcoal); accessible VideoBackground with poster fallback, network awareness, and reduced-motion protection; asymmetric editorial Hero with signature tasting notes card; FeaturedProductsSection fetching real DB products with BDT format; StorySection with craft showcase; CraftAtmosphereSection with roastery hours & pickup details; TestimonialsSection with authentic guest reviews; NewsletterSection with Zod validation, honeypot bot trap, and Server Action inserting into newsletter_subscribers; 70/70 vitest tests passing; Next.js production build First Load JS: 110 kB.
 
 *(Repeat for all 15 phases)*
 

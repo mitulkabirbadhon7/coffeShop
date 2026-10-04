@@ -4,30 +4,30 @@ import { siteConfig } from "@/config/site.config";
 
 export function Footer() {
   return (
-    <footer className="w-full bg-[#2C221E] text-[#F5E6D3] border-t border-[#C89B5E]/20">
+    <footer className="w-full bg-[#1A1613] text-[#FDFBF7] border-t border-[#5C4A3D]/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand Info */}
           <div className="space-y-4 md:col-span-1">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#C89B5E]/20 border border-[#C89B5E]/40 flex items-center justify-center text-[#C89B5E]">
+              <div className="w-9 h-9 rounded-full bg-[#D4A373]/15 border border-[#D4A373]/40 flex items-center justify-center text-[#D4A373]">
                 <Coffee className="w-4 h-4" />
               </div>
-              <span className="font-serif text-xl font-bold tracking-tight text-[#F5E6D3]">
+              <span className="font-serif text-xl font-bold tracking-tight text-[#FDFBF7]">
                 {siteConfig.name}
               </span>
             </div>
-            <p className="text-sm text-[#F5E6D3]/70 font-sans leading-relaxed">
+            <p className="text-sm text-[#FDFBF7]/75 font-sans leading-relaxed">
               {siteConfig.description}
             </p>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#6B4423]/30 border border-[#C89B5E]/20 text-xs text-[#C89B5E]">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2C221E] border border-[#5C4A3D]/40 text-xs text-[#D4A373]">
               <span>Pickup Order Only in V1</span>
             </div>
           </div>
 
           {/* Quick Navigation */}
           <div className="space-y-4">
-            <h4 className="font-serif text-base font-semibold text-[#C89B5E] tracking-wider uppercase text-xs">
+            <h4 className="font-serif text-base font-semibold text-[#D4A373] tracking-wider uppercase text-xs">
               Navigation
             </h4>
             <ul className="space-y-2.5 text-sm font-sans">
@@ -35,7 +35,7 @@ export function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-[#F5E6D3]/75 hover:text-[#C89B5E] transition-colors"
+                    className="text-[#FDFBF7]/75 hover:text-[#D4A373] transition-colors"
                   >
                     {item.name}
                   </Link>
@@ -44,7 +44,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/account"
-                  className="text-[#F5E6D3]/75 hover:text-[#C89B5E] transition-colors"
+                  className="text-[#FDFBF7]/75 hover:text-[#D4A373] transition-colors"
                 >
                   My Account
                 </Link>
@@ -52,7 +52,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/admin"
-                  className="text-[#F5E6D3]/50 hover:text-[#C89B5E] transition-colors text-xs"
+                  className="text-[#8A8179] hover:text-[#D4A373] transition-colors text-xs"
                 >
                   Staff / Admin Portal
                 </Link>
@@ -62,37 +62,37 @@ export function Footer() {
 
           {/* Roastery Hours & Location */}
           <div className="space-y-4">
-            <h4 className="font-serif text-base font-semibold text-[#C89B5E] tracking-wider uppercase text-xs">
+            <h4 className="font-serif text-base font-semibold text-[#D4A373] tracking-wider uppercase text-xs">
               Roastery Hours
             </h4>
-            <div className="space-y-3 text-sm text-[#F5E6D3]/75 font-sans">
+            <div className="space-y-3 text-sm text-[#FDFBF7]/75 font-sans">
               <div className="flex items-start gap-2.5">
-                <Clock className="w-4 h-4 text-[#C89B5E] mt-0.5 shrink-0" />
+                <Clock className="w-4 h-4 text-[#D4A373] mt-0.5 shrink-0" />
                 <div>
-                  <p className="font-medium text-[#F5E6D3]">Open Daily</p>
-                  <p className="text-xs text-[#F5E6D3]/60">{siteConfig.operatingHours}</p>
+                  <p className="font-medium text-[#FDFBF7]">Open Daily</p>
+                  <p className="text-xs text-[#8A8179]">{siteConfig.operatingHours}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#C89B5E] mt-0.5 shrink-0" />
-                <p className="text-xs text-[#F5E6D3]/70">{siteConfig.contact.address}</p>
+                <MapPin className="w-4 h-4 text-[#D4A373] mt-0.5 shrink-0" />
+                <p className="text-xs text-[#FDFBF7]/75">{siteConfig.contact.address}</p>
               </div>
             </div>
           </div>
 
           {/* Direct Contact */}
           <div className="space-y-4">
-            <h4 className="font-serif text-base font-semibold text-[#C89B5E] tracking-wider uppercase text-xs">
-              Inquiries & Orders
+            <h4 className="font-serif text-base font-semibold text-[#D4A373] tracking-wider uppercase text-xs">
+              Inquiries &amp; Orders
             </h4>
-            <div className="space-y-2.5 text-sm text-[#F5E6D3]/75 font-sans">
+            <div className="space-y-2.5 text-sm text-[#FDFBF7]/75 font-sans">
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#C89B5E] shrink-0" />
+                <Phone className="w-4 h-4 text-[#D4A373] shrink-0" />
                 <span className="text-xs">{siteConfig.contact.phone}</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#C89B5E] shrink-0" />
+                <Mail className="w-4 h-4 text-[#D4A373] shrink-0" />
                 <span className="text-xs">{siteConfig.contact.email}</span>
               </div>
             </div>
@@ -100,11 +100,11 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-[#C89B5E]/15 flex flex-col sm:flex-row items-center justify-between text-xs text-[#F5E6D3]/60 font-sans gap-4">
-          <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
+        <div className="mt-12 pt-8 border-t border-[#5C4A3D]/30 flex flex-col sm:flex-row items-center justify-between text-xs text-[#8A8179] font-sans gap-4">
+          <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <span>Dhaka, Bangladesh</span>
-            <span>Handcrafted Specialty Beans</span>
+            <span>Small-Batch Artisanal Coffee &amp; Cocoa</span>
           </div>
         </div>
       </div>
