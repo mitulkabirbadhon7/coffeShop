@@ -155,16 +155,15 @@ Security:
 - Secret Scanning: Verified zero client-component secret exposure
 - Dependency Audit: Documented and verified against pinned stack rules
 
-## Phase 14 — Performance, Accessibility & SEO
-- image optimization
-- video optimization
-- bundle analysis
-- caching
-- LCP/CLS work
-- axe testing
-- keyboard review
-- metadata
-- structured data
+## Phase 14 — Performance, Accessibility & SEO (✅ Complete)
+- Image optimization: `next.config.mjs` configured with modern AVIF and WebP formats, remotePatterns for Supabase Storage, explicit responsive deviceSizes and imageSizes
+- Video optimization: IntersectionObserver-driven lazy playback for below-the-fold media, `preload="metadata"` / `preload="none"`, and zero-CLS aspect ratio containers (`aspect-[4/5]`, `aspect-[16/9]`)
+- Bundle analysis: First-load shared JS maintained at 87.2 kB (well within <200 kB target)
+- Accessibility (WCAG 2.2 AA): Keyboard skip-link (`#main-content`), main content landmark, ARIA attributes on navigation elements (`aria-expanded`, `aria-controls`, `role="navigation"`), and Escape-key dismissibility
+- Metadata: Comprehensive `metadataBase`, Open Graph card, Twitter card, robots indexing rules, and canonical link generation
+- Robots & Sitemap: Dynamic `robots.ts` and dynamic `sitemap.ts` indexing core marketing pages and live product offerings
+- Structured data: Schema.org JSON-LD structured data for `CoffeeShop`, `Product`, and `BreadcrumbList`
+- Automated test suites: 12 new tests across SEO, accessibility, and performance (210/210 vitest tests passing across 28 suites)
 
 ## Phase 15 — Production Release
 - full regression

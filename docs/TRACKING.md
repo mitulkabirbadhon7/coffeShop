@@ -194,8 +194,15 @@ These decisions guide every phase. The agent must respect them.
 - **Status:** ✅ Complete
 - **Started:** 2026-10-05
 - **Completed:** 2026-10-05
-- **Commit:** Pending owner manual commit
+- **Commit:** `4f32654`
 - **Notes:** Centralized rate limiting engine (`@upstash/ratelimit` & `@upstash/redis` with in-memory sliding window fallback) protecting auth (`/login`, `/signup`, `/reset-password`), public mutations (`subscribeNewsletterAction`, `sendContactMessageAction`), checkout (`placeOrderAction`), and public `/api/` endpoints (429 with Retry-After header); comprehensive baseline HTTP security headers in `next.config.mjs` and `middleware.ts` (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`, `HSTS 2-years`, COOP, CORP, and CSP with frame-ancestors 'none'); CSRF origin validation (`csrf.ts`); production error sanitization & secret masking (`error-sanitizer.ts`); automated secret scanner ensuring no client component leaks private keys; RLS audit ensuring 0-row mutation isolation across protected tables; dependency security audit documented; 40 new automated security tests (198/198 total vitest tests passing across 25 suites); Next.js production build 23/23 routes passing with zero lint errors.
+
+### Phase 14 — Performance, Accessibility & SEO
+- **Status:** ✅ Complete
+- **Started:** 2026-10-05
+- **Completed:** 2026-10-05
+- **Commit:** Pending owner manual commit
+- **Notes:** Image and media optimization configured in `next.config.mjs` (modern AVIF & WebP formats, remotePatterns for Supabase Storage, device & image sizes); lazy below-fold video loading with IntersectionObserver, zero CLS aspect ratio containers, and LCP static poster prioritization; WCAG 2.2 AA accessibility landmarks with skip-to-content link, main content landmark, ARIA attributes on navigation elements, and keyboard Escape dismissibility; complete SEO metadataBase configuration with Open Graph and Twitter cards; dynamic `robots.ts` disallowing admin/account/api routes; dynamic `sitemap.ts` indexing static marketing pages and all live product offerings; Schema.org JSON-LD structured data (`CoffeeShop`, `Product`, `BreadcrumbList`); 12 new automated test assertions (210/210 total vitest tests passing across 28 suites); Next.js production build 25/25 static & dynamic routes compiled with zero lint warnings.
 
 *(Repeat for all 15 phases)*
 

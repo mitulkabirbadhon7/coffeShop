@@ -13,6 +13,17 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const { openCart, totalItems } = useCart();
 
+  // Close mobile drawer on Escape key (WCAG 2.2 AA)
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileMenuOpen]);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#5C4A3D]/40 bg-[#1A1613]/90 backdrop-blur-md transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -35,7 +46,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav aria-label="Main Navigation" className="hidden md:flex items-center gap-8">
           {siteConfig.navigation.main.map((item) => {
             const isActive =
               item.href === "/"
@@ -88,8 +99,9 @@ export function Header() {
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2 rounded-md text-[#FDFBF7] hover:bg-[#2C221E] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A373]"
-            aria-label="Toggle Navigation"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -98,7 +110,12 @@ export function Header() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-[#5C4A3D]/40 bg-[#1A1613] px-4 pt-3 pb-6 space-y-3">
+        <div
+          id="mobile-navigation"
+          role="navigation"
+          aria-label="Mobile Navigation"
+          className="md:hidden border-b border-[#5C4A3D]/40 bg-[#1A1613] px-4 pt-3 pb-6 space-y-3"
+        >
           {siteConfig.navigation.main.map((item) => (
             <Link
               key={item.name}

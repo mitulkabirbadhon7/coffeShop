@@ -19,6 +19,13 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+import {
+  getProductJsonLd,
+  getBreadcrumbJsonLd,
+  JsonLd,
+} from "@/components/seo/json-ld";
+import { env } from "@/lib/env";
+
 interface ProductPageProps {
   params: {
     slug: string;
@@ -57,6 +64,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const siteUrl = env.NEXT_PUBLIC_SITE_URL || "https://chocobliss.coffee";
+
   const [categories, relatedProducts] = await Promise.all([
     getCategories(),
     product.category_id
@@ -67,35 +76,32 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const category = categories.find((c) => c.id === product.category_id);
   const categoryName = category ? category.name : "Artisanal Specialty";
 
-  // Structured JSON-LD Data for Search Engines
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
+  // Structured JSON-LD Data for Product and Breadcrumbs
+  const productJsonLd = getProductJsonLd({
     name: product.name,
     description: product.description,
-    image: product.image_path || "/images/hero-poster.jpg",
-    offers: {
-      "@type": "Offer",
-      price: (product.price_minor / 100).toFixed(2),
-      priceCurrency: "BDT",
-      availability: product.is_available
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
-      priceValidUntil: "2027-12-31",
-      seller: {
-        "@type": "Organization",
-        name: "Chocobliss Coffee Roastery",
-      },
-    },
-  };
+    slug: product.slug,
+    priceMinor: product.price_minor,
+    currency: product.currency,
+    isAvailable: product.is_available,
+    imagePath: product.image_path,
+    siteUrl,
+  });
+
+  const breadcrumbJsonLd = getBreadcrumbJsonLd(
+    [
+      { name: "Home", url: "/" },
+      { name: "Roastery Menu", url: "/products" },
+      { name: product.name, url: `/products/${product.slug}` },
+    ],
+    siteUrl
+  );
 
   return (
     <div className="bg-[#FDFBF7] py-12 sm:py-16 px-4 sm:px-6 lg:px-8 min-h-screen">
-      {/* Insert JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {/* Insert JSON-LD Structured Data */}
+      <JsonLd data={productJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
 
       <div className="max-w-6xl mx-auto space-y-12">
         {/* Breadcrumb Navigation */}
