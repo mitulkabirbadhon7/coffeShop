@@ -63,34 +63,42 @@ export function ScrollVideo({
     if (prefersReducedMotion || duration === 0 || !videoRef.current) return;
 
     const video = videoRef.current;
-    let rafId: number;
     let targetTime = 0;
+    let isSeeking = false;
 
-    const updateTime = () => {
-      if (video) {
-        // Only set if diff is significant to prevent decoder thrashing on micro-updates
-        if (Math.abs(video.currentTime - targetTime) > 0.01) {
-          video.currentTime = targetTime;
-        }
+    // Bulletproof MP4 scrub logic:
+    // We only trigger a new seek if the video is NOT currently seeking.
+    // When a seek finishes, we check if the target has moved further and seek again.
+    const onSeeked = () => {
+      isSeeking = false;
+      // If targetTime has drifted away from where we just seeked, trigger another seek immediately
+      if (Math.abs(video.currentTime - targetTime) > 0.05) {
+        isSeeking = true;
+        video.currentTime = targetTime;
       }
-      rafId = requestAnimationFrame(updateTime);
     };
-    
-    rafId = requestAnimationFrame(updateTime);
+
+    video.addEventListener("seeked", onSeeked);
 
     const unsubscribe = scrubProgress.on("change", (latest) => {
       targetTime = latest * duration;
+      
+      // If we aren't currently waiting for a seek to finish, start one
+      if (!isSeeking && Math.abs(video.currentTime - targetTime) > 0.05) {
+        isSeeking = true;
+        video.currentTime = targetTime;
+      }
     });
 
     return () => {
-      cancelAnimationFrame(rafId);
+      video.removeEventListener("seeked", onSeeked);
       unsubscribe();
     };
   }, [scrubProgress, duration, prefersReducedMotion]);
 
   return (
     <div ref={containerRef} className={`relative w-full ${className}`}>
-      {/* Sticky Video Background */}
+      {/* Sticky Container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden will-change-transform z-0">
         {prefersReducedMotion ? (
           <Image
@@ -122,11 +130,13 @@ export function ScrollVideo({
           className="absolute inset-0 backdrop-blur-[1px] bg-gradient-to-r from-[#1A1613]/95 via-[#1A1613]/85 to-[#1A1613]/60"
           aria-hidden="true"
         />
-      </div>
 
-      {/* Scrollable Foreground Content */}
-      <div className="absolute inset-0 z-10 flex flex-col justify-start w-full">
-        {children}
+        {/* Sticky Foreground Content */}
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          <div className="pointer-events-auto w-full h-full">
+            {children}
+          </div>
+        </div>
       </div>
     </div>
   );
