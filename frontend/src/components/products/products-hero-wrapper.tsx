@@ -18,7 +18,7 @@ export function ProductsHeroWrapper({ children }: { children: React.ReactNode })
         />
         
         {/* Cinematic Dark Overlay */}
-        <div className="absolute inset-0 backdrop-blur-[1px] bg-gradient-to-r from-[#1A1613]/95 via-[#1A1613]/85 to-[#1A1613]/60 z-0" />
+        <div className="absolute inset-0 backdrop-blur-[1px] bg-gradient-to-r from-transparent via-[#1A1613]/40 to-[#1A1613]/95 z-0" />
         
         <div className="relative z-10 w-full pointer-events-none">
           <div className="pointer-events-auto">

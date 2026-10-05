@@ -25,34 +25,38 @@ export default async function ProductsPage() {
     <main>
       {/* Cinematic Scroll Video Hero */}
       <ProductsHeroWrapper>
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-20">
-          <div className="max-w-7xl mx-auto w-full">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-[#FDFBF7]/20">
-              <div className="space-y-4 max-w-2xl text-left">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2C221E]/70 backdrop-blur-md border border-[#D4A373]/40 text-[#D4A373] text-xs font-medium tracking-widest uppercase">
-                  <Coffee className="w-3.5 h-3.5" />
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-20 h-screen flex flex-col justify-center items-end">
+          <div className="max-w-2xl w-full text-left">
+            <div className="space-y-6 pb-12 border-b border-[#FDFBF7]/20">
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2C221E]/70 backdrop-blur-md border border-[#D4A373]/40 text-[#D4A373] text-xs font-semibold tracking-widest uppercase">
+                  <Coffee className="w-4 h-4" />
                   <span>Dhaka Roastery Counter Menu</span>
                 </div>
 
-                <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#FDFBF7]">
+                <h1 className="font-serif text-5xl sm:text-6xl font-bold tracking-tight text-[#FDFBF7] leading-[1.1] drop-shadow-lg">
                   Artisanal Roasts &amp; Confections
                 </h1>
 
-                <p className="text-base sm:text-lg text-[#FDFBF7]/85 font-sans leading-relaxed max-w-xl">
+                <p className="text-lg sm:text-xl text-[#FDFBF7]/90 font-sans leading-relaxed drop-shadow-md">
                   Every coffee is sourced from ethical micro-lots and roasted twice weekly.
                   All orders are prepared fresh for counter pickup at our Dhaka roastery.
                 </p>
               </div>
 
               {/* Roastery Quick Info Card */}
-              <div className="p-5 rounded-xl bg-[#2C221E]/70 backdrop-blur-md border border-[#D4A373]/30 text-xs text-[#FDFBF7]/90 space-y-2 shrink-0">
-                <div className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-[#D4A373]" />
-                  <span>Counter Pickup: 8:00 AM – 10:00 PM</span>
+              <div className="grid grid-cols-2 gap-4 p-5 rounded-2xl bg-[#2C221E]/60 backdrop-blur-md border border-[#D4A373]/30 text-sm text-[#FDFBF7]/90 mt-8">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-full bg-[#D4A373]/10">
+                    <Clock className="w-4 h-4 text-[#D4A373]" />
+                  </div>
+                  <span>Pickup: 8am – 10pm</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <MapPin className="w-4 h-4 text-[#D4A373]" />
-                  <span>Road 11, Banani, Dhaka</span>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-full bg-[#D4A373]/10">
+                    <MapPin className="w-4 h-4 text-[#D4A373]" />
+                  </div>
+                  <span>Road 11, Banani</span>
                 </div>
               </div>
             </div>
