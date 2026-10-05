@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { HeroSection } from "@/components/home/hero-section";
 import { FeaturedProductsSection } from "@/components/home/featured-products";
-import { StorySection } from "@/components/home/story-section";
-import { CraftAtmosphereSection } from "@/components/home/craft-atmosphere";
-import { TestimonialsSection } from "@/components/home/testimonials-section";
-import { NewsletterSection } from "@/components/home/newsletter-section";
+
+const StorySection = dynamic(() => import("@/components/home/story-section").then((mod) => mod.StorySection));
+const CraftAtmosphereSection = dynamic(() => import("@/components/home/craft-atmosphere").then((mod) => mod.CraftAtmosphereSection));
+const TestimonialsSection = dynamic(() => import("@/components/home/testimonials-section").then((mod) => mod.TestimonialsSection));
+const NewsletterSection = dynamic(() => import("@/components/home/newsletter-section").then((mod) => mod.NewsletterSection));
 
 export const metadata: Metadata = {
   title: "Chocobliss Coffee Roastery | Artisanal Roasts & Fine Cocoa Confections",
