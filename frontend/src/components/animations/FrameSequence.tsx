@@ -78,7 +78,7 @@ export function FrameSequence({
 
     for (let i = 1; i <= frameCount; i++) {
       const paddedIndex = i.toString().padStart(3, "0");
-      const imgPath = `/frames/${folder}/ezgif-frame-${paddedIndex}.jpg`;
+      const imgPath = `/frames/${folder}/frame-${paddedIndex}.jpg`;
 
       preloadPromises.push(
         new Promise((resolve) => {
@@ -101,7 +101,7 @@ export function FrameSequence({
   }, [inView, frameCount, folder, prefersReducedMotion]);
 
   const paddedFrame = currentFrame.toString().padStart(3, "0");
-  const currentImgSrc = `/frames/${folder}/ezgif-frame-${paddedFrame}.jpg`;
+  const currentImgSrc = `/frames/${folder}/frame-${paddedFrame}.jpg`;
 
   return (
     <div
