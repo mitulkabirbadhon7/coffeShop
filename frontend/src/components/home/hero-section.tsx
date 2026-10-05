@@ -25,22 +25,13 @@ export async function HeroSection() {
     (dynamicContent?.secondary_cta_link as string) || "/about";
 
   return (
-    <div className="relative min-h-[88vh] flex items-center bg-[#1A1613] overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <ScrollVideo
-          srcWebm="/videos/coffee-pour.webm"
-          srcMp4="/videos/CoffePour.mp4"
-          poster="/images/hero-poster.jpg"
-        />
-        {/* Cinematic Dark Overlay */}
-        <div
-          className="absolute inset-0 backdrop-blur-[1px] bg-gradient-to-r from-[#1A1613]/95 via-[#1A1613]/85 to-[#1A1613]/60"
-          aria-hidden="true"
-        />
-      </div>
-
-      {/* Ambient Roast Aroma Particles */}
-      <AmbientAroma count={10} />
+    <ScrollVideo
+      srcMp4="/videos/CoffePour.mp4"
+      poster="/images/hero-poster.jpg"
+    >
+      <div className="relative min-h-screen flex items-center">
+        {/* Ambient Roast Aroma Particles */}
+        <AmbientAroma count={10} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full relative z-20">
         {/* Editorial Asymmetric Grid (7/5 split) */}
@@ -198,6 +189,7 @@ export async function HeroSection() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </ScrollVideo>
   );
 }
