@@ -35,6 +35,9 @@ export function ProductModal({
   const [imagePath, setImagePath] = React.useState<string>("");
   const [ingredients, setIngredients] = React.useState<string[]>([]);
   const [newIngredient, setNewIngredient] = React.useState<string>("");
+  const [variants, setVariants] = React.useState<string[]>([]);
+  const [newVariant, setNewVariant] = React.useState<string>("");
+  const [discountPercentage, setDiscountPercentage] = React.useState<string>("0");
   const [isAvailable, setIsAvailable] = React.useState<boolean>(true);
   const [isFeatured, setIsFeatured] = React.useState<boolean>(false);
 
@@ -52,6 +55,8 @@ export function ProductModal({
       setDescription(productToEdit.description || "");
       setImagePath(productToEdit.image_path || "");
       setIngredients(productToEdit.ingredients || []);
+      setVariants(productToEdit.variants || []);
+      setDiscountPercentage((productToEdit.discount_percentage || 0).toString());
       setIsAvailable(productToEdit.is_available);
       setIsFeatured(productToEdit.is_featured);
     } else {
@@ -62,6 +67,8 @@ export function ProductModal({
       setDescription("");
       setImagePath("");
       setIngredients([]);
+      setVariants([]);
+      setDiscountPercentage("0");
       setIsAvailable(true);
       setIsFeatured(false);
     }
@@ -88,6 +95,18 @@ export function ProductModal({
 
   const handleRemoveIngredient = (tag: string) => {
     setIngredients(ingredients.filter((i) => i !== tag));
+  };
+
+  const handleAddVariant = () => {
+    const trimmed = newVariant.trim();
+    if (trimmed && !variants.includes(trimmed) && variants.length < 10) {
+      setVariants([...variants, trimmed]);
+      setNewVariant("");
+    }
+  };
+
+  const handleRemoveVariant = (tag: string) => {
+    setVariants(variants.filter((v) => v !== tag));
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,6 +153,8 @@ export function ProductModal({
         description: description || undefined,
         imagePath: imagePath || undefined,
         ingredients,
+        variants,
+        discountPercentage: parseInt(discountPercentage) || 0,
         isAvailable,
         isFeatured,
       });
@@ -153,6 +174,8 @@ export function ProductModal({
         description: description || undefined,
         imagePath: imagePath || undefined,
         ingredients,
+        variants,
+        discountPercentage: parseInt(discountPercentage) || 0,
         isAvailable,
         isFeatured,
       });
@@ -268,6 +291,8 @@ export function ProductModal({
                 </select>
               </div>
 
+            {/* Price & Discount */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-[#D4A373] font-medium mb-1">
                   Pickup Price (BDT Taka) *
@@ -279,6 +304,20 @@ export function ProductModal({
                   min="1"
                   value={priceBdt}
                   onChange={(e) => setPriceBdt(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg bg-[#231B18] border border-[#5C4A3D]/50 text-[#F5E6D3] focus:outline-none focus:border-[#D4A373]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[#D4A373] font-medium mb-1">
+                  Discount (%)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={discountPercentage}
+                  onChange={(e) => setDiscountPercentage(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg bg-[#231B18] border border-[#5C4A3D]/50 text-[#F5E6D3] focus:outline-none focus:border-[#D4A373]"
                 />
               </div>
@@ -336,6 +375,56 @@ export function ProductModal({
                       <button
                         type="button"
                         onClick={() => handleRemoveIngredient(tag)}
+                        className="hover:text-[#F87171]"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Variants Tags */}
+            <div>
+              <label className="block text-[#D4A373] font-medium mb-1">
+                Variants (e.g., Small, Large, 250g, 500g)
+              </label>
+              <div className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  value={newVariant}
+                  onChange={(e) => setNewVariant(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleAddVariant();
+                    }
+                  }}
+                  placeholder="e.g. Small, Large..."
+                  className="flex-1 px-3 py-2 rounded-lg bg-[#231B18] border border-[#5C4A3D]/50 text-[#F5E6D3] placeholder-[#8A8179]/60 focus:outline-none focus:border-[#D4A373]"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddVariant}
+                  className="px-3.5 py-2 rounded-lg bg-[#3D3028] text-[#F5E6D3] hover:bg-[#5C4A3D] transition-colors flex items-center gap-1 font-medium"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add</span>
+                </button>
+              </div>
+
+              {variants.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {variants.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2.5 py-1 rounded-md bg-[#3D3028] text-[#D4A373] border border-[#5C4A3D]/50 text-xs flex items-center gap-1.5"
+                    >
+                      <span>{tag}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveVariant(tag)}
                         className="hover:text-[#F87171]"
                       >
                         <Trash2 className="w-3 h-3" />

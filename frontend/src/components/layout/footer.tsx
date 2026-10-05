@@ -101,7 +101,10 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-[#5C4A3D]/30 flex flex-col sm:flex-row items-center justify-between text-xs text-[#8A8179] font-sans gap-4">
-          <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
+            <Link href="/privacy" className="hover:text-[#D4A373] transition-colors">Privacy Policy</Link>
+          </div>
           <div className="flex items-center gap-6">
             <span>Dhaka, Bangladesh</span>
             <span>Small-Batch Artisanal Coffee &amp; Cocoa</span>

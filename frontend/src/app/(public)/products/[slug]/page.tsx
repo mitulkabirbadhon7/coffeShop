@@ -201,8 +201,15 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                   Pickup Price:
                 </span>
                 <span className="font-serif text-3xl font-bold text-[#2C221E]">
-                  {formatBdt(product.price_minor)}
+                  {product.discount_percentage && product.discount_percentage > 0
+                    ? formatBdt(Math.round(product.price_minor * (1 - product.discount_percentage / 100)))
+                    : formatBdt(product.price_minor)}
                 </span>
+                {product.discount_percentage && product.discount_percentage > 0 && (
+                  <span className="font-serif text-xl text-[#8A8179] line-through ml-2">
+                    {formatBdt(product.price_minor)}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -225,6 +232,25 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                       className="text-xs px-3 py-1 rounded-md bg-[#FDFBF7] border border-[#8A8179]/30 text-[#2C221E] font-sans"
                     >
                       {note}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Variants */}
+            {product.variants && product.variants.length > 0 && (
+              <div className="space-y-2 pt-4 border-t border-[#8A8179]/20">
+                <h2 className="text-xs font-semibold uppercase tracking-wider text-[#8A8179] font-sans">
+                  Available Variants
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {product.variants.map((variant) => (
+                    <span
+                      key={variant}
+                      className="text-xs px-3 py-1 rounded-md bg-[#FAEDCD]/50 border border-[#D4A373]/30 text-[#D4A373] font-sans font-semibold uppercase"
+                    >
+                      {variant}
                     </span>
                   ))}
                 </div>

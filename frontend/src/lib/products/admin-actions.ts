@@ -54,6 +54,8 @@ export async function createProductAction(
       priceMinor,
       imagePath,
       ingredients,
+      variants,
+      discountPercentage,
       isAvailable,
       isFeatured,
     } = parseResult.data;
@@ -85,6 +87,8 @@ export async function createProductAction(
         currency: "BDT",
         image_path: imagePath,
         ingredients,
+        variants,
+        discount_percentage: discountPercentage,
         is_available: isAvailable,
         is_featured: isFeatured,
       })
@@ -146,6 +150,8 @@ export async function updateProductAction(
       priceMinor,
       imagePath,
       ingredients,
+      variants,
+      discountPercentage,
       isAvailable,
       isFeatured,
     } = parseResult.data;
@@ -177,6 +183,8 @@ export async function updateProductAction(
         price_minor: priceMinor,
         image_path: imagePath,
         ingredients,
+        variants,
+        discount_percentage: discountPercentage,
         is_available: isAvailable,
         is_featured: isFeatured,
         updated_at: new Date().toISOString(),

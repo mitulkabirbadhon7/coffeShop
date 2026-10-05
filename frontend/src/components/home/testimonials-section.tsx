@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import { Star, Quote, Award } from "lucide-react";
 import { getPublishedTestimonials } from "@/lib/data/content.data";
 
@@ -73,6 +74,22 @@ export async function TestimonialsSection() {
               </div>
             );
           })}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+          <Link
+            href="/reviews"
+            className="px-6 py-2.5 rounded-md bg-[#2C221E] text-[#FDFBF7] text-sm font-medium hover:bg-[#3A2D26] transition-colors"
+          >
+            See All Reviews
+          </Link>
+          <Link
+            href="/login?returnUrl=/reviews/new"
+            className="px-6 py-2.5 rounded-md border border-[#2C221E] text-[#2C221E] text-sm font-medium hover:bg-[#2C221E] hover:text-[#FDFBF7] transition-colors"
+          >
+            Give Review
+          </Link>
         </div>
       </div>
     </section>

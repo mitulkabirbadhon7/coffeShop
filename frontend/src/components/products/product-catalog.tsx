@@ -257,6 +257,20 @@ export function ProductCatalog({
                       ))}
                     </div>
                   )}
+
+                  {/* Variants pills */}
+                  {product.variants && product.variants.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {product.variants.slice(0, 3).map((variant) => (
+                        <span
+                          key={variant}
+                          className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-[#FAEDCD]/50 text-[#D4A373] border border-[#D4A373]/20 font-sans font-semibold"
+                        >
+                          {variant}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Price & Action */}
@@ -265,9 +279,18 @@ export function ProductCatalog({
                     <span className="text-[10px] uppercase tracking-wider text-[#8A8179] block">
                       Pickup Price
                     </span>
-                    <span className="font-serif text-xl font-bold text-[#2C221E]">
-                      {formatBdt(product.price_minor)}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-serif text-xl font-bold text-[#2C221E]">
+                        {product.discount_percentage && product.discount_percentage > 0
+                          ? formatBdt(Math.round(product.price_minor * (1 - product.discount_percentage / 100)))
+                          : formatBdt(product.price_minor)}
+                      </span>
+                      {product.discount_percentage && product.discount_percentage > 0 && (
+                        <span className="text-xs text-[#8A8179] line-through">
+                          {formatBdt(product.price_minor)}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   <Link href={`/products/${product.slug}`}>

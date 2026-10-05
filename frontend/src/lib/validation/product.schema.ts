@@ -38,6 +38,15 @@ export const productSchema = z.object({
     .array(z.string().min(1).max(50))
     .max(10, "Cannot specify more than 10 tasting notes or ingredients.")
     .default([]),
+  variants: z
+    .array(z.string().min(1).max(50))
+    .max(10, "Cannot specify more than 10 variants.")
+    .default([]),
+  discountPercentage: z
+    .number()
+    .min(0, "Discount cannot be less than 0%")
+    .max(100, "Discount cannot be more than 100%")
+    .default(0),
   isAvailable: z.boolean().default(true),
   isFeatured: z.boolean().default(false),
 });
