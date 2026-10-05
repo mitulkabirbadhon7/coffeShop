@@ -43,7 +43,7 @@ export async function HeroSection() {
             <span>Small-Batch Roastery & Atelier • Dhaka</span>
           </div>
 
-          <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#FDFBF7] leading-[1.05] drop-shadow-lg">
+          <h1 className="font-serif text-4xl sm:text-5xl font-bold tracking-tight text-[#FDFBF7] leading-[1.15] drop-shadow-lg">
             {title}
           </h1>
 

@@ -10,6 +10,7 @@ interface FrameSequenceProps {
   poster: string;
   className?: string;
   scrollTarget?: React.RefObject<HTMLElement>;
+  scrollProgress?: import("framer-motion").MotionValue<number>;
 }
 
 export function FrameSequence({
@@ -18,6 +19,7 @@ export function FrameSequence({
   poster,
   className = "",
   scrollTarget,
+  scrollProgress: externalScrollProgress,
 }: FrameSequenceProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loadedFrames, setLoadedFrames] = useState(0);
@@ -28,16 +30,18 @@ export function FrameSequence({
   // Determine if we show poster based on load progress (50% threshold)
   const isLoaded = loadedFrames >= frameCount * 0.5;
 
-  // Use framer-motion useScroll to track the element
-  const { scrollYProgress } = useScroll({
+  // Use framer-motion useScroll to track the element ONLY if external progress isn't provided
+  const { scrollYProgress: internalScrollProgress } = useScroll({
     target: scrollTarget || containerRef,
     // Start tracking when top of element hits top of viewport (scroll = 0 for hero)
     // End tracking when bottom of element hits bottom of viewport (for tall sticky containers)
     offset: ["start start", "end end"],
   });
 
+  const activeScrollProgress = externalScrollProgress || internalScrollProgress;
+
   // Map scroll progress (0 to 1) to frame index (1 to frameCount)
-  const frameIndex = useTransform(scrollYProgress, [0, 1], [1, frameCount]);
+  const frameIndex = useTransform(activeScrollProgress, [0, 1], [1, frameCount]);
 
   useMotionValueEvent(frameIndex, "change", (latest) => {
     if (!prefersReducedMotion && isLoaded) {
