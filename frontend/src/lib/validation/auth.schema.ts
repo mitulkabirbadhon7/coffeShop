@@ -8,7 +8,7 @@ export const loginSchema = z.object({
     .max(255, { message: "Email address exceeds maximum length of 255 characters." }),
   password: z
     .string()
-    .min(10, { message: "Password must be at least 10 characters long." })
+    .min(6, { message: "Password must be at least 6 characters long." })
     .max(72, { message: "Password exceeds maximum length of 72 characters." }),
 });
 
@@ -25,10 +25,12 @@ export const signupSchema = z.object({
     .max(255, { message: "Email address exceeds maximum length of 255 characters." }),
   password: z
     .string()
-    .min(10, { message: "Password must be at least 10 characters long." })
-    .max(72, { message: "Password exceeds maximum length of 72 characters." })
-    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter." })
-    .regex(/[0-9]/, { message: "Password must contain at least one number." }),
+    .min(6, { message: "Password must be at least 6 characters long." })
+    .max(72, { message: "Password exceeds maximum length of 72 characters." }),
+  termsAccepted: z.boolean().refine(val => val === true, {
+    message: "You must accept the terms and conditions."
+  }),
+  marketingAccepted: z.boolean().optional(),
 });
 
 export const resetPasswordSchema = z.object({
@@ -43,10 +45,8 @@ export const updatePasswordSchema = z
   .object({
     password: z
       .string()
-      .min(10, { message: "Password must be at least 10 characters long." })
-      .max(72, { message: "Password exceeds maximum length of 72 characters." })
-      .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter." })
-      .regex(/[0-9]/, { message: "Password must contain at least one number." }),
+      .min(6, { message: "Password must be at least 6 characters long." })
+      .max(72, { message: "Password exceeds maximum length of 72 characters." }),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {

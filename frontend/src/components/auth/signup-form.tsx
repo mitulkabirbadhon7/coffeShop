@@ -6,7 +6,7 @@ import { signUpAction } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GoogleAuthButton } from "./google-auth-button";
-import { AlertCircle, CheckCircle2, Mail } from "lucide-react";
+import { AlertCircle, CheckCircle2, Mail, Eye, EyeOff } from "lucide-react";
 
 export function SignupForm() {
   const [name, setName] = React.useState("");
@@ -18,6 +18,9 @@ export function SignupForm() {
     message: string;
   } | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [termsAccepted, setTermsAccepted] = React.useState(false);
+  const [marketingAccepted, setMarketingAccepted] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +28,13 @@ export function SignupForm() {
     setIsLoading(true);
 
     try {
-      const result = await signUpAction({ name, email, password });
+      const result = await signUpAction({ 
+        name, 
+        email, 
+        password,
+        termsAccepted,
+        marketingAccepted
+      });
       if (result.error) {
         setErrorMessage(result.error);
       } else if (result.success) {
@@ -105,16 +114,52 @@ export function SignupForm() {
 
         <div className="space-y-1.5">
           <label className="text-xs uppercase tracking-wider text-[#F5E6D3]/75 font-medium">
-            Password (min. 10 chars, 1 uppercase, 1 number)
+            Password (min. 6 characters)
           </label>
-          <Input
-            type="password"
-            placeholder="••••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            autoComplete="new-password"
-          />
+          <div className="relative">
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="••••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="new-password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#F5E6D3]/50 hover:text-[#C89B5E] transition-colors"
+            >
+              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-3 pt-2">
+          <label className="flex items-start gap-3">
+            <input 
+              type="checkbox" 
+              required
+              checked={termsAccepted}
+              onChange={(e) => setTermsAccepted(e.target.checked)}
+              className="mt-1 w-4 h-4 rounded border-[#C89B5E]/30 bg-[#1A1613] text-[#C89B5E] focus:ring-[#C89B5E] focus:ring-offset-[#2C221E]" 
+            />
+            <span className="text-xs text-[#F5E6D3]/70 font-sans leading-relaxed">
+              I accept the <Link href="/terms" className="text-[#C89B5E] hover:underline">Terms & Conditions</Link> and <Link href="/privacy" className="text-[#C89B5E] hover:underline">Privacy Policy</Link>.
+            </span>
+          </label>
+          
+          <label className="flex items-start gap-3">
+            <input 
+              type="checkbox" 
+              checked={marketingAccepted}
+              onChange={(e) => setMarketingAccepted(e.target.checked)}
+              className="mt-1 w-4 h-4 rounded border-[#C89B5E]/30 bg-[#1A1613] text-[#C89B5E] focus:ring-[#C89B5E] focus:ring-offset-[#2C221E]" 
+            />
+            <span className="text-xs text-[#F5E6D3]/70 font-sans leading-relaxed">
+              I would like to receive order updates and promotional offers via email or SMS.
+            </span>
+          </label>
         </div>
 
         <Button
@@ -135,13 +180,6 @@ export function SignupForm() {
       </div>
 
       <GoogleAuthButton mode="signup" />
-
-      <div className="pt-2 text-center text-xs text-[#F5E6D3]/70 border-t border-[#C89B5E]/15 font-sans">
-        <span>Already have an account? </span>
-        <Link href="/login" className="text-[#C89B5E] font-medium hover:underline">
-          Sign In
-        </Link>
-      </div>
     </div>
   );
 }
