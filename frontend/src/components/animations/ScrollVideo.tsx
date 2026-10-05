@@ -1,9 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useScroll, useTransform, useSpring } from "framer-motion";
-import { useReducedMotion } from "framer-motion";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 interface ScrollVideoProps {
   srcWebm?: string;
@@ -17,119 +14,77 @@ export function ScrollVideo({
   srcWebm,
   srcMp4,
   poster,
-  className = "h-[300vh]", // Default to a tall container for scrolling
+  className = "h-[300vh]",
   children,
 }: ScrollVideoProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [duration, setDuration] = useState(0);
-  const prefersReducedMotion = useReducedMotion();
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  // Finish the video scrub at 85% of the scroll container,
-  // so the last frame stays visible before it scrolls away.
-  const rawProgress = useTransform(scrollYProgress, [0, 0.85], [0, 1]);
-  const scrubProgress = useSpring(rawProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
 
   useEffect(() => {
-    if (!videoRef.current || prefersReducedMotion) return;
-
     const video = videoRef.current;
+    const container = containerRef.current;
+    if (!video || !container) return;
 
-    const onLoadedMetadata = () => {
-      setDuration(video.duration);
-    };
+    let rafId: number;
+    let currentLerpTime = 0;
 
-    video.addEventListener("loadedmetadata", onLoadedMetadata);
-    // In case it's already loaded
-    if (video.readyState >= 1) {
-      setDuration(video.duration);
-    }
+    // Force load the video metadata so we have the duration
+    video.load();
 
-    return () => {
-      video.removeEventListener("loadedmetadata", onLoadedMetadata);
-    };
-  }, [prefersReducedMotion]);
+    const loop = () => {
+      if (video.duration) {
+        const rect = container.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Total scroll distance available inside this container
+        const scrollDistance = rect.height - windowHeight;
+        
+        // rect.top goes from 0 (start) to negative scrollDistance (end)
+        let progress = -rect.top / scrollDistance;
+        
+        // Clamp between 0 and 1
+        progress = Math.max(0, Math.min(1, progress));
+        
+        // Map [0, 0.9] -> [0, 1] so it finishes slightly before the container unpins
+        progress = Math.min(progress / 0.9, 1.0);
+        
+        const targetTime = progress * video.duration;
 
-  useEffect(() => {
-    if (prefersReducedMotion || duration === 0 || !videoRef.current) return;
+        // Linear interpolation (LERP) for buttery smoothness
+        currentLerpTime += (targetTime - currentLerpTime) * 0.1;
 
-    const video = videoRef.current;
-    let targetTime = 0;
-    let isSeeking = false;
-
-    // Bulletproof MP4 scrub logic:
-    // We only trigger a new seek if the video is NOT currently seeking.
-    // When a seek finishes, we check if the target has moved further and seek again.
-    const onSeeked = () => {
-      isSeeking = false;
-      // If targetTime has drifted away from where we just seeked, trigger another seek immediately
-      if (Math.abs(video.currentTime - targetTime) > 0.05) {
-        isSeeking = true;
-        video.currentTime = targetTime;
+        // Apply to video if difference is significant enough to warrant a decoder seek
+        if (Math.abs(video.currentTime - currentLerpTime) > 0.03) {
+          video.currentTime = currentLerpTime;
+        }
       }
-    };
-
-    video.addEventListener("seeked", onSeeked);
-
-    const unsubscribe = scrubProgress.on("change", (latest) => {
-      targetTime = latest * duration;
       
-      // If we aren't currently waiting for a seek to finish, start one
-      if (!isSeeking && Math.abs(video.currentTime - targetTime) > 0.05) {
-        isSeeking = true;
-        video.currentTime = targetTime;
-      }
-    });
-
-    return () => {
-      video.removeEventListener("seeked", onSeeked);
-      unsubscribe();
+      rafId = requestAnimationFrame(loop);
     };
-  }, [scrubProgress, duration, prefersReducedMotion]);
+
+    rafId = requestAnimationFrame(loop);
+
+    return () => cancelAnimationFrame(rafId);
+  }, []);
 
   return (
     <div ref={containerRef} className={`relative w-full ${className}`}>
       {/* Sticky Container */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden will-change-transform z-0">
-        {prefersReducedMotion ? (
-          <Image
-            src={poster}
-            alt=""
-            fill
-            className="object-cover"
-            aria-hidden="true"
-            role="presentation"
-          />
-        ) : (
-          <video
-            ref={videoRef}
-            className="w-full h-full object-cover"
-            poster={poster}
-            preload="auto"
-            muted
-            playsInline
-            aria-hidden="true"
-            role="presentation"
-          >
-            {srcWebm && <source src={srcWebm} type="video/webm" />}
-            {srcMp4 && <source src={srcMp4} type="video/mp4" />}
-          </video>
-        )}
+      <div className="sticky top-0 h-screen w-full overflow-hidden z-0">
+        <video
+          ref={videoRef}
+          className="w-full h-full object-cover"
+          poster={poster}
+          preload="auto"
+          muted
+          playsInline
+        >
+          {srcWebm && <source src={srcWebm} type="video/webm" />}
+          {srcMp4 && <source src={srcMp4} type="video/mp4" />}
+        </video>
         
         {/* Cinematic Dark Overlay */}
-        <div
-          className="absolute inset-0 backdrop-blur-[1px] bg-gradient-to-r from-[#1A1613]/95 via-[#1A1613]/85 to-[#1A1613]/60"
-          aria-hidden="true"
-        />
+        <div className="absolute inset-0 bg-black/40" />
 
         {/* Sticky Foreground Content */}
         <div className="absolute inset-0 z-10 pointer-events-none">
