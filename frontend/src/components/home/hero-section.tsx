@@ -101,6 +101,7 @@ export async function HeroSection() {
                 Pickup Daily (8 AM – 10 PM)
               </p>
             </div>
+          </div>
         </div>
     </HeroSectionWrapper>
   );
