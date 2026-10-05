@@ -2,10 +2,10 @@ import * as React from "react";
 import Link from "next/link";
 import { Coffee, ArrowRight, Sparkles, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { FrameSequence } from "@/components/animations/FrameSequence";
 import { SteamSwirl } from "@/components/motion/steam-swirl";
 import { AmbientAroma } from "@/components/motion/ambient-aroma";
 import { getPublishedContent } from "@/lib/data/content.data";
+import { HeroSectionWrapper } from "./hero-section-wrapper";
 
 export async function HeroSection() {
   const dynamicContent = await getPublishedContent("hero_section");
@@ -25,18 +25,7 @@ export async function HeroSection() {
     (dynamicContent?.secondary_cta_link as string) || "/about";
 
   return (
-    <div className="relative min-h-screen flex items-center bg-[#1A1613] overflow-hidden">
-      <FrameSequence
-        folder="coffee-pour"
-        frameCount={120}
-        poster="/posters/coffee-pour.jpg"
-        className="absolute inset-0 w-full h-full z-0"
-      />
-      
-      {/* Cinematic Dark Overlay */}
-      <div className="absolute inset-0 backdrop-blur-[1px] bg-gradient-to-r from-[#1A1613]/95 via-[#1A1613]/85 to-[#1A1613]/60 z-0" />
-      
-      <div className="relative z-10 w-full">
+    <HeroSectionWrapper>
         {/* Ambient Roast Aroma Particles */}
         <AmbientAroma count={10} />
 
@@ -195,8 +184,6 @@ export async function HeroSection() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    </div>
+    </HeroSectionWrapper>
   );
 }

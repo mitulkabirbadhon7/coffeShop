@@ -9,6 +9,7 @@ interface FrameSequenceProps {
   frameCount: number;
   poster: string;
   className?: string;
+  scrollTarget?: React.RefObject<HTMLElement>;
 }
 
 export function FrameSequence({
@@ -16,6 +17,7 @@ export function FrameSequence({
   frameCount,
   poster,
   className = "",
+  scrollTarget,
 }: FrameSequenceProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loadedFrames, setLoadedFrames] = useState(0);
@@ -28,10 +30,10 @@ export function FrameSequence({
 
   // Use framer-motion useScroll to track the element
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: scrollTarget || containerRef,
     // Start tracking when top of element hits top of viewport (scroll = 0 for hero)
-    // End tracking when bottom of element hits top of viewport (element completely scrolled out)
-    offset: ["start start", "end start"],
+    // End tracking when bottom of element hits bottom of viewport (for tall sticky containers)
+    offset: ["start start", "end end"],
   });
 
   // Map scroll progress (0 to 1) to frame index (1 to frameCount)
