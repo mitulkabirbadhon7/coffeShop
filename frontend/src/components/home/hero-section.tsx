@@ -27,11 +27,9 @@ export async function HeroSection() {
     <HeroSectionWrapper>
       {/* Ambient Roast Aroma Particles */}
       <AmbientAroma count={10} />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full h-screen flex flex-col justify-center items-end">
         
-        {/* Right-Aligned Hero Content */}
-        <div className="max-w-xl space-y-8 text-left">
+      {/* Content Block */}
+      <div className="space-y-8 text-left w-full">
           
           {/* Roastery Badge */}
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-[#D4A373]/40 bg-[#2C221E]/70 backdrop-blur-md text-[#D4A373] text-xs font-medium tracking-[0.15em] uppercase">
@@ -103,10 +101,7 @@ export async function HeroSection() {
                 Pickup Daily (8 AM – 10 PM)
               </p>
             </div>
-          </div>
         </div>
-
-      </div>
     </HeroSectionWrapper>
   );
 }
