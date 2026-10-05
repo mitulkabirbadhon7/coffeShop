@@ -57,40 +57,17 @@ export function ScrollVideo({
   useEffect(() => {
     if (prefersReducedMotion || duration === 0 || !videoRef.current) return;
 
-    let rafId: number;
-    let targetTime = 0;
-    let isSeeking = false;
-
     const video = videoRef.current;
 
-    const onSeeked = () => {
-      isSeeking = false;
-    };
-    video.addEventListener("seeked", onSeeked);
-
-    const updateVideoTime = () => {
-      if (video && !isSeeking) {
-        // Only trigger a new seek if the target changed enough to matter
-        // and we aren't currently waiting for a seek to finish.
-        if (Math.abs(video.currentTime - targetTime) > 0.03) {
-          isSeeking = true;
-          // Clamp to duration just in case
-          video.currentTime = Math.min(targetTime, duration - 0.01);
-        }
-      }
-      rafId = requestAnimationFrame(updateVideoTime);
-    };
-
-    rafId = requestAnimationFrame(updateVideoTime);
-
     const unsubscribe = scrubProgress.on("change", (latest) => {
-      targetTime = latest * duration;
+      if (video) {
+        // Simple direct assignment. Modern browsers handle this well with Lenis.
+        video.currentTime = latest * duration;
+      }
     });
 
     return () => {
-      cancelAnimationFrame(rafId);
       unsubscribe();
-      video.removeEventListener("seeked", onSeeked);
     };
   }, [scrubProgress, duration, prefersReducedMotion]);
 
