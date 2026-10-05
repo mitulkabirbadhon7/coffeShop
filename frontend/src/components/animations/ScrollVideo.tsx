@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useScroll, useTransform } from "framer-motion";
+import { useScroll, useTransform, useSpring } from "framer-motion";
 import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
@@ -32,7 +32,12 @@ export function ScrollVideo({
 
   // Finish the video scrub at 85% of the scroll container,
   // so the last frame stays visible before it scrolls away.
-  const scrubProgress = useTransform(scrollYProgress, [0, 0.85], [0, 1]);
+  const rawProgress = useTransform(scrollYProgress, [0, 0.85], [0, 1]);
+  const scrubProgress = useSpring(rawProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   useEffect(() => {
     if (!videoRef.current || prefersReducedMotion) return;
@@ -58,15 +63,27 @@ export function ScrollVideo({
     if (prefersReducedMotion || duration === 0 || !videoRef.current) return;
 
     const video = videoRef.current;
+    let rafId: number;
+    let targetTime = 0;
+
+    const updateTime = () => {
+      if (video) {
+        // Only set if diff is significant to prevent decoder thrashing on micro-updates
+        if (Math.abs(video.currentTime - targetTime) > 0.01) {
+          video.currentTime = targetTime;
+        }
+      }
+      rafId = requestAnimationFrame(updateTime);
+    };
+    
+    rafId = requestAnimationFrame(updateTime);
 
     const unsubscribe = scrubProgress.on("change", (latest) => {
-      if (video) {
-        // Simple direct assignment. Modern browsers handle this well with Lenis.
-        video.currentTime = latest * duration;
-      }
+      targetTime = latest * duration;
     });
 
     return () => {
+      cancelAnimationFrame(rafId);
       unsubscribe();
     };
   }, [scrubProgress, duration, prefersReducedMotion]);
