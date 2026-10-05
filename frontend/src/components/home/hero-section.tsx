@@ -2,7 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 import { Coffee, ArrowRight, Sparkles, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ScrollVideo } from "@/components/animations/ScrollVideo";
+import { FrameSequence } from "@/components/animations/FrameSequence";
 import { SteamSwirl } from "@/components/motion/steam-swirl";
 import { AmbientAroma } from "@/components/motion/ambient-aroma";
 import { getPublishedContent } from "@/lib/data/content.data";
@@ -25,16 +25,23 @@ export async function HeroSection() {
     (dynamicContent?.secondary_cta_link as string) || "/about";
 
   return (
-    <ScrollVideo
-      srcMp4="/videos/CoffePour.mp4"
-      poster="/images/hero-poster.jpg"
-    >
-      <div className="relative min-h-screen flex items-center">
+    <div className="relative min-h-screen flex items-center bg-[#1A1613] overflow-hidden">
+      <FrameSequence
+        folder="coffee-pour"
+        frameCount={120}
+        poster="/posters/coffee-pour.jpg"
+        className="absolute inset-0 w-full h-full z-0"
+      />
+      
+      {/* Cinematic Dark Overlay */}
+      <div className="absolute inset-0 backdrop-blur-[1px] bg-gradient-to-r from-[#1A1613]/95 via-[#1A1613]/85 to-[#1A1613]/60 z-0" />
+      
+      <div className="relative z-10 w-full">
         {/* Ambient Roast Aroma Particles */}
         <AmbientAroma count={10} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full relative z-20">
-        {/* Editorial Asymmetric Grid (7/5 split) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full">
+          {/* Editorial Asymmetric Grid (7/5 split) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Editorial Headline & Narrative (7 cols) */}
           <div className="lg:col-span-7 space-y-8 text-left">
@@ -189,7 +196,7 @@ export async function HeroSection() {
           </div>
         </div>
       </div>
-      </div>
-    </ScrollVideo>
+    </div>
+    </div>
   );
 }

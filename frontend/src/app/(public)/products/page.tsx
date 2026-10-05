@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getCategories, getProducts } from "@/lib/data/products.data";
 import { ProductCatalog } from "@/components/products/product-catalog";
 import { Coffee, MapPin, Clock } from "lucide-react";
-import { ScrollVideo } from "@/components/animations/ScrollVideo";
+import { FrameSequence } from "@/components/animations/FrameSequence";
 
 export const metadata: Metadata = {
   title: "Artisanal Roasts & Menu | Chocobliss Coffee Roastery",
@@ -24,12 +24,19 @@ export default async function ProductsPage() {
   return (
     <main>
       {/* Cinematic Scroll Video Hero */}
-      <ScrollVideo
-        srcMp4="/videos/Ingredients.mp4"
-        poster="/images/hero-poster.jpg"
-      >
-        <div className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto w-full pt-20">
+      <div className="relative min-h-[60vh] flex items-center bg-[#1A1613] overflow-hidden">
+        <FrameSequence
+          folder="ingredients"
+          frameCount={120}
+          poster="/posters/ingredients.jpg"
+          className="absolute inset-0 w-full h-full z-0"
+        />
+        
+        {/* Cinematic Dark Overlay */}
+        <div className="absolute inset-0 backdrop-blur-[1px] bg-gradient-to-r from-[#1A1613]/95 via-[#1A1613]/85 to-[#1A1613]/60 z-0" />
+
+        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 py-20">
+          <div className="max-w-7xl mx-auto w-full">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-[#FDFBF7]/20">
               <div className="space-y-4 max-w-2xl text-left">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2C221E]/70 backdrop-blur-md border border-[#D4A373]/40 text-[#D4A373] text-xs font-medium tracking-widest uppercase">
@@ -61,7 +68,7 @@ export default async function ProductsPage() {
             </div>
           </div>
         </div>
-      </ScrollVideo>
+      </div>
 
       <div className="bg-[#FDFBF7] py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-12">
