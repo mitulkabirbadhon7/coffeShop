@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getCategories, getProducts } from "@/lib/data/products.data";
 import { ProductCatalog } from "@/components/products/product-catalog";
 import { Coffee, MapPin, Clock } from "lucide-react";
@@ -26,7 +27,13 @@ export default async function ProductsPage() {
         <div className="relative w-full px-4 sm:px-6 lg:px-8 py-20 min-h-[50vh] flex flex-col justify-center items-center bg-[#1A1613]">
           
           <div className="absolute inset-0 z-0">
-             <img src="/posters/ingredients.jpg" alt="" className="w-full h-full object-cover opacity-50" />
+             <Image 
+               src="/posters/ingredients.jpg" 
+               alt="Ingredients background" 
+               fill 
+               className="object-cover opacity-50"
+               sizes="100vw"
+             />
           </div>
 
           <div className="relative z-10 max-w-4xl w-full text-center">

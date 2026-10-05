@@ -109,21 +109,20 @@ export function FrameSequence({
       className={`relative overflow-hidden will-change-transform ${className}`}
       style={{ aspectRatio: "16/9" }}
     >
-      {(!isLoaded || prefersReducedMotion) ? (
-        <Image
-          src={poster}
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          aria-hidden="true"
-          role="presentation"
-        />
-      ) : (
+      <Image
+        src={poster}
+        alt=""
+        fill
+        className={`object-cover transition-opacity duration-500 ${!isLoaded || prefersReducedMotion ? 'opacity-100' : 'opacity-0'}`}
+        priority
+        aria-hidden="true"
+        role="presentation"
+      />
+      {isLoaded && !prefersReducedMotion && (
         <img
           src={currentImgSrc}
           alt=""
-          className="w-full h-full object-cover transition-opacity duration-500 opacity-100"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 opacity-100"
           aria-hidden="true"
           role="presentation"
         />

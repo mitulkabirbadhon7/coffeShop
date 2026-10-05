@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Mail, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import Image from "next/image";
 import { subscribeNewsletterAction } from "@/lib/newsletter/actions";
 import { Button } from "@/components/ui/button";
 
@@ -43,10 +44,14 @@ export function NewsletterSection() {
   return (
     <section className="relative py-20 px-4 sm:px-6 lg:px-8 text-[#FDFBF7] overflow-hidden">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url("/posters/coffee-pour.jpg")' }}
-      >
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/posters/coffee-pour.jpg"
+          alt="Coffee pour background"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
         <div className="absolute inset-0 bg-[#2C221E]/90 backdrop-blur-sm" />
       </div>
       {/* Subtle Roastery Background Glow Accent */}

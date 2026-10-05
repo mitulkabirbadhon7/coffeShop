@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Coffee } from "lucide-react";
 
 export default function AuthLayout({
@@ -9,10 +10,14 @@ export default function AuthLayout({
   return (
     <div className="relative min-h-screen flex flex-col justify-between py-12 px-4 sm:px-6 lg:px-8">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url("/posters/coffee-pour.jpg")' }}
-      >
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/posters/coffee-pour.jpg"
+          alt="Coffee pour background"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
         <div className="absolute inset-0 bg-[#1A1613]/80 backdrop-blur-sm" />
       </div>
 
