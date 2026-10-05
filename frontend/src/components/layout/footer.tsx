@@ -43,10 +43,10 @@ export function Footer() {
               ))}
               <li>
                 <Link
-                  href="/account"
+                  href="/login"
                   className="text-[#FDFBF7]/75 hover:text-[#D4A373] transition-colors"
                 >
-                  My Account
+                  Login
                 </Link>
               </li>
               <li>

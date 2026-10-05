@@ -29,7 +29,7 @@ export async function HeroSection() {
       <AmbientAroma count={10} />
         
       {/* Content Block */}
-      <div className="space-y-8 text-left w-full">
+      <div className="space-y-4 sm:space-y-6 lg:space-y-6 text-left w-full pb-16 lg:pb-0">
           
           {/* Roastery Badge */}
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-[#D4A373]/40 bg-[#2C221E]/70 backdrop-blur-md text-[#D4A373] text-xs font-medium tracking-[0.15em] uppercase">
@@ -41,11 +41,11 @@ export async function HeroSection() {
             <span>Small-Batch Roastery & Atelier • Dhaka</span>
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold tracking-tight text-[#FDFBF7] leading-[1.15] drop-shadow-lg">
+          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#FDFBF7] leading-[1.15] drop-shadow-lg">
             {title}
           </h1>
 
-          <p className="text-lg sm:text-xl text-[#FDFBF7]/90 font-sans leading-relaxed drop-shadow-md">
+          <p className="text-base sm:text-lg lg:text-xl text-[#FDFBF7]/90 font-sans leading-relaxed drop-shadow-md line-clamp-3 sm:line-clamp-none">
             {subtitle}
           </p>
 
@@ -74,7 +74,7 @@ export async function HeroSection() {
           </div>
 
           {/* Key Roastery Markers */}
-          <div className="pt-8 border-t border-[#5C4A3D]/40 grid grid-cols-2 gap-6 text-[#FDFBF7]/80">
+          <div className="pt-4 lg:pt-6 border-t border-[#5C4A3D]/40 grid grid-cols-2 gap-4 lg:gap-6 text-[#FDFBF7]/80">
             <div className="space-y-1.5">
               <p className="text-[10px] uppercase tracking-[0.15em] text-[#D4A373] font-bold">
                 Origin Quality
