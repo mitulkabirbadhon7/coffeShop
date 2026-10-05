@@ -38,3 +38,16 @@ promt.md
 prompt.md
 *.prompt.md
 
+
+# Local notes & prompts (never committed)
+update.md
+update.md
+*.update.md
+
+
+# Environment
+.env
+.env.local
+.env*.local
+*.env
+!.env.example
