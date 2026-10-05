@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { getCurrentUser } from "@/lib/auth/guards";
+import { createClient } from "@/lib/supabase/server";
 import { User, ShoppingBag, MapPin, Shield } from "lucide-react";
 
 export default async function AccountLayout({
@@ -10,7 +11,18 @@ export default async function AccountLayout({
   children: React.ReactNode;
 }) {
   const user = await getCurrentUser();
-  const isAdmin = user?.role === "ADMIN";
+  let isAdmin = false;
+  
+  if (user) {
+    const supabase = await createClient();
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+    
+    isAdmin = profile?.role === "ADMIN";
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FDFBF7] text-[#2C221E]">
