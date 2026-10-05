@@ -2,7 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 import { Coffee, ArrowRight, Sparkles, Clock, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { VideoBackground } from "@/components/ui/video-background";
+import { ScrollVideo } from "@/components/animations/ScrollVideo";
 import { SteamSwirl } from "@/components/motion/steam-swirl";
 import { AmbientAroma } from "@/components/motion/ambient-aroma";
 import { getPublishedContent } from "@/lib/data/content.data";
@@ -25,14 +25,20 @@ export async function HeroSection() {
     (dynamicContent?.secondary_cta_link as string) || "/about";
 
   return (
-    <VideoBackground
-      src="/videos/CoffePour.mp4"
-      poster="/images/hero-poster.jpg"
-      posterAlt="Artisanal espresso extraction with golden crema at Chocobliss Roastery"
-      overlayClassName="bg-gradient-to-r from-[#1A1613]/95 via-[#1A1613]/85 to-[#1A1613]/60"
-      className="min-h-[88vh] flex items-center relative"
-      priority
-    >
+    <div className="relative min-h-[88vh] flex items-center bg-[#1A1613] overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <ScrollVideo
+          srcWebm="/videos/coffee-pour.webm"
+          srcMp4="/videos/CoffePour.mp4"
+          poster="/images/hero-poster.jpg"
+        />
+        {/* Cinematic Dark Overlay */}
+        <div
+          className="absolute inset-0 backdrop-blur-[1px] bg-gradient-to-r from-[#1A1613]/95 via-[#1A1613]/85 to-[#1A1613]/60"
+          aria-hidden="true"
+        />
+      </div>
+
       {/* Ambient Roast Aroma Particles */}
       <AmbientAroma count={10} />
 
@@ -192,6 +198,6 @@ export async function HeroSection() {
           </div>
         </div>
       </div>
-    </VideoBackground>
+    </div>
   );
 }

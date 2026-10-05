@@ -11,6 +11,8 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@studio-freight/lenis": "^1.0.42",
+    "@studio-freight/react-lenis": "^0.0.47",
     "@supabase/ssr": "0.5.2",
     "@supabase/supabase-js": "2.45.6",
     "@upstash/ratelimit": "2.0.5",
