@@ -184,6 +184,7 @@ export async function HeroSection() {
             </div>
           </div>
         </div>
+      </div>
     </HeroSectionWrapper>
   );
 }
