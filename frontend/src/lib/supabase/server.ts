@@ -6,11 +6,11 @@ import { env } from "@/lib/env";
 export async function createClient() {
   let cookieStore: {
     get: (name: string) => { value: string } | undefined;
-    set: (options: { name: string; value: string } & CookieOptions) => void;
+    set?: (options: { name: string; value: string } & CookieOptions) => void;
   };
 
   try {
-    cookieStore = cookies();
+    cookieStore = await cookies();
   } catch {
     // Graceful fallback for execution outside active Next.js request scope (e.g. test runner)
     const inMemory = new Map<string, string>();
@@ -35,14 +35,14 @@ export async function createClient() {
         },
         set(name: string, value: string, options: CookieOptions) {
           try {
-            cookieStore.set({ name, value, ...options });
+            cookieStore.set?.({ name, value, ...options });
           } catch {
             // Ignored if called from Server Component
           }
         },
         remove(name: string, options: CookieOptions) {
           try {
-            cookieStore.set({ name, value: "", ...options });
+            cookieStore.set?.({ name, value: "", ...options });
           } catch {
             // Ignored if called from Server Component
           }
