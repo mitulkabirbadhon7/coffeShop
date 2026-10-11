@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { CartProvider } from "@/lib/cart/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { env } from "@/lib/env";
 import "./globals.css";
 
@@ -100,10 +101,12 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <CartProvider>
-          {children}
-          <CartDrawer />
-        </CartProvider>
+        <SmoothScroll>
+          <CartProvider>
+            {children}
+            <CartDrawer />
+          </CartProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
