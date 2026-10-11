@@ -92,7 +92,7 @@ export function ContactForm() {
             id="contact-name"
             type="text"
             required
-            placeholder="Enter your name"
+            placeholder="e.g. Maya Chowdhury"
             value={name}
             onChange={(e) => setName(e.target.value)}
             disabled={isSubmitting}
@@ -111,7 +111,7 @@ export function ContactForm() {
             id="contact-email"
             type="email"
             required
-            placeholder="Enter your email address"
+            placeholder="maya@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={isSubmitting}
@@ -132,7 +132,7 @@ export function ContactForm() {
           id="contact-subject"
           type="text"
           required
-          placeholder="Enter subject or inquiry topic"
+          placeholder="e.g. Private Cupping Session or Whole Bean Order"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           disabled={isSubmitting}

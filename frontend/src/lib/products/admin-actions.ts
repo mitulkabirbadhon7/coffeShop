@@ -56,6 +56,7 @@ export async function createProductAction(
       ingredients,
       variants,
       discountPercentage,
+
       isAvailable,
       isFeatured,
     } = parseResult.data;
@@ -89,6 +90,7 @@ export async function createProductAction(
         ingredients,
         variants,
         discount_percentage: discountPercentage,
+
         is_available: isAvailable,
         is_featured: isFeatured,
       })
@@ -152,6 +154,7 @@ export async function updateProductAction(
       ingredients,
       variants,
       discountPercentage,
+
       isAvailable,
       isFeatured,
     } = parseResult.data;
@@ -185,6 +188,7 @@ export async function updateProductAction(
         ingredients,
         variants,
         discount_percentage: discountPercentage,
+
         is_available: isAvailable,
         is_featured: isFeatured,
         updated_at: new Date().toISOString(),

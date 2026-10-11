@@ -138,7 +138,7 @@ These decisions guide every phase. The agent must respect them.
 - **Status:** ✅ Complete
 - **Started:** 2026-10-04
 - **Completed:** 2026-10-04
-- **Commit:** `7702d28`
+- **Commit:** `7702d28` (Merged in origin/main)
 - **Notes:** Interactive ProductCatalog with real-time category tabs, search input, sort selector, in-stock toggle, and live item counter; ProductDetailPage with JSON-LD (schema.org/Product), dynamic SEO metadata, breadcrumbs, tasting notes, ProductDetailActions quantity picker with cup-fill hover, Dhaka pickup guidelines, and related product recommendations; strict soft-deletion defense in data layer; 79/79 tests green across 11 suites; Next.js production build 17/17 routes passing cleanly.
 
 ### Phase 6 — About & Contact
@@ -201,7 +201,7 @@ These decisions guide every phase. The agent must respect them.
 - **Status:** ✅ Complete
 - **Started:** 2026-10-05
 - **Completed:** 2026-10-05
-- **Commit:** `e89b866`
+- **Commit:** `e89b866` (Merged in origin/main)
 - **Notes:** Image and media optimization configured in `next.config.mjs` (modern AVIF & WebP formats, remotePatterns for Supabase Storage, device & image sizes); lazy below-fold video loading with IntersectionObserver, zero CLS aspect ratio containers, and LCP static poster prioritization; WCAG 2.2 AA accessibility landmarks with skip-to-content link, main content landmark, ARIA attributes on navigation elements, and keyboard Escape dismissibility; complete SEO metadataBase configuration with Open Graph and Twitter cards; dynamic `robots.ts` disallowing admin/account/api routes; dynamic `sitemap.ts` indexing static marketing pages and all live product offerings; Schema.org JSON-LD structured data (`CoffeeShop`, `Product`, `BreadcrumbList`); 12 new automated test assertions (210/210 total vitest tests passing across 28 suites); Next.js production build 25/25 static & dynamic routes compiled with zero lint warnings.
 
 ### Phase 15 — Production Release
@@ -224,7 +224,6 @@ These decisions guide every phase. The agent must respect them.
 - **Completed:** 2026-10-11
 - **Commit:** `chore(deploy): configure production monitoring and runbook`
 - **Notes:** Configured Sentry error monitoring (`@sentry/nextjs`) across client, server, and edge runtimes (`sentry.client.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`); privacy data scrubber (`sentry-scrubber.ts`) completely redacting emails, tokens, passwords, and request bodies; post-deploy smoke test suite (`tests/e2e/smoke.test.ts`) verifying baseline security headers, unauthenticated admin rejection, and `/api/health` status; 247/247 automated vitest tests passing across 32 test suites; production operations runbook added to `README.md` covering deploy, instant rollback, key rotation, admin recovery, backup restore, and atomic migration handling; Next.js 14.2.15 production build compiling 26/26 routes cleanly with zero lint warnings and zero typecheck errors.
-
 
 
 ---

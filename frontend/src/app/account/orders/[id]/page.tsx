@@ -19,13 +19,12 @@ export const metadata: Metadata = {
 };
 
 interface OrderDetailPageProps {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
 }
 
 export default async function OrderDetailPage({ params }: OrderDetailPageProps) {
-  const { id } = await params;
   const user = await requireUser();
   const supabase = await createClient();
 
@@ -33,7 +32,7 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
   const { data: order, error: orderError } = await supabase
     .from("orders")
     .select("id, status, currency, subtotal_minor, total_minor, notes, created_at")
-    .eq("id", id)
+    .eq("id", params.id)
     .eq("user_id", user.id)
     .single();
 

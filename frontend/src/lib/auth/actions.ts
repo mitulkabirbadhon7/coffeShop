@@ -27,18 +27,16 @@ export interface AuthActionResult {
 async function getClientIdentifier(fallback: string): Promise<string> {
   try {
     const { headers } = await import("next/headers");
-    const requestHeaders = await headers();
-    const ip = getClientIp(requestHeaders);
+    const ip = getClientIp(headers());
     return `${ip}:${fallback}`;
   } catch {
     return `127.0.0.1:${fallback}`;
   }
 }
 
-async function getRequestOrigin(): Promise<string> {
+function getRequestOrigin(): string {
   try {
-    const requestHeaders = await headers();
-    return requestHeaders.get("origin") || env.NEXT_PUBLIC_SITE_URL;
+    return headers().get("origin") || env.NEXT_PUBLIC_SITE_URL;
   } catch {
     return env.NEXT_PUBLIC_SITE_URL;
   }
@@ -108,7 +106,7 @@ export async function signUpAction(
   }
 
   const supabase = await createClient();
-  const origin = await getRequestOrigin();
+  const origin = getRequestOrigin();
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -170,7 +168,7 @@ export async function resetPasswordAction(
   }
 
   const supabase = await createClient();
-  const origin = await getRequestOrigin();
+  const origin = getRequestOrigin();
 
   await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${origin}/api/auth/callback?next=/update-password`,

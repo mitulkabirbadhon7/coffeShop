@@ -39,8 +39,7 @@ export async function subscribeNewsletterAction(
   let clientIp = "127.0.0.1";
   try {
     const { headers } = await import("next/headers");
-    const requestHeaders = await headers();
-    clientIp = getClientIp(requestHeaders);
+    clientIp = getClientIp(headers());
   } catch {
     // Test environment fallback
   }

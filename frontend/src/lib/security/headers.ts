@@ -3,7 +3,7 @@
  * Satisfies requirements S4, S7, S10 in docs/SECURITY.md
  */
 
-export function getContentSecurityPolicy(isDev: boolean = false, nonce: string = ""): string {
+export function getContentSecurityPolicy(isDev: boolean = false): string {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://sslwbhdcmscsifrwxifa.supabase.co";
   let supabaseDomain = "";
   try {
@@ -16,18 +16,15 @@ export function getContentSecurityPolicy(isDev: boolean = false, nonce: string =
     "default-src": ["'self'"],
     "script-src": [
       "'self'",
-      nonce ? `'nonce-${nonce}'` : "",
-      "'strict-dynamic'",
-      isDev ? "'unsafe-inline'" : "", // Required for Next.js inline bootstrap scripts in dev
-      isDev ? "'unsafe-eval'" : "", // Required for development and certain Framer Motion / Lottie runtime routines
+      "'unsafe-inline'", // Required for Next.js inline bootstrap scripts
+      "'unsafe-eval'", // Required for development and certain Framer Motion / Lottie runtime routines
       "https://challenges.cloudflare.com", // Cloudflare Turnstile widget
-    ].filter(Boolean),
+    ],
     "style-src": [
       "'self'",
-      nonce ? `'nonce-${nonce}'` : "",
       "'unsafe-inline'", // Next.js inline CSS and Tailwind style injection
       "https://fonts.googleapis.com",
-    ].filter(Boolean),
+    ],
     "font-src": [
       "'self'",
       "https://fonts.gstatic.com",
@@ -95,14 +92,13 @@ export const BASE_SECURITY_HEADERS: Record<string, string> = {
  */
 export function applySecurityHeaders<T extends { headers: Headers }>(
   response: T,
-  isDev: boolean = false,
-  nonce: string = ""
+  isDev: boolean = false
 ): T {
   for (const [key, value] of Object.entries(BASE_SECURITY_HEADERS)) {
     response.headers.set(key, value);
   }
 
-  const csp = getContentSecurityPolicy(isDev, nonce);
+  const csp = getContentSecurityPolicy(isDev);
   response.headers.set("Content-Security-Policy", csp);
 
   return response;

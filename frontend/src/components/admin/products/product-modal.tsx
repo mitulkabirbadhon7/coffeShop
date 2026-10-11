@@ -38,6 +38,7 @@ export function ProductModal({
   const [variants, setVariants] = React.useState<string[]>([]);
   const [newVariant, setNewVariant] = React.useState<string>("");
   const [discountPercentage, setDiscountPercentage] = React.useState<string>("0");
+
   const [isAvailable, setIsAvailable] = React.useState<boolean>(true);
   const [isFeatured, setIsFeatured] = React.useState<boolean>(false);
 
@@ -57,6 +58,7 @@ export function ProductModal({
       setIngredients(productToEdit.ingredients || []);
       setVariants(productToEdit.variants || []);
       setDiscountPercentage((productToEdit.discount_percentage || 0).toString());
+
       setIsAvailable(productToEdit.is_available);
       setIsFeatured(productToEdit.is_featured);
     } else {
@@ -69,6 +71,7 @@ export function ProductModal({
       setIngredients([]);
       setVariants([]);
       setDiscountPercentage("0");
+
       setIsAvailable(true);
       setIsFeatured(false);
     }
@@ -155,6 +158,7 @@ export function ProductModal({
         ingredients,
         variants,
         discountPercentage: parseInt(discountPercentage) || 0,
+
         isAvailable,
         isFeatured,
       });
@@ -176,6 +180,7 @@ export function ProductModal({
         ingredients,
         variants,
         discountPercentage: parseInt(discountPercentage) || 0,
+
         isAvailable,
         isFeatured,
       });
@@ -294,6 +299,7 @@ export function ProductModal({
 
             {/* Price & Discount */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
               <div>
                 <label className="block text-[#D4A373] font-medium mb-1">
                   Pickup Price (BDT Taka) *
@@ -308,7 +314,6 @@ export function ProductModal({
                   className="w-full px-3 py-2 rounded-lg bg-[#231B18] border border-[#5C4A3D]/50 text-[#F5E6D3] focus:outline-none focus:border-[#D4A373]"
                 />
               </div>
-
               <div>
                 <label className="block text-[#D4A373] font-medium mb-1">
                   Discount (%)
@@ -322,6 +327,7 @@ export function ProductModal({
                   className="w-full px-3 py-2 rounded-lg bg-[#231B18] border border-[#5C4A3D]/50 text-[#F5E6D3] focus:outline-none focus:border-[#D4A373]"
                 />
               </div>
+
             </div>
 
             {/* Description */}

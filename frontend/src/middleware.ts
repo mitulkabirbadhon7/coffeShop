@@ -7,10 +7,6 @@ import { checkRateLimit, getClientIp } from "@/lib/security/rate-limit";
 export async function middleware(request: NextRequest) {
   const isDev = process.env.NODE_ENV !== "production";
   const path = request.nextUrl.pathname;
-  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
-  
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-nonce", nonce);
 
   // Rate limit public API endpoints
   if (path.startsWith("/api/")) {
@@ -23,14 +19,12 @@ export async function middleware(request: NextRequest) {
         { status: 429 }
       );
       rateLimitResponse.headers.set("Retry-After", String(retrySecs));
-      return applySecurityHeaders(rateLimitResponse, isDev, nonce);
+      return applySecurityHeaders(rateLimitResponse, isDev);
     }
   }
 
   let supabaseResponse = NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
+    request,
   });
 
   const supabase = createServerClient(
@@ -46,9 +40,7 @@ export async function middleware(request: NextRequest) {
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
-            request: {
-              headers: requestHeaders,
-            },
+            request,
           });
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
@@ -69,7 +61,7 @@ export async function middleware(request: NextRequest) {
     loginUrl.pathname = "/login";
     loginUrl.searchParams.set("returnUrl", path);
     const redirectResponse = NextResponse.redirect(loginUrl);
-    return applySecurityHeaders(redirectResponse, isDev, nonce);
+    return applySecurityHeaders(redirectResponse, isDev);
   }
 
   // Redirect already logged-in users away from auth pages
@@ -77,10 +69,10 @@ export async function middleware(request: NextRequest) {
     const accountUrl = request.nextUrl.clone();
     accountUrl.pathname = "/account";
     const redirectResponse = NextResponse.redirect(accountUrl);
-    return applySecurityHeaders(redirectResponse, isDev, nonce);
+    return applySecurityHeaders(redirectResponse, isDev);
   }
 
-  return applySecurityHeaders(supabaseResponse, isDev, nonce);
+  return applySecurityHeaders(supabaseResponse, isDev);
 }
 
 export const config = {
