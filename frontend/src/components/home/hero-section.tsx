@@ -29,33 +29,33 @@ export async function HeroSection() {
       <AmbientAroma count={10} />
         
       {/* Content Block */}
-      <div className="space-y-4 sm:space-y-6 lg:space-y-6 text-left w-full pb-16 lg:pb-0">
+      <div className="space-y-3 sm:space-y-5 lg:space-y-6 text-left w-full pb-4 lg:pb-0">
           
         {/* Roastery Badge */}
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-[#D4A373]/40 bg-[#2C221E]/70 backdrop-blur-md text-[#D4A373] text-xs font-medium tracking-[0.15em] uppercase">
+        <div className="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full border border-[#D4A373]/40 bg-[#2C221E]/70 backdrop-blur-md text-[#D4A373] text-[11px] sm:text-xs font-medium tracking-[0.15em] uppercase">
           <span className="relative flex h-2 w-2">
             <span className="animate-open-ping absolute inline-flex h-full w-full rounded-full bg-[#4ADE80] opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4ADE80]" />
           </span>
-          <Coffee className="w-3.5 h-3.5 text-[#D4A373]" />
+          <Coffee className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#D4A373]" />
           <span>Small-Batch Roastery & Atelier • Dhaka</span>
         </div>
 
-        <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#FDFBF7] leading-[1.15] drop-shadow-lg">
+        <h1 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#FDFBF7] leading-[1.15] drop-shadow-lg">
           {title}
         </h1>
 
-        <p className="text-base sm:text-lg lg:text-xl text-[#FDFBF7]/90 font-sans leading-relaxed drop-shadow-md line-clamp-3 sm:line-clamp-none">
+        <p className="text-xs sm:text-base lg:text-xl text-[#FDFBF7]/90 font-sans leading-relaxed drop-shadow-md line-clamp-2 sm:line-clamp-none">
           {subtitle}
         </p>
 
         {/* CTAs */}
-        <div className="flex flex-wrap items-center gap-4 pt-4">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1 sm:pt-3">
           <Link href={ctaLink}>
             <Button
               variant="primary"
               size="lg"
-              className="btn-cup-fill bg-[#D4A373] text-[#1A1613] hover:text-[#1A1613] font-medium tracking-wide border-0 shadow-xl inline-flex items-center gap-2 rounded-md h-14 px-8 transition-transform hover:-translate-y-0.5 active:translate-y-0"
+              className="btn-cup-fill bg-[#D4A373] text-[#1A1613] hover:text-[#1A1613] font-medium tracking-wide border-0 shadow-xl inline-flex items-center gap-2 rounded-md h-11 sm:h-14 px-5 sm:px-8 text-xs sm:text-base transition-transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <span>{ctaText}</span>
               <ArrowRight className="w-4 h-4" />
@@ -66,7 +66,7 @@ export async function HeroSection() {
             <Button
               variant="secondary"
               size="lg"
-              className="bg-transparent text-[#FDFBF7] hover:bg-[#3A2D26] border-2 border-[#5C4A3D] font-medium tracking-wide rounded-md h-14 px-8 transition-transform hover:-translate-y-0.5 active:translate-y-0"
+              className="bg-transparent text-[#FDFBF7] hover:bg-[#3A2D26] border-2 border-[#5C4A3D] font-medium tracking-wide rounded-md h-11 sm:h-14 px-5 sm:px-8 text-xs sm:text-base transition-transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <span>{secondaryCtaText}</span>
             </Button>
