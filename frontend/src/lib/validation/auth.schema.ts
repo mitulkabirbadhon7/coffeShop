@@ -8,7 +8,7 @@ export const loginSchema = z.object({
     .max(255, { message: "Email address exceeds maximum length of 255 characters." }),
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters long." })
+    .min(10, { message: "Password must be at least 10 characters long." })
     .max(72, { message: "Password exceeds maximum length of 72 characters." }),
 });
 
@@ -25,11 +25,16 @@ export const signupSchema = z.object({
     .max(255, { message: "Email address exceeds maximum length of 255 characters." }),
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters long." })
-    .max(72, { message: "Password exceeds maximum length of 72 characters." }),
-  termsAccepted: z.boolean().refine(val => val === true, {
-    message: "You must accept the terms and conditions."
-  }),
+    .min(10, { message: "Password must be at least 10 characters long." })
+    .max(72, { message: "Password exceeds maximum length of 72 characters." })
+    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter." })
+    .regex(/[0-9]/, { message: "Password must contain at least one number." }),
+  termsAccepted: z
+    .boolean()
+    .default(true)
+    .refine((val) => val === true, {
+      message: "You must accept the terms and conditions.",
+    }),
   marketingAccepted: z.boolean().optional(),
 });
 
@@ -45,8 +50,10 @@ export const updatePasswordSchema = z
   .object({
     password: z
       .string()
-      .min(6, { message: "Password must be at least 6 characters long." })
-      .max(72, { message: "Password exceeds maximum length of 72 characters." }),
+      .min(10, { message: "Password must be at least 10 characters long." })
+      .max(72, { message: "Password exceeds maximum length of 72 characters." })
+      .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter." })
+      .regex(/[0-9]/, { message: "Password must contain at least one number." }),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {

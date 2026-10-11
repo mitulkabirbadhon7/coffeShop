@@ -175,6 +175,21 @@ Security:
 - Database security: All 11 tables verified under RLS, SECURITY DEFINER functions hardened with `SET search_path = ''`, and 0 advisor performance/initplan warnings
 - Final git diff and secret review: Clean working tree and verified secret isolation
 
+## Phase 16 — Performance Optimization & Database Migration Hardening (✅ Complete)
+- Relocated public schema `SECURITY DEFINER` functions (`is_admin`, `place_order`) into a dedicated `private` schema with strict usage grants (`authenticated`, `service_role`), resolving the last Security Advisor warnings.
+- Optimized mobile responsiveness and touch interactions across home, menu, story, and footer components.
+- Fixed mobile hero frame scrubbing animation and added sticky mobile order CTA.
+- Applied migrations remotely via `supabase db push` and verified zero schema drift.
+
+## Phase 17 — Deployment and Monitoring (✅ Code & Config Complete)
+- Configured Sentry error monitoring (`@sentry/nextjs`) across client, server, and edge runtimes (`sentry.client.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`).
+- Implemented robust privacy data scrubber (`sentry-scrubber.ts`) completely sanitizing emails, JWT/bearer tokens, passwords, authorization headers, and request bodies before transmission.
+- Added comprehensive post-deploy smoke test suite (`tests/e2e/smoke.test.ts`) validating baseline HTTP security headers (HSTS, nosniff, DENY, Permissions-Policy), unauthenticated `/admin` rejection, and `/api/health` connectivity.
+- Added 9 new unit & smoke assertions (247/247 total automated vitest tests passing across 32 test suites).
+- Integrated production deployment and operations runbook in `README.md` covering deploy, instant Vercel rollback, key rotation, admin recovery, backup restore, and atomic migration handling.
+- Verified Next.js 14.2.15 production build (26/26 routes compiled cleanly with zero lint warnings and clean typecheck).
+
+
 ## Phase Exit Protocol
 Every phase:
 1. read relevant docs

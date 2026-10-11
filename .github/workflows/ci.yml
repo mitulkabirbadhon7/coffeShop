@@ -56,3 +56,11 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_anon_key_for_testing"
           SUPABASE_SERVICE_ROLE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_service_role_key_for_testing"
         run: npm run build
+
+      - name: Verify Service Role Key not in Client Bundles (S4)
+        working-directory: frontend
+        run: |
+          if grep -rq "dummy_service_role_key_for_testing" .next/static; then
+            echo "Security Error: Service role key found in client bundles!"
+            exit 1
+          fi
