@@ -87,11 +87,11 @@ export function Header() {
           </button>
 
           <Link
-            href="/account"
+            href="/login"
             className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#D4A373]/30 bg-[#2C221E]/60 text-[#FDFBF7] text-xs font-medium hover:bg-[#2C221E] hover:border-[#D4A373]/60 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A373]"
           >
             <User className="w-3.5 h-3.5 text-[#D4A373]" />
-            <span>Account</span>
+            <span>Login</span>
           </Link>
 
           {/* Mobile Menu Toggle Button */}
@@ -128,12 +128,12 @@ export function Header() {
           ))}
           <div className="pt-3 border-t border-[#5C4A3D]/30 flex flex-col gap-2">
             <Link
-              href="/account"
+              href="/login"
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-2 px-3 py-2 text-sm text-[#FDFBF7] hover:text-[#D4A373]"
             >
               <User className="w-4 h-4 text-[#D4A373]" />
-              <span>Customer Account</span>
+              <span>Login</span>
             </Link>
           </div>
         </div>

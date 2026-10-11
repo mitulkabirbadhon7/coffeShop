@@ -7,7 +7,7 @@ import { signInAction } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GoogleAuthButton } from "./google-auth-button";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Eye, EyeOff } from "lucide-react";
 
 export function LoginForm() {
   const searchParams = useSearchParams();
@@ -20,6 +20,7 @@ export function LoginForm() {
     initialError ? "Authentication was not completed. Please try again." : null
   );
   const [isLoading, setIsLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,14 +75,23 @@ export function LoginForm() {
               Forgot password?
             </Link>
           </div>
-          <Input
-            type="password"
-            placeholder="••••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            autoComplete="current-password"
-          />
+          <div className="relative">
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="••••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#F5E6D3]/50 hover:text-[#C89B5E] transition-colors"
+            >
+              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            </button>
+          </div>
         </div>
 
         <Button
@@ -102,13 +112,6 @@ export function LoginForm() {
       </div>
 
       <GoogleAuthButton mode="signin" />
-
-      <div className="pt-2 text-center text-xs text-[#F5E6D3]/70 border-t border-[#C89B5E]/15 font-sans">
-        <span>New to Chocobliss? </span>
-        <Link href="/signup" className="text-[#C89B5E] font-medium hover:underline">
-          Create an Account
-        </Link>
-      </div>
     </div>
   );
 }

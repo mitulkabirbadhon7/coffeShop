@@ -19,16 +19,24 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+import {
+  getProductJsonLd,
+  getBreadcrumbJsonLd,
+  JsonLd,
+} from "@/components/seo/json-ld";
+import { env } from "@/lib/env";
+
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
-  const product = await getProductBySlug(params.slug);
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
   if (!product) {
     return {
       title: "Product Not Found | Chocobliss Coffee Roastery",
@@ -51,11 +59,14 @@ export async function generateMetadata({
 }
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
-  const product = await getProductBySlug(params.slug);
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
+
+  const siteUrl = env.NEXT_PUBLIC_SITE_URL || "https://chocobliss.coffee";
 
   const [categories, relatedProducts] = await Promise.all([
     getCategories(),
@@ -67,35 +78,32 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const category = categories.find((c) => c.id === product.category_id);
   const categoryName = category ? category.name : "Artisanal Specialty";
 
-  // Structured JSON-LD Data for Search Engines
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
+  // Structured JSON-LD Data for Product and Breadcrumbs
+  const productJsonLd = getProductJsonLd({
     name: product.name,
     description: product.description,
-    image: product.image_path || "/images/hero-poster.jpg",
-    offers: {
-      "@type": "Offer",
-      price: (product.price_minor / 100).toFixed(2),
-      priceCurrency: "BDT",
-      availability: product.is_available
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
-      priceValidUntil: "2027-12-31",
-      seller: {
-        "@type": "Organization",
-        name: "Chocobliss Coffee Roastery",
-      },
-    },
-  };
+    slug: product.slug,
+    priceMinor: product.price_minor,
+    currency: product.currency,
+    isAvailable: product.is_available,
+    imagePath: product.image_path,
+    siteUrl,
+  });
+
+  const breadcrumbJsonLd = getBreadcrumbJsonLd(
+    [
+      { name: "Home", url: "/" },
+      { name: "Roastery Menu", url: "/products" },
+      { name: product.name, url: `/products/${product.slug}` },
+    ],
+    siteUrl
+  );
 
   return (
     <div className="bg-[#FDFBF7] py-12 sm:py-16 px-4 sm:px-6 lg:px-8 min-h-screen">
-      {/* Insert JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {/* Insert JSON-LD Structured Data */}
+      <JsonLd data={productJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
 
       <div className="max-w-6xl mx-auto space-y-12">
         {/* Breadcrumb Navigation */}
@@ -195,8 +203,15 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                   Pickup Price:
                 </span>
                 <span className="font-serif text-3xl font-bold text-[#2C221E]">
-                  {formatBdt(product.price_minor)}
+                  {product.discount_percentage && product.discount_percentage > 0
+                    ? formatBdt(Math.round(product.price_minor * (1 - product.discount_percentage / 100)))
+                    : formatBdt(product.price_minor)}
                 </span>
+                {product.discount_percentage && product.discount_percentage > 0 && (
+                  <span className="font-serif text-xl text-[#8A8179] line-through ml-2">
+                    {formatBdt(product.price_minor)}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -225,9 +240,33 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               </div>
             )}
 
+            {/* Variants */}
+            {product.variants && product.variants.length > 0 && (
+              <div className="space-y-2 pt-4 border-t border-[#8A8179]/20">
+                <h2 className="text-xs font-semibold uppercase tracking-wider text-[#8A8179] font-sans">
+                  Available Variants
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {product.variants.map((variant) => (
+                    <span
+                      key={variant}
+                      className="text-xs px-3 py-1 rounded-md bg-[#FAEDCD]/50 border border-[#D4A373]/30 text-[#D4A373] font-sans font-semibold uppercase"
+                    >
+                      {variant}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Action Bar (Quantity + Order Button) */}
             <ProductDetailActions
+              productId={product.id}
               productName={product.name}
+              slug={product.slug}
+              priceMinor={product.price_minor}
+              imageUrl={product.image_path}
+              categoryName={categoryName}
               isAvailable={product.is_available}
             />
 

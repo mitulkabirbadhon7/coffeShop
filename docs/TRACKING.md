@@ -201,9 +201,30 @@ These decisions guide every phase. The agent must respect them.
 - **Status:** ✅ Complete
 - **Started:** 2026-10-05
 - **Completed:** 2026-10-05
-- **Commit:** Pending owner manual commit
+- **Commit:** `e89b866` (Merged in origin/main)
 - **Notes:** Image and media optimization configured in `next.config.mjs` (modern AVIF & WebP formats, remotePatterns for Supabase Storage, device & image sizes); lazy below-fold video loading with IntersectionObserver, zero CLS aspect ratio containers, and LCP static poster prioritization; WCAG 2.2 AA accessibility landmarks with skip-to-content link, main content landmark, ARIA attributes on navigation elements, and keyboard Escape dismissibility; complete SEO metadataBase configuration with Open Graph and Twitter cards; dynamic `robots.ts` disallowing admin/account/api routes; dynamic `sitemap.ts` indexing static marketing pages and all live product offerings; Schema.org JSON-LD structured data (`CoffeeShop`, `Product`, `BreadcrumbList`); 12 new automated test assertions (210/210 total vitest tests passing across 28 suites); Next.js production build 25/25 static & dynamic routes compiled with zero lint warnings.
-*(Repeat for all 15 phases)*
+
+### Phase 15 — Production Release
+- **Status:** ✅ Complete
+- **Started:** 2026-10-05
+- **Completed:** 2026-10-05
+- **Commit:** Pending owner manual commit
+- **Notes:** Comprehensive regression and critical journeys E2E test suite (`tests/e2e/critical-journeys.test.ts`) covering customer signup, login, password recovery, open redirect mitigation, product search & filtering, order state transitions, contact & newsletter, and system `/api/health` availability (226/226 tests passing across 29 suites); GitHub Actions CI/CD workflow (`.github/workflows/ci.yml`) automating lint, typecheck, tests, and build; complete production deployment documentation (`docs/DEPLOYMENT.md`) covering architecture, Vercel setup, environment variables, health monitoring, and security checklists; Next.js 14.2.15 production build compiled 25/25 routes cleanly with zero lint or typecheck warnings.
+
+### Phase 16 — Performance Optimization & Database Hardening
+- **Status:** ✅ Complete
+- **Started:** 2026-10-05
+- **Completed:** 2026-10-05
+- **Commit:** `055d3cb`
+- **Notes:** Relocated public schema `SECURITY DEFINER` functions (`is_admin`, `place_order`) to private schema with authenticated and service_role grants; mobile animation frame scrubbing fixes and sticky mobile checkout CTA; database migration synchronized via `supabase db push`.
+
+### Phase 17 — Deployment and Monitoring
+- **Status:** ✅ Code & Config Complete (Awaiting Owner Review & Production Setup)
+- **Started:** 2026-10-11
+- **Completed:** 2026-10-11
+- **Commit:** `chore(deploy): configure production monitoring and runbook`
+- **Notes:** Configured Sentry error monitoring (`@sentry/nextjs`) across client, server, and edge runtimes (`sentry.client.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`); privacy data scrubber (`sentry-scrubber.ts`) completely redacting emails, tokens, passwords, and request bodies; post-deploy smoke test suite (`tests/e2e/smoke.test.ts`) verifying baseline security headers, unauthenticated admin rejection, and `/api/health` status; 247/247 automated vitest tests passing across 32 test suites; production operations runbook added to `README.md` covering deploy, instant rollback, key rotation, admin recovery, backup restore, and atomic migration handling; Next.js 14.2.15 production build compiling 26/26 routes cleanly with zero lint warnings and zero typecheck errors.
+
 
 ---
 

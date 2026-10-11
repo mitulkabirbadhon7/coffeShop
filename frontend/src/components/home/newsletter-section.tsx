@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Mail, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import Image from "next/image";
 import { subscribeNewsletterAction } from "@/lib/newsletter/actions";
 import { Button } from "@/components/ui/button";
 
@@ -41,18 +42,29 @@ export function NewsletterSection() {
   };
 
   return (
-    <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-[#2C221E] text-[#FDFBF7] border-t border-[#D4A373]/20 overflow-hidden">
+    <section className="relative py-20 px-4 sm:px-6 lg:px-8 text-[#FDFBF7] overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/posters/coffee-pour.jpg"
+          alt="Coffee pour background"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-[#2C221E]/90 backdrop-blur-sm" />
+      </div>
       {/* Subtle Roastery Background Glow Accent */}
       <div
         className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-[#D4A373]/10 blur-3xl pointer-events-none"
         aria-hidden="true"
       />
       <div
-        className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-[#E07A5F]/10 blur-3xl pointer-events-none"
+        className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-[#E07A5F]/10 blur-3xl pointer-events-none z-10"
         aria-hidden="true"
       />
 
-      <div className="relative max-w-4xl mx-auto text-center space-y-8">
+      <div className="relative z-20 max-w-4xl mx-auto text-center space-y-8">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#D4A373]/30 bg-[#3A2D26]/40 text-[#D4A373] text-xs font-medium tracking-widest uppercase">
           <Mail className="w-3.5 h-3.5" />
           <span>The Roaster&apos;s Dispatch</span>

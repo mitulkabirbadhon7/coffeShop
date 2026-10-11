@@ -29,6 +29,13 @@ export const signupSchema = z.object({
     .max(72, { message: "Password exceeds maximum length of 72 characters." })
     .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter." })
     .regex(/[0-9]/, { message: "Password must contain at least one number." }),
+  termsAccepted: z
+    .boolean()
+    .default(true)
+    .refine((val) => val === true, {
+      message: "You must accept the terms and conditions.",
+    }),
+  marketingAccepted: z.boolean().optional(),
 });
 
 export const resetPasswordSchema = z.object({

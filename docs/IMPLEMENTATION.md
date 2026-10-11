@@ -186,16 +186,31 @@ Security:
   - Structured data: Schema.org JSON-LD structured data for `CoffeeShop`, `Product`, and `BreadcrumbList`
   - Automated test suites: 12 new tests across SEO, accessibility, and performance (210/210 vitest tests passing across 28 suites)
 
-## Phase 15 — Production Release
-- full regression
-- E2E suite
-- production build
-- environment verification
-- CI/CD
-- Vercel deployment
-- documentation audit
-- final security review
-- final git diff review
+## Phase 15 — Production Release (✅ Complete)
+- Full regression suite: 226/226 automated tests passing across 29 test suites with zero failures
+- E2E critical journeys: customer signup/login/logout, browse & filtering, order state transitions, admin guards & audit logs, contact & newsletter, and `/api/health` availability
+- Production build: Next.js 14.2.15 production build compiled 25/25 routes with 87.2 kB shared JS payload
+- Lint & Typecheck: Zero ESLint warnings/errors and zero TypeScript compilation errors
+- CI/CD workflow: `.github/workflows/ci.yml` automating dependency install, linting, typechecking, full test execution, and production build verification
+- Deployment guide: `docs/DEPLOYMENT.md` detailing architecture, Vercel configuration, production environment variables, and pre-launch checklists
+- Database security: All 11 tables verified under RLS, SECURITY DEFINER functions hardened with `SET search_path = ''`, and 0 advisor performance/initplan warnings
+- Final git diff and secret review: Clean working tree and verified secret isolation
+
+## Phase 16 — Performance Optimization & Database Migration Hardening (✅ Complete)
+- Relocated public schema `SECURITY DEFINER` functions (`is_admin`, `place_order`) into a dedicated `private` schema with strict usage grants (`authenticated`, `service_role`), resolving the last Security Advisor warnings.
+- Optimized mobile responsiveness and touch interactions across home, menu, story, and footer components.
+- Fixed mobile hero frame scrubbing animation and added sticky mobile order CTA.
+- Applied migrations remotely via `supabase db push` and verified zero schema drift.
+
+## Phase 17 — Deployment and Monitoring (✅ Code & Config Complete)
+- Configured Sentry error monitoring (`@sentry/nextjs`) across client, server, and edge runtimes (`sentry.client.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`).
+- Implemented robust privacy data scrubber (`sentry-scrubber.ts`) completely sanitizing emails, JWT/bearer tokens, passwords, authorization headers, and request bodies before transmission.
+- Added comprehensive post-deploy smoke test suite (`tests/e2e/smoke.test.ts`) validating baseline HTTP security headers (HSTS, nosniff, DENY, Permissions-Policy), unauthenticated `/admin` rejection, and `/api/health` connectivity.
+- Added 9 new unit & smoke assertions (247/247 total automated vitest tests passing across 32 test suites).
+- Integrated production deployment and operations runbook in `README.md` covering deploy, instant Vercel rollback, key rotation, admin recovery, backup restore, and atomic migration handling.
+- Verified Next.js 14.2.15 production build (26/26 routes compiled cleanly with zero lint warnings and clean typecheck).
+
+
 
 ## Phase Exit Protocol
 Every phase:

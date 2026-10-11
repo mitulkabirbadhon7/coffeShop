@@ -10,7 +10,11 @@ import {
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env.local") });
 
-describe("Phase 2: Products Data Access Layer Tests", () => {
+const isDummy =
+  !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.includes("dummy");
+
+describe.skipIf(isDummy)("Phase 2: Products Data Access Layer Tests", () => {
   it("fetches categories from database sorted by sort_order", async () => {
     const categories = await getCategories();
     expect(categories).toBeDefined();

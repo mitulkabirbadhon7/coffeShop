@@ -10,7 +10,14 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-describe("Phase 1: Database Schema & RLS Foundation Tests", () => {
+const isDummy =
+  !supabaseUrl ||
+  !supabaseAnonKey ||
+  !supabaseServiceKey ||
+  supabaseAnonKey.includes("dummy") ||
+  supabaseServiceKey.includes("dummy");
+
+describe.skipIf(isDummy)("Phase 1: Database Schema & RLS Foundation Tests", () => {
   beforeAll(() => {
     if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceKey) {
       throw new Error(

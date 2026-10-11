@@ -1,4 +1,4 @@
-﻿export type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -300,6 +300,8 @@ export type Database = {
           price_minor: number
           slug: string
           updated_at: string
+          variants: string[] | null
+          discount_percentage: number | null
         }
         Insert: {
           category_id: string
@@ -316,6 +318,8 @@ export type Database = {
           price_minor: number
           slug: string
           updated_at?: string
+          variants?: string[] | null
+          discount_percentage?: number | null
         }
         Update: {
           category_id?: string
@@ -332,6 +336,8 @@ export type Database = {
           price_minor?: number
           slug?: string
           updated_at?: string
+          variants?: string[] | null
+          discount_percentage?: number | null
         }
         Relationships: [
           {
