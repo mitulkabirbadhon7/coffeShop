@@ -9,7 +9,12 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env.local") });
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-describe("Phase 13: Comprehensive RLS Security Audit", () => {
+const isDummy =
+  !supabaseUrl ||
+  !supabaseAnonKey ||
+  supabaseAnonKey.includes("dummy");
+
+describe.skipIf(isDummy)("Phase 13: Comprehensive RLS Security Audit", () => {
   beforeAll(() => {
     if (!supabaseUrl || !supabaseAnonKey) {
       throw new Error("Missing Supabase configuration in .env.local");
