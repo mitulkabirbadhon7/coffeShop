@@ -47,6 +47,8 @@ export function getContentSecurityPolicy(isDev: boolean = false): string {
       supabaseDomain,
       "https://challenges.cloudflare.com",
       "https://*.upstash.io",
+      "https://*.ingest.sentry.io",
+      "https://*.ingest.us.sentry.io",
       ...(isDev ? ["ws:", "http://localhost:*", "http://127.0.0.1:*"] : []),
     ],
     "frame-src": [
