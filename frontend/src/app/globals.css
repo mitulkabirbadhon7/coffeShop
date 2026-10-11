@@ -201,10 +201,7 @@ body {
   will-change: transform, opacity;
 }
 
-/* ==========================================================================
-   Reduced Motion Safety (Strict WCAG 2.2 Compliance)
-   Completely neutralizes all continuous loops and keyframes when requested.
-   ========================================================================== */
+/* Reduced Motion Safety */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
