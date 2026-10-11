@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart/cart-context";
 
 export interface ProductDetailActionsProps {
-  productId: string;
+  productId?: string;
   productName: string;
-  slug: string;
-  priceMinor: number;
+  slug?: string;
+  priceMinor?: number;
   imageUrl?: string | null;
   categoryName?: string;
   isAvailable: boolean;
@@ -32,17 +32,19 @@ export function ProductDetailActions({
   const decrement = () => setQuantity((q) => Math.max(1, q - 1));
 
   const handleOrder = () => {
-    addItem(
-      {
-        productId,
-        name: productName,
-        slug,
-        priceMinor,
-        imageUrl,
-        categoryName,
-      },
-      quantity
-    );
+    if (productId && slug && priceMinor !== undefined) {
+      addItem(
+        {
+          productId,
+          name: productName,
+          slug,
+          priceMinor,
+          imageUrl,
+          categoryName,
+        },
+        quantity
+      );
+    }
     setAdded(true);
     setTimeout(() => setAdded(false), 2500);
   };

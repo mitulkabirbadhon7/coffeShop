@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { AuthTabs } from "@/components/auth/auth-tabs";
+import { LoginForm } from "@/components/auth/login-form";
 
 export const metadata = {
   title: "Sign In | Chocobliss Coffee Roastery",
@@ -21,7 +21,7 @@ export default function LoginPage() {
 
       <CardContent>
         <Suspense fallback={<div className="text-center py-6 text-xs text-[#F5E6D3]/60">Loading form...</div>}>
-          <AuthTabs />
+          <LoginForm />
         </Suspense>
       </CardContent>
     </Card>

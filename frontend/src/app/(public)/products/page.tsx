@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { getCategories, getProducts } from "@/lib/data/products.data";
 import { ProductCatalog } from "@/components/products/product-catalog";
 import { Coffee, MapPin, Clock } from "lucide-react";
@@ -22,45 +21,42 @@ export default async function ProductsPage() {
   ]);
 
   return (
-    <main>
-      {/* Hero Section */}
-        <div className="relative w-full px-4 sm:px-6 lg:px-8 py-20 min-h-[50vh] flex flex-col justify-center items-center bg-[#1A1613]">
-          
-          <div className="absolute inset-0 z-0">
-             <Image 
-               src="/posters/ingredients.jpg" 
-               alt="Ingredients background" 
-               fill 
-               className="object-cover opacity-50"
-               sizes="100vw"
-             />
+    <div className="bg-[#FDFBF7] py-16 px-4 sm:px-6 lg:px-8 min-h-screen">
+      <div className="max-w-7xl mx-auto space-y-12">
+        {/* Editorial Catalog Header */}
+        <div className="border-b border-[#8A8179]/20 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAEDCD] text-[#5C4A3D] text-xs font-medium tracking-widest uppercase">
+              <Coffee className="w-3.5 h-3.5 text-[#E07A5F]" />
+              <span>Dhaka Roastery Counter Menu</span>
+            </div>
+
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#2C221E]">
+              Artisanal Roasts &amp; Confections
+            </h1>
+
+            <p className="text-sm sm:text-base text-[#5C4A3D] font-sans leading-relaxed">
+              Every coffee is sourced from ethical micro-lots and roasted twice weekly.
+              All orders are prepared fresh for counter pickup at our Dhaka roastery.
+            </p>
           </div>
 
-          <div className="relative z-10 max-w-4xl w-full text-center">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2C221E]/70 backdrop-blur-md border border-[#D4A373]/40 text-[#D4A373] text-xs font-semibold tracking-widest uppercase">
-                <Coffee className="w-4 h-4" />
-                <span>Dhaka Roastery Counter Menu</span>
-              </div>
-
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#FDFBF7] leading-[1.1] drop-shadow-lg">
-                Artisanal Roasts &amp; Confections
-              </h1>
-
-              <p className="text-base sm:text-lg text-[#FDFBF7]/90 font-sans leading-relaxed drop-shadow-md max-w-2xl mx-auto">
-                Every coffee is sourced from ethical micro-lots and roasted twice weekly.
-                All orders are prepared fresh for counter pickup at our Dhaka roastery.
-              </p>
+          {/* Roastery Quick Info Card */}
+          <div className="p-4 rounded-lg bg-[#F4F1EA] border border-[#8A8179]/20 text-xs text-[#5C4A3D] space-y-1.5 shrink-0">
+            <div className="flex items-center gap-2">
+              <Clock className="w-3.5 h-3.5 text-[#D4A373]" />
+              <span>Counter Pickup: 8:00 AM – 10:00 PM</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="w-3.5 h-3.5 text-[#D4A373]" />
+              <span>Road 11, Banani, Dhaka</span>
             </div>
           </div>
         </div>
 
-      <div className="bg-[#FDFBF7] py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto space-y-12">
-          {/* Interactive Filter & Products Catalog */}
-          <ProductCatalog initialProducts={products} categories={categories} />
-        </div>
+        {/* Interactive Filter & Products Catalog */}
+        <ProductCatalog initialProducts={products} categories={categories} />
       </div>
-    </main>
+    </div>
   );
 }
