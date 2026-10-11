@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #fdfbf7;
+  --foreground: #2c221e;
+  --espresso: #2c221e;
+  --oat: #fdfbf7;
+  --latte: #d4a373;
+  --cream: #faedcd;
+  --terracotta: #e07a5f;
+  --charcoal: #1a1613;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-inter), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessible Warm Selection */
+::selection {
+  background-color: #d4a373;
+  color: #1a1613;
+}
+
+/* Micro-interaction: Cup fill animation on hover (UIUX.md 4.1 & 7) */
+.btn-cup-fill {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-cup-fill::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #d4a373;
+  transform: translateY(100%);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.btn-cup-fill:hover::before {
+  transform: translateY(0);
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
