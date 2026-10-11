@@ -15,12 +15,23 @@ import {
 } from "@/lib/validation/auth.schema";
 import { safeRedirectPath } from "@/lib/auth/guards";
 import { env } from "@/lib/env";
+import { checkRateLimit, getClientIp } from "@/lib/security/rate-limit";
 
 export interface AuthActionResult {
   success?: boolean;
   error?: string;
   message?: string;
   needsConfirmation?: boolean;
+}
+
+async function getClientIdentifier(fallback: string): Promise<string> {
+  try {
+    const { headers } = await import("next/headers");
+    const ip = getClientIp(headers());
+    return `${ip}:${fallback}`;
+  } catch {
+    return `127.0.0.1:${fallback}`;
+  }
 }
 
 function getRequestOrigin(): string {
@@ -47,6 +58,13 @@ export async function signInAction(
   }
 
   const { email, password } = validation.data;
+  const clientIdentifier = await getClientIdentifier(email.toLowerCase());
+  const rl = await checkRateLimit("auth", clientIdentifier);
+  if (!rl.success) {
+    return {
+      error: "Too many sign-in attempts. Please wait 15 minutes before trying again.",
+    };
+  }
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -79,6 +97,14 @@ export async function signUpAction(
   }
 
   const { name, email, password } = validation.data;
+  const clientIdentifier = await getClientIdentifier(email.toLowerCase());
+  const rl = await checkRateLimit("auth", clientIdentifier);
+  if (!rl.success) {
+    return {
+      error: "Too many registration attempts. Please wait 15 minutes before trying again.",
+    };
+  }
+
   const supabase = await createClient();
   const origin = getRequestOrigin();
 
@@ -133,6 +159,14 @@ export async function resetPasswordAction(
   }
 
   const { email } = validation.data;
+  const clientIdentifier = await getClientIdentifier(email.toLowerCase());
+  const rl = await checkRateLimit("auth", clientIdentifier);
+  if (!rl.success) {
+    return {
+      error: "Too many password reset requests. Please wait 15 minutes before trying again.",
+    };
+  }
+
   const supabase = await createClient();
   const origin = getRequestOrigin();
 

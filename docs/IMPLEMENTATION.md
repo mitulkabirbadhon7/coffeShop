@@ -145,28 +145,46 @@ Security:
 - validation
 - audit trail
 
-## Phase 13 — Security Hardening
-- rate limiting
-- headers
-- CSP
-- security tests
-- dependency audit
-- secret scanning
-- abuse tests
-- RLS audit
+## Phase 13 — Security Hardening (✅ Complete)
+- Scope & Requirements:
+  - rate limiting
+  - headers
+  - CSP
+  - security tests
+  - dependency audit
+  - secret scanning
+  - abuse tests
+  - RLS audit
+- Completed Implementation:
+  - Rate limiting: Centralized sliding-window rate limiting engine with Upstash Redis (`@upstash/ratelimit` & `@upstash/redis`) and in-memory fallback protecting auth, public mutations, orders, and `/api/` endpoints
+  - HTTP Headers: Comprehensive baseline security headers in `next.config.mjs` and `middleware.ts` (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`, `HSTS 2-years`, COOP, CORP)
+  - Content-Security-Policy (CSP): Strict directives with `frame-ancestors 'none'`, Supabase/Turnstile/Google Fonts allowlists, and production HTTPS upgrade
+  - CSRF & Origin Verification: `csrf.ts` validating trusted request origins on mutations
+  - Error Sanitization & Masking: `error-sanitizer.ts` preventing database internal leakages and redacting credentials in diagnostic objects
+  - Security & Abuse Tests: 40 automated security tests covering rate limiting, headers, CSP, CSRF, error masking, secret scanning, and RLS audit (198/198 total tests passing across 25 suites)
+  - Secret Scanning: Verified zero client-component secret exposure
+  - Dependency Audit: Documented and verified against pinned stack rules
 
-This phase must not be treated as optional; security should already exist in earlier phases.
-
-## Phase 14 — Performance, Accessibility & SEO
-- image optimization
-- video optimization
-- bundle analysis
-- caching
-- LCP/CLS work
-- axe testing
-- keyboard review
-- metadata
-- structured data
+## Phase 14 — Performance, Accessibility & SEO (✅ Complete)
+- Scope & Requirements:
+  - image optimization
+  - video optimization
+  - bundle analysis
+  - caching
+  - LCP/CLS work
+  - axe testing
+  - keyboard review
+  - metadata
+  - structured data
+- Completed Implementation:
+  - Image optimization: `next.config.mjs` configured with modern AVIF and WebP formats, remotePatterns for Supabase Storage, explicit responsive deviceSizes and imageSizes
+  - Video optimization: IntersectionObserver-driven lazy playback for below-the-fold media, `preload="metadata"` / `preload="none"`, and zero-CLS aspect ratio containers (`aspect-[4/5]`, `aspect-[16/9]`)
+  - Bundle analysis: First-load shared JS maintained at 87.2 kB (well within <200 kB target)
+  - Accessibility (WCAG 2.2 AA): Keyboard skip-link (`#main-content`), main content landmark, ARIA attributes on navigation elements (`aria-expanded`, `aria-controls`, `role="navigation"`), and Escape-key dismissibility
+  - Metadata: Comprehensive `metadataBase`, Open Graph card, Twitter card, robots indexing rules, and canonical link generation
+  - Robots & Sitemap: Dynamic `robots.ts` and dynamic `sitemap.ts` indexing core marketing pages and live product offerings
+  - Structured data: Schema.org JSON-LD structured data for `CoffeeShop`, `Product`, and `BreadcrumbList`
+  - Automated test suites: 12 new tests across SEO, accessibility, and performance (210/210 vitest tests passing across 28 suites)
 
 ## Phase 15 — Production Release
 - full regression

@@ -33,6 +33,8 @@ export function formatBdt(
   return formatCurrency(minorUnits, "BDT", options);
 }
 
+export const formatCurrencyBDT = formatBdt;
+
 /**
  * Format date string into editorial human-readable date.
  * Example: "2026-10-04T12:00:00Z" -> "October 4, 2026"

@@ -2,16 +2,17 @@ import * as React from "react";
 import Link from "next/link";
 import { Clock, MapPin, Coffee, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { VideoBackground } from "@/components/ui/video-background";
 
 export function CraftAtmosphereSection() {
   return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#1A1613] text-[#FDFBF7] overflow-hidden">
-      {/* Decorative Atmospheric Radial Gradients */}
-      <div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#3A2D26]/40 via-[#1A1613]/90 to-[#1A1613] pointer-events-none"
-        aria-hidden="true"
-      />
-
+    <VideoBackground
+      src="/videos/Steam.mp4"
+      poster="/images/hero-poster.jpg"
+      posterAlt="Warm ambient steam at Chocobliss Roastery"
+      overlayClassName="bg-[#1A1613]/85"
+      className="py-24 px-4 sm:px-6 lg:px-8 text-[#FDFBF7]"
+    >
       <div className="relative max-w-5xl mx-auto text-center space-y-10">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#D4A373]/30 bg-[#2C221E]/60 text-[#D4A373] text-xs font-medium tracking-widest uppercase">
           <Coffee className="w-3.5 h-3.5 text-[#D4A373]" />
@@ -25,7 +26,7 @@ export function CraftAtmosphereSection() {
 
         {/* Roastery Pillars Info Bar */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-[#5C4A3D]/40 text-left max-w-4xl mx-auto">
-          <div className="p-6 rounded-lg bg-[#2C221E]/70 border border-[#5C4A3D]/30 space-y-2">
+          <div className="p-6 rounded-lg bg-[#2C221E]/80 border border-[#5C4A3D]/30 space-y-2">
             <Clock className="w-5 h-5 text-[#D4A373]" />
             <h3 className="font-serif text-base font-bold text-[#FDFBF7]">
               Open Daily
@@ -35,7 +36,7 @@ export function CraftAtmosphereSection() {
             </p>
           </div>
 
-          <div className="p-6 rounded-lg bg-[#2C221E]/70 border border-[#5C4A3D]/30 space-y-2">
+          <div className="p-6 rounded-lg bg-[#2C221E]/80 border border-[#5C4A3D]/30 space-y-2">
             <ShoppingBag className="w-5 h-5 text-[#D4A373]" />
             <h3 className="font-serif text-base font-bold text-[#FDFBF7]">
               Fresh Counter Pickup
@@ -45,7 +46,7 @@ export function CraftAtmosphereSection() {
             </p>
           </div>
 
-          <div className="p-6 rounded-lg bg-[#2C221E]/70 border border-[#5C4A3D]/30 space-y-2">
+          <div className="p-6 rounded-lg bg-[#2C221E]/80 border border-[#5C4A3D]/30 space-y-2">
             <MapPin className="w-5 h-5 text-[#D4A373]" />
             <h3 className="font-serif text-base font-bold text-[#FDFBF7]">
               Dhaka Atelier
@@ -61,13 +62,13 @@ export function CraftAtmosphereSection() {
             <Button
               variant="primary"
               size="md"
-              className="bg-[#D4A373] text-[#1A1613] hover:bg-[#FAEDCD] font-medium tracking-wide rounded-md h-11 px-7"
+              className="bg-[#D4A373] text-[#1A1613] hover:bg-[#FAEDCD] font-medium tracking-wide rounded-md h-11 px-7 transition-transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <span>Explore Seasonal Menu</span>
             </Button>
           </Link>
         </div>
       </div>
-    </section>
+    </VideoBackground>
   );
 }

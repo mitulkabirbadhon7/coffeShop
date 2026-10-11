@@ -11,6 +11,8 @@ import {
   ArrowLeft,
   Shield,
   Star,
+  History,
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
@@ -18,9 +20,11 @@ const adminNavItems = [
   { name: "Overview", href: "/admin", icon: LayoutDashboard },
   { name: "Products", href: "/admin/products", icon: Coffee },
   { name: "Orders", href: "/admin/orders", icon: ShoppingBag },
+  { name: "Users & Roles", href: "/admin/users", icon: Users },
   { name: "Site Content", href: "/admin/content", icon: FileText },
   { name: "Testimonials", href: "/admin/testimonials", icon: Star },
   { name: "Messages", href: "/admin/messages", icon: MessageSquare },
+  { name: "Audit Trail", href: "/admin/audit", icon: History },
 ];
 
 export function AdminSidebar() {
