@@ -27,15 +27,16 @@ import {
 import { env } from "@/lib/env";
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
-  const product = await getProductBySlug(params.slug);
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
   if (!product) {
     return {
       title: "Product Not Found | Chocobliss Coffee Roastery",
@@ -58,7 +59,8 @@ export async function generateMetadata({
 }
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
-  const product = await getProductBySlug(params.slug);
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
