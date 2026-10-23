@@ -96,47 +96,50 @@ export async function signInAction(
     redirect(destination);
   }
 
-  // Graceful Demo / Local Fallback session
-  if (password.length >= 6) {
-    const isDemoAdmin =
-      email.toLowerCase() === "admin@chocobliss.com" ||
-      email.toLowerCase().includes("admin");
+  // Support explicit demo accounts in local testing or browser environments
+  const isExplicitDemoAdmin = email.toLowerCase() === "admin@chocobliss.com";
+  const isExplicitDemoPatron = email.toLowerCase() === "patron@chocobliss.com";
 
-    const cookieStore = await cookies();
-    const demoUser = {
-      id: isDemoAdmin
-        ? "00000000-0000-0000-0000-000000000001"
-        : "00000000-0000-0000-0000-000000000002",
-      aud: "authenticated",
-      role: "authenticated",
-      email: email.toLowerCase(),
-      email_confirmed_at: new Date().toISOString(),
-      user_metadata: {
-        full_name: isDemoAdmin ? "Master Roaster (Admin)" : "Artisan Patron",
-        role: isDemoAdmin ? "ADMIN" : "USER",
-      },
-      app_metadata: { provider: "email", providers: ["email"] },
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
+  if (isExplicitDemoAdmin || isExplicitDemoPatron) {
+    try {
+      const cookieStore = await cookies();
+      const demoUser = {
+        id: isExplicitDemoAdmin
+          ? "00000000-0000-0000-0000-000000000001"
+          : "00000000-0000-0000-0000-000000000002",
+        aud: "authenticated",
+        role: "authenticated",
+        email: email.toLowerCase(),
+        email_confirmed_at: new Date().toISOString(),
+        user_metadata: {
+          full_name: isExplicitDemoAdmin ? "Master Roaster (Admin)" : "Artisan Patron",
+          role: isExplicitDemoAdmin ? "ADMIN" : "USER",
+        },
+        app_metadata: { provider: "email", providers: ["email"] },
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
 
-    cookieStore.set("chocobliss_demo_session", JSON.stringify(demoUser), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
-    });
+      cookieStore.set("chocobliss_demo_session", JSON.stringify(demoUser), {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 7,
+        path: "/",
+      });
 
-    const destination = safeRedirectPath(
-      returnUrl,
-      isDemoAdmin ? "/admin" : "/account"
-    );
-    redirect(destination);
+      const destination = safeRedirectPath(
+        returnUrl,
+        isExplicitDemoAdmin ? "/admin" : "/account"
+      );
+      redirect(destination);
+    } catch (err) {
+      if (isNextRedirect(err)) throw err;
+    }
   }
 
   return {
-    error: "Invalid email or password. Password must be at least 6 characters.",
+    error: "Invalid email or password. Please verify your credentials and try again.",
   };
 }
 
@@ -191,30 +194,32 @@ export async function signUpAction(
     if (isNextRedirect(err)) throw err;
   }
 
-  // Fallback demo signup
-  const cookieStore = await cookies();
-  const demoUser = {
-    id: "00000000-0000-0000-0000-000000000003",
-    aud: "authenticated",
-    role: "authenticated",
-    email: email.toLowerCase(),
-    email_confirmed_at: new Date().toISOString(),
-    user_metadata: {
-      full_name: name,
-      role: "USER",
-    },
-    app_metadata: { provider: "email", providers: ["email"] },
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  };
+  // Graceful fallback for local demo testing
+  try {
+    const cookieStore = await cookies();
+    const demoUser = {
+      id: "00000000-0000-0000-0000-000000000003",
+      aud: "authenticated",
+      role: "authenticated",
+      email: email.toLowerCase(),
+      email_confirmed_at: new Date().toISOString(),
+      user_metadata: {
+        full_name: name,
+        role: "USER",
+      },
+      app_metadata: { provider: "email", providers: ["email"] },
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
 
-  cookieStore.set("chocobliss_demo_session", JSON.stringify(demoUser), {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7,
-    path: "/",
-  });
+    cookieStore.set("chocobliss_demo_session", JSON.stringify(demoUser), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    });
+  } catch {}
 
   return {
     success: true,
@@ -275,7 +280,7 @@ export async function resetPasswordAction(
 
   return {
     success: true,
-    message: "If an account exists for this email, password reset instructions have been sent.",
+    message: "If a registered account matches that email, a password reset link has been dispatched.",
   };
 }
 

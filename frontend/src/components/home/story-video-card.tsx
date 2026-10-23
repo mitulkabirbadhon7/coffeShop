@@ -164,7 +164,7 @@ export function StoryVideoCard({
           autoPlay={autoPlay}
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleEnded}
           onPlaying={() => setIsPlaying(true)}
