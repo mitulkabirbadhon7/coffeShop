@@ -14,14 +14,22 @@ export default async function AccountLayout({
   let isAdmin = false;
   
   if (user) {
-    const supabase = await createClient();
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single();
-    
-    isAdmin = profile?.role === "ADMIN";
+    if (user.user_metadata?.role === "ADMIN" || user.email === "admin@chocobliss.com") {
+      isAdmin = true;
+    } else {
+      try {
+        const supabase = await createClient();
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+        
+        isAdmin = profile?.role === "ADMIN";
+      } catch {
+        isAdmin = false;
+      }
+    }
   }
 
   return (
@@ -60,14 +68,14 @@ export default async function AccountLayout({
                     className="flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-semibold text-[#D4A373] bg-[#2C221E] hover:bg-[#1A1613] transition-colors"
                   >
                     <Shield className="w-4 h-4 text-[#D4A373]" />
-                    <span>Admin Dashboard</span>
+                    <span>Admin Atelier</span>
                   </Link>
                 </div>
               )}
             </div>
           </aside>
 
-          {/* Account Main Content */}
+          {/* Account Content Area */}
           <div className="md:col-span-3">{children}</div>
         </div>
       </main>

@@ -65,10 +65,9 @@ export function NewsletterSection() {
       />
 
       <div className="relative z-20 max-w-4xl mx-auto text-center space-y-8">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#D4A373]/30 bg-[#3A2D26]/40 text-[#D4A373] text-xs font-medium tracking-widest uppercase">
-          <Mail className="w-3.5 h-3.5" />
-          <span>The Roaster&apos;s Dispatch</span>
-        </div>
+        <p className="text-xs font-semibold tracking-widest uppercase text-[#D4A373]">
+          The Roaster&apos;s Dispatch
+        </p>
 
         <div className="space-y-4 max-w-2xl mx-auto">
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FDFBF7] leading-tight">

@@ -13,7 +13,6 @@ import {
   ArrowLeft,
   Clock,
   MapPin,
-  Sparkles,
   ArrowRight,
   ShieldCheck,
 } from "lucide-react";
@@ -161,10 +160,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               {categoryName}
             </span>
 
-            <div className="mt-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1A1613]/60 border border-[#D4A373]/30 text-[11px] text-[#FAEDCD]">
-              <Sparkles className="w-3 h-3 text-[#D4A373]" />
-              <span>Roasted in Dhaka • Small Batch</span>
-            </div>
+            <p className="mt-6 text-[11px] uppercase tracking-wider text-[#D4A373] font-medium">
+              Roasted in Dhaka • Small Batch
+            </p>
           </div>
 
           {/* Right Column: Narrative & Order Actions (7 cols) */}
@@ -300,14 +298,11 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                   Related Selections
                 </h2>
               </div>
-              <Link href="/products">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-[#2C221E] text-[#2C221E] hover:bg-[#2C221E] hover:text-[#FDFBF7] rounded-md text-xs"
-                >
-                  <span>View All Offerings</span>
-                </Button>
+              <Link
+                href="/products"
+                className="border border-[#2C221E] text-[#2C221E] hover:bg-[#2C221E] hover:text-[#FDFBF7] rounded-md text-xs px-3.5 py-1.5 font-medium inline-flex items-center transition-colors"
+              >
+                <span>View All Offerings</span>
               </Link>
             </div>
 

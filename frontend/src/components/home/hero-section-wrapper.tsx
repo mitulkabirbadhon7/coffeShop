@@ -13,7 +13,7 @@ export function HeroSectionWrapper({ children }: { children: React.ReactNode }) 
         {/* Modern Split Layout Container */}
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           
-          {/* Left: Contained Animation (Small & High Quality) */}
+          {/* Left: Contained Scroll Animation */}
           <div className="w-full lg:w-1/2 h-[40vh] sm:h-[50vh] lg:h-[70vh] rounded-2xl lg:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-[#5C4A3D]/40 relative flex-shrink-0 z-10 order-first lg:order-none">
             <FrameSequence
               folder="coffee-pour"

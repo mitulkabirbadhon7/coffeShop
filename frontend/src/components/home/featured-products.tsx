@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { Coffee, ArrowRight, Sparkles } from "lucide-react";
+import { Coffee, ArrowRight } from "lucide-react";
 import { getFeaturedProducts, getCategories } from "@/lib/data/products.data";
 import { formatBdt } from "@/lib/utils/formatters";
 import { Button } from "@/components/ui/button";
@@ -19,10 +19,9 @@ export async function FeaturedProductsSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#D4A373]/30 pb-8">
           <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAEDCD] text-[#5C4A3D] text-xs font-medium tracking-widest uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-[#E07A5F]" />
-              <span>Seasonal Curations</span>
-            </div>
+            <p className="text-xs font-semibold tracking-widest uppercase text-[#A06C3B]">
+              Seasonal Curations
+            </p>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#2C221E]">
               Featured Roasts &amp; Confections
             </h2>
@@ -32,15 +31,12 @@ export async function FeaturedProductsSection() {
             </p>
           </div>
 
-          <Link href="/products" className="shrink-0">
-            <Button
-              variant="outline"
-              size="md"
-              className="border-[#2C221E] text-[#2C221E] hover:bg-[#2C221E] hover:text-[#FDFBF7] rounded-md font-medium inline-flex items-center gap-2 h-11 px-5"
-            >
-              <span>Explore Full Menu</span>
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+          <Link
+            href="/products"
+            className="border border-[#2C221E] text-[#2C221E] hover:bg-[#2C221E] hover:text-[#FDFBF7] rounded-md font-medium inline-flex items-center gap-2 h-11 px-5 transition-colors shrink-0"
+          >
+            <span>Explore Full Menu</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
@@ -100,15 +96,12 @@ export async function FeaturedProductsSection() {
                       </span>
                     </div>
 
-                    <Link href={`/products/${product.slug}`}>
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        className="btn-cup-fill bg-[#2C221E] text-[#FDFBF7] hover:text-[#1A1613] rounded-md text-xs font-medium h-9 px-4 inline-flex items-center gap-1.5"
-                      >
-                        <span>Order Pickup</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
+                    <Link
+                      href={`/products/${product.slug}`}
+                      className="btn-cup-fill bg-[#2C221E] text-[#FDFBF7] hover:text-[#1A1613] rounded-md text-xs font-medium h-9 px-4 inline-flex items-center gap-1.5 transition-colors"
+                    >
+                      <span>Order Pickup</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </div>

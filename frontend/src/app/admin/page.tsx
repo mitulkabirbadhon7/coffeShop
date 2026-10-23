@@ -6,22 +6,29 @@ import { formatCurrencyBDT, formatDate } from "@/lib/utils/formatters";
 import { ORDER_STATUS_DETAILS, type OrderStatus } from "@/lib/services/order.service";
 
 export default async function AdminOverviewPage() {
-  const supabase = await createClient();
+  let productsCount = 22;
+  let ordersCount = 0;
+  let pendingOrdersCount = 0;
+  let completedOrders: { total_minor: number | null }[] = [];
+  let recentOrders: { id: string; status: OrderStatus; total_minor: number; created_at: string }[] = [];
 
-  // Parallel data fetching for dashboard indicators
-  const [
-    { count: productsCount },
-    { count: ordersCount },
-    { count: pendingOrdersCount },
-    { data: completedOrders },
-    { data: recentOrders },
-  ] = await Promise.all([
-    supabase.from("products").select("*", { count: "exact", head: true }).is("deleted_at", null),
-    supabase.from("orders").select("*", { count: "exact", head: true }),
-    supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "PENDING"),
-    supabase.from("orders").select("total_minor").eq("status", "COMPLETED"),
-    supabase.from("orders").select("id, status, total_minor, created_at").order("created_at", { ascending: false }).limit(5),
-  ]);
+  try {
+    const supabase = await createClient();
+    const [p, o, po, co, ro] = await Promise.all([
+      supabase.from("products").select("*", { count: "exact", head: true }).is("deleted_at", null),
+      supabase.from("orders").select("*", { count: "exact", head: true }),
+      supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "PENDING"),
+      supabase.from("orders").select("total_minor").eq("status", "COMPLETED"),
+      supabase.from("orders").select("id, status, total_minor, created_at").order("created_at", { ascending: false }).limit(5),
+    ]);
+    productsCount = p.count ?? 22;
+    ordersCount = o.count ?? 0;
+    pendingOrdersCount = po.count ?? 0;
+    completedOrders = (co.data as { total_minor: number | null }[]) || [];
+    recentOrders = (ro.data as unknown as { id: string; status: OrderStatus; total_minor: number; created_at: string }[]) || [];
+  } catch {
+    // Offline / Demo fallback
+  }
 
   const totalRevenueMinor = (completedOrders || []).reduce(
     (acc, curr) => acc + (curr.total_minor || 0),

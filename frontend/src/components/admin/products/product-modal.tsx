@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { X, Upload, Sparkles, Loader2, AlertCircle, Plus, Trash2 } from "lucide-react";
+import { X, Upload, Loader2, AlertCircle, Plus, Trash2, RefreshCw } from "lucide-react";
 import { createProductAction, updateProductAction } from "@/lib/products/admin-actions";
 import { uploadProductImageAction } from "@/lib/uploads/image-service";
 import type { Database } from "@/types/database.types";
@@ -250,7 +250,7 @@ export function ProductModal({
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Ethiopia Yirgacheffe Washed"
+                  placeholder="Enter product name"
                   className="w-full px-3 py-2 rounded-lg bg-[#231B18] border border-[#5C4A3D]/50 text-[#F5E6D3] placeholder-[#8A8179]/60 focus:outline-none focus:border-[#D4A373]"
                 />
               </div>
@@ -263,7 +263,7 @@ export function ProductModal({
                     onClick={handleGenerateSlug}
                     className="text-[10px] text-[#D4A373] hover:underline flex items-center gap-1"
                   >
-                    <Sparkles className="w-3 h-3" />
+                    <RefreshCw className="w-3 h-3" />
                     <span>Generate</span>
                   </button>
                 </div>
@@ -272,7 +272,7 @@ export function ProductModal({
                   required
                   value={slug}
                   onChange={(e) => setSlug(e.target.value.toLowerCase())}
-                  placeholder="e.g. ethiopia-yirgacheffe-washed"
+                  placeholder="Enter URL slug"
                   className="w-full px-3 py-2 rounded-lg bg-[#231B18] border border-[#5C4A3D]/50 text-[#F5E6D3] placeholder-[#8A8179]/60 focus:outline-none focus:border-[#D4A373]"
                 />
               </div>
@@ -337,7 +337,7 @@ export function ProductModal({
                 rows={3}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Origin terroir, roast profile, tasting notes..."
+                placeholder="Enter product description..."
                 className="w-full px-3 py-2 rounded-lg bg-[#231B18] border border-[#5C4A3D]/50 text-[#F5E6D3] placeholder-[#8A8179]/60 focus:outline-none focus:border-[#D4A373] resize-none"
               />
             </div>
@@ -358,7 +358,7 @@ export function ProductModal({
                       handleAddIngredient();
                     }
                   }}
-                  placeholder="e.g. Jasmine, Bergamot, Raw Cacao..."
+                  placeholder="Enter tasting note or ingredient"
                   className="flex-1 px-3 py-2 rounded-lg bg-[#231B18] border border-[#5C4A3D]/50 text-[#F5E6D3] placeholder-[#8A8179]/60 focus:outline-none focus:border-[#D4A373]"
                 />
                 <button
@@ -395,7 +395,7 @@ export function ProductModal({
             {/* Variants Tags */}
             <div>
               <label className="block text-[#D4A373] font-medium mb-1">
-                Variants (e.g., Small, Large, 250g, 500g)
+                Variants (Sizes, Weight, Beans)
               </label>
               <div className="flex gap-2 mb-2">
                 <input
@@ -408,7 +408,7 @@ export function ProductModal({
                       handleAddVariant();
                     }
                   }}
-                  placeholder="e.g. Small, Large..."
+                  placeholder="Enter variant name (250g, 500g, etc.)"
                   className="flex-1 px-3 py-2 rounded-lg bg-[#231B18] border border-[#5C4A3D]/50 text-[#F5E6D3] placeholder-[#8A8179]/60 focus:outline-none focus:border-[#D4A373]"
                 />
                 <button

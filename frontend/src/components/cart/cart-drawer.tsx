@@ -259,7 +259,7 @@ export function CartDrawer() {
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     maxLength={500}
-                    placeholder="e.g., Whole beans please, or pickup estimated around 5:30 PM..."
+                    placeholder="Enter special instructions or notes..."
                     className="w-full text-xs px-3 py-2 rounded-lg bg-[#231B18] border border-[#D4A373]/20 text-[#FDFBF7] placeholder-[#8A8179]/60 focus:outline-none focus:border-[#D4A373] resize-none"
                   />
                 </div>

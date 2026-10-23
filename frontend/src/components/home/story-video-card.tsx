@@ -6,30 +6,37 @@ import { Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
 interface StoryVideoCardProps {
-  poster: string;
+  poster?: string;
   videoSrc: string;
   autoPlay?: boolean;
+  startTime?: number;
+  endTime?: number;
   captionTitle?: string;
   captionSubtitle?: string;
 }
 
 /**
- * Artisanal automatic looping video card for the roastery showcase.
- * Plays Ingredients.mp4 automatically in a smooth loop (muted, playsInline) with fallback poster.
+ * Artisanal looping video card for the roastery showcase.
+ * Plays the finished coffee segment of Ingredients.mp4 (6.0s to 8.0s) in a seamless loop with steam rising.
+ * Uses Media Fragment URI (#t=6.0,8.0) combined with seek-guard clamping so the making sequence (falling beans, milk pouring)
+ * is completely omitted, showing exclusively the completed handcrafted latte art cup with rising steam.
  * Respects prefers-reduced-motion and provides an accessible toggle control (WCAG 2.2 AA).
  */
 export function StoryVideoCard({
-  poster,
+  poster = "/posters/finished-cup.jpg",
   videoSrc,
   autoPlay = true,
+  startTime = 6.0,
+  endTime = 8.0,
   captionTitle = "The Atelier • Dhaka",
   captionSubtitle = "Hand-selected ingredients & small-batch discipline",
 }: StoryVideoCardProps) {
   const [isPlaying, setIsPlaying] = React.useState<boolean>(autoPlay);
   const [canAnimate, setCanAnimate] = React.useState<boolean>(true);
-  const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
+  const [isReady, setIsReady] = React.useState<boolean>(false);
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
+  // Check prefers-reduced-motion
   React.useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -37,69 +44,134 @@ export function StoryVideoCard({
     if (prefersReducedMotion) {
       setCanAnimate(false);
       setIsPlaying(false);
-      return;
+    }
+  }, []);
+
+  // Initialize playback clamped to [startTime, endTime]
+  React.useEffect(() => {
+    if (!canAnimate) return;
+    const v = videoRef.current;
+    if (!v) return;
+
+    const enforceStartTime = () => {
+      if (v.currentTime < startTime || v.currentTime >= endTime) {
+        v.currentTime = startTime;
+      }
+    };
+
+    const handleSeeked = () => {
+      if (v.currentTime >= startTime - 0.15) {
+        setIsReady(true);
+      }
+    };
+
+    v.addEventListener("loadedmetadata", enforceStartTime);
+    v.addEventListener("seeked", handleSeeked);
+
+    if (v.readyState >= 1) {
+      enforceStartTime();
     }
 
-    if (autoPlay && videoRef.current) {
-      videoRef.current
-        .play()
+    if (autoPlay) {
+      v.play()
         .then(() => {
           setIsPlaying(true);
         })
         .catch(() => {
-          // Autoplay policy prevented playback until interaction
+          // Browser autoplay policy caught; user can click to play
           setIsPlaying(false);
         });
     }
-  }, [autoPlay]);
+
+    return () => {
+      v.removeEventListener("loadedmetadata", enforceStartTime);
+      v.removeEventListener("seeked", handleSeeked);
+    };
+  }, [autoPlay, canAnimate, startTime, endTime]);
+
+  // Keep playback looped strictly within [startTime, endTime]
+  const handleTimeUpdate = () => {
+    const v = videoRef.current;
+    if (!v) return;
+
+    // Guard against starting before startTime
+    if (v.currentTime < startTime - 0.2) {
+      v.currentTime = startTime;
+      return;
+    }
+
+    // When nearing end of the steam loop, loop back to startTime
+    if (v.currentTime >= endTime - 0.08) {
+      v.currentTime = startTime;
+      if (isPlaying && v.paused) {
+        v.play().catch(() => {});
+      }
+    }
+
+    if (!isReady && v.currentTime >= startTime - 0.1) {
+      setIsReady(true);
+    }
+  };
+
+  const handleEnded = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.currentTime = startTime;
+    if (isPlaying) {
+      v.play().catch(() => {});
+    }
+  };
 
   const togglePlay = () => {
-    if (!videoRef.current) return;
+    const v = videoRef.current;
+    if (!v) return;
     if (isPlaying) {
-      videoRef.current.pause();
+      v.pause();
       setIsPlaying(false);
     } else {
-      videoRef.current
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-        })
+      if (v.currentTime >= endTime - 0.1 || v.currentTime < startTime) {
+        v.currentTime = startTime;
+      }
+      v.play()
+        .then(() => setIsPlaying(true))
         .catch(() => {});
     }
   };
 
+  // Fragment URI sets native browser media segment start
+  const mediaFragmentSrc = `${videoSrc}#t=${startTime},${endTime}`;
+
   return (
     <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-[#8A8179]/30 shadow-2xl bg-[#1A1613] group">
-      {/* High-Resolution Poster Image as LCP and Fallback */}
+      {/* High-Resolution Finished Cup Poster as Fallback and LCP */}
       <Image
         src={poster}
-        alt="Artisan roaster inspecting single-origin ingredients and green coffee beans"
+        alt="Handcrafted artisanal coffee with delicate steam rising from rosetta latte art"
         fill
         sizes="(max-width: 1024px) 100vw, 40vw"
+        priority
         className={cn(
           "object-cover object-center transition-opacity duration-700",
-          isPlaying && isLoaded ? "opacity-0 pointer-events-none" : "opacity-90 group-hover:scale-105"
+          isPlaying && isReady ? "opacity-0 pointer-events-none" : "opacity-100 group-hover:scale-105"
         )}
       />
 
-      {/* Video Element: Autoplay, Loop, Muted, PlaysInline */}
+      {/* Video Element: Plays ONLY the finished cup segment with rising steam */}
       {canAnimate && (
         <video
           ref={videoRef}
-          src={videoSrc}
+          src={mediaFragmentSrc}
           autoPlay={autoPlay}
-          loop
           muted
           playsInline
-          preload="metadata"
-          onPlaying={() => {
-            setIsPlaying(true);
-            setIsLoaded(true);
-          }}
+          preload="auto"
+          onTimeUpdate={handleTimeUpdate}
+          onEnded={handleEnded}
+          onPlaying={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           className={cn(
-            "absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700",
-            isPlaying ? "opacity-100" : "opacity-0 pointer-events-none"
+            "absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500",
+            isPlaying && isReady ? "opacity-100" : "opacity-0 pointer-events-none"
           )}
         />
       )}

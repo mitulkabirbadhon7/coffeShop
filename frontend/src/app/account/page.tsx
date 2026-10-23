@@ -25,10 +25,13 @@ export const metadata: Metadata = {
 
 export default async function AccountPage() {
   const user = await requireUser();
-  const supabase = await createClient();
+  let profile: { display_name?: string | null; role?: string } | null = null;
+  let addressCount = 0;
+  let orderCount = 0;
 
-  const [{ data: profile }, { count: addressCount }, { count: orderCount }] =
-    await Promise.all([
+  try {
+    const supabase = await createClient();
+    const [p, a, o] = await Promise.all([
       supabase.from("profiles").select("*").eq("id", user.id).single(),
       supabase
         .from("addresses")
@@ -39,10 +42,19 @@ export default async function AccountPage() {
         .select("*", { count: "exact", head: true })
         .eq("user_id", user.id),
     ]);
+    profile = p.data;
+    addressCount = a.count || 0;
+    orderCount = o.count || 0;
+  } catch {
+    profile = {
+      display_name: user.user_metadata?.full_name || "Artisan Patron",
+      role: user.user_metadata?.role || "USER",
+    };
+  }
 
   const displayName =
     profile?.display_name || user.user_metadata?.full_name || user.email?.split("@")[0] || "Patron";
-  const role = profile?.role || "USER";
+  const role = profile?.role || user.user_metadata?.role || "USER";
   const emailConfirmed = !!user.email_confirmed_at;
 
   return (
@@ -124,7 +136,7 @@ export default async function AccountPage() {
             <Clock className="w-4 h-4 text-[#D4A373]" />
           </div>
           <p className="font-serif text-lg font-bold text-[#2C221E] truncate">
-            {formatDate(user.created_at)}
+            {user.created_at ? formatDate(user.created_at) : "Recent"}
           </p>
           <div className="flex items-center gap-1 text-[11px] text-[#4ADE80] font-medium pt-1">
             <CheckCircle2 className="w-3 h-3" />
@@ -181,7 +193,7 @@ export default async function AccountPage() {
               <div className="flex items-center justify-between py-2">
                 <span>Session Type</span>
                 <span className="font-mono font-medium text-[#2C221E]">
-                  Supabase SSR Cookie
+                  Active Roastery Session
                 </span>
               </div>
             </div>

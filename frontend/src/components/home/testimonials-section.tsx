@@ -15,10 +15,9 @@ export async function TestimonialsSection() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Section Header */}
         <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAEDCD] text-[#5C4A3D] text-xs font-medium tracking-widest uppercase">
-            <Award className="w-3.5 h-3.5 text-[#E07A5F]" />
-            <span>Patron Experiences</span>
-          </div>
+          <p className="text-xs font-semibold tracking-widest uppercase text-[#A06C3B]">
+            Patron Experiences
+          </p>
 
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#2C221E]">
             Words From Our Guests

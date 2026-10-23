@@ -178,7 +178,7 @@ export function AddressManager({ initialAddresses }: AddressManagerProps) {
                 required
                 value={label}
                 onChange={(e) => setLabel(e.target.value)}
-                placeholder="Home"
+                placeholder="Enter address label"
                 className="w-full h-10 px-3 rounded-md bg-[#FDFBF7] border border-[#8A8179]/30 text-xs text-[#2C221E] focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               />
             </div>
@@ -192,7 +192,7 @@ export function AddressManager({ initialAddresses }: AddressManagerProps) {
                 required
                 value={recipientName}
                 onChange={(e) => setRecipientName(e.target.value)}
-                placeholder="Full Name"
+                placeholder="Enter recipient name"
                 className="w-full h-10 px-3 rounded-md bg-[#FDFBF7] border border-[#8A8179]/30 text-xs text-[#2C221E] focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               />
             </div>
@@ -206,7 +206,7 @@ export function AddressManager({ initialAddresses }: AddressManagerProps) {
                 required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+880 1711 000000"
+                placeholder="Enter phone number"
                 className="w-full h-10 px-3 rounded-md bg-[#FDFBF7] border border-[#8A8179]/30 text-xs text-[#2C221E] focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               />
             </div>
@@ -220,7 +220,7 @@ export function AddressManager({ initialAddresses }: AddressManagerProps) {
                 required
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                placeholder="Dhaka"
+                placeholder="Enter city"
                 className="w-full h-10 px-3 rounded-md bg-[#FDFBF7] border border-[#8A8179]/30 text-xs text-[#2C221E] focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               />
             </div>
@@ -234,7 +234,7 @@ export function AddressManager({ initialAddresses }: AddressManagerProps) {
                 required
                 value={line1}
                 onChange={(e) => setLine1(e.target.value)}
-                placeholder="House 12, Road 11, Block D, Banani"
+                placeholder="Enter street address"
                 className="w-full h-10 px-3 rounded-md bg-[#FDFBF7] border border-[#8A8179]/30 text-xs text-[#2C221E] focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               />
             </div>
@@ -247,7 +247,7 @@ export function AddressManager({ initialAddresses }: AddressManagerProps) {
                 type="text"
                 value={line2}
                 onChange={(e) => setLine2(e.target.value)}
-                placeholder="Apt 4B"
+                placeholder="Enter apartment or suite (optional)"
                 className="w-full h-10 px-3 rounded-md bg-[#FDFBF7] border border-[#8A8179]/30 text-xs text-[#2C221E] focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               />
             </div>
@@ -261,7 +261,7 @@ export function AddressManager({ initialAddresses }: AddressManagerProps) {
                 required
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
-                placeholder="1213"
+                placeholder="Enter postal code"
                 className="w-full h-10 px-3 rounded-md bg-[#FDFBF7] border border-[#8A8179]/30 text-xs text-[#2C221E] focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               />
             </div>

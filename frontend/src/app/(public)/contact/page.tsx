@@ -7,7 +7,6 @@ import {
   Mail,
   Clock,
   Coffee,
-  Sparkles,
   ShoppingBag,
 } from "lucide-react";
 
@@ -27,10 +26,9 @@ export default function ContactPage() {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Header */}
         <div className="border-b border-[#8A8179]/20 pb-8 space-y-3 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAEDCD] text-[#5C4A3D] text-xs font-medium tracking-widest uppercase">
-            <Coffee className="w-3.5 h-3.5 text-[#E07A5F]" />
-            <span>Connect &amp; Inquire</span>
-          </div>
+          <p className="text-xs font-semibold tracking-widest uppercase text-[#A06C3B]">
+            Connect &amp; Inquire
+          </p>
 
           <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#2C221E]">
             Visit Our Dhaka Roastery Atelier
@@ -116,7 +114,7 @@ export default function ContactPage() {
             {/* Cupping Sessions Note */}
             <div className="p-6 rounded-lg bg-[#F4F1EA] border border-[#8A8179]/20 space-y-2">
               <div className="flex items-center gap-2 text-xs font-semibold text-[#E07A5F] uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />
+                <Coffee className="w-3.5 h-3.5 text-[#E07A5F]" />
                 <span>Weekly Public Cuppings</span>
               </div>
               <p className="text-xs text-[#5C4A3D] leading-relaxed">

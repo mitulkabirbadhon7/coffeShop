@@ -31,15 +31,10 @@ export async function HeroSection() {
       {/* Content Block */}
       <div className="space-y-4 sm:space-y-6 lg:space-y-6 text-left w-full pb-16 lg:pb-0">
           
-        {/* Roastery Badge */}
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-[#D4A373]/40 bg-[#2C221E]/70 backdrop-blur-md text-[#D4A373] text-xs font-medium tracking-[0.15em] uppercase">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-open-ping absolute inline-flex h-full w-full rounded-full bg-[#4ADE80] opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#4ADE80]" />
-          </span>
-          <Coffee className="w-3.5 h-3.5 text-[#D4A373]" />
-          <span>Small-Batch Roastery & Atelier • Dhaka</span>
-        </div>
+        {/* Roastery Subtitle / Eyebrow */}
+        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#D4A373]">
+          Small-Batch Roastery & Atelier • Dhaka
+        </p>
 
         <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#FDFBF7] leading-[1.15] drop-shadow-lg">
           {title}
@@ -51,25 +46,19 @@ export async function HeroSection() {
 
         {/* CTAs */}
         <div className="flex flex-wrap items-center gap-4 pt-4">
-          <Link href={ctaLink}>
-            <Button
-              variant="primary"
-              size="lg"
-              className="btn-cup-fill bg-[#D4A373] text-[#1A1613] hover:text-[#1A1613] font-medium tracking-wide border-0 shadow-xl inline-flex items-center gap-2 rounded-md h-14 px-8 transition-transform hover:-translate-y-0.5 active:translate-y-0"
-            >
-              <span>{ctaText}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+          <Link
+            href={ctaLink}
+            className="btn-cup-fill bg-[#D4A373] text-[#1A1613] hover:bg-[#FAEDCD] font-medium tracking-wide border-0 shadow-xl inline-flex items-center gap-2 rounded-md h-14 px-8 transition-transform hover:-translate-y-0.5 active:translate-y-0 text-base"
+          >
+            <span>{ctaText}</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
 
-          <Link href={secondaryCtaLink}>
-            <Button
-              variant="secondary"
-              size="lg"
-              className="bg-transparent text-[#FDFBF7] hover:bg-[#3A2D26] border-2 border-[#5C4A3D] font-medium tracking-wide rounded-md h-14 px-8 transition-transform hover:-translate-y-0.5 active:translate-y-0"
-            >
-              <span>{secondaryCtaText}</span>
-            </Button>
+          <Link
+            href={secondaryCtaLink}
+            className="bg-transparent text-[#FDFBF7] hover:bg-[#3A2D26] border-2 border-[#5C4A3D] font-medium tracking-wide rounded-md h-14 px-8 transition-transform hover:-translate-y-0.5 active:translate-y-0 inline-flex items-center justify-center text-base"
+          >
+            <span>{secondaryCtaText}</span>
           </Link>
         </div>
 
