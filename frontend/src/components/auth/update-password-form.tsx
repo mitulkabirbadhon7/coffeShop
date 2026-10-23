@@ -49,7 +49,7 @@ export function UpdatePasswordForm() {
           </label>
           <Input
             type="password"
-            placeholder="••••••••••"
+            placeholder="Enter new password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -63,7 +63,7 @@ export function UpdatePasswordForm() {
           </label>
           <Input
             type="password"
-            placeholder="••••••••••"
+            placeholder="Enter new password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required

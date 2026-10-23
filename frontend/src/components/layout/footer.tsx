@@ -20,9 +20,9 @@ export function Footer() {
             <p className="text-sm text-[#FDFBF7]/75 font-sans leading-relaxed">
               {siteConfig.description}
             </p>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2C221E] border border-[#5C4A3D]/40 text-xs text-[#D4A373]">
-              <span>Pickup Order Only in V1</span>
-            </div>
+            <p className="text-xs text-[#D4A373] tracking-wide font-medium">
+              Pickup Order Only in V1
+            </p>
           </div>
 
           {/* Quick Navigation */}

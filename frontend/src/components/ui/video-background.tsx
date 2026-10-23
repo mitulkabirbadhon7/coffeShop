@@ -37,6 +37,7 @@ export function VideoBackground({
   const [isPlaying, setIsPlaying] = React.useState<boolean>(true);
   const [canPlayVideo, setCanPlayVideo] = React.useState<boolean>(false);
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
+  const [isVideoLoaded, setIsVideoLoaded] = React.useState<boolean>(false);
   const [hasError, setHasError] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -78,8 +79,12 @@ export function VideoBackground({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            if (videoRef.current && isPlaying) {
-              videoRef.current.play().catch(() => {});
+            if (videoRef.current) {
+              videoRef.current.muted = true;
+              videoRef.current.defaultMuted = true;
+              if (isPlaying) {
+                videoRef.current.play().catch(() => {});
+              }
             }
           } else {
             if (videoRef.current) {
@@ -94,6 +99,13 @@ export function VideoBackground({
     observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, [canPlayVideo, isPlaying]);
+
+  React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.defaultMuted = true;
+    }
+  }, [isVisible]);
 
   const togglePlayback = () => {
     if (!videoRef.current) return;
@@ -126,7 +138,7 @@ export function VideoBackground({
           sizes="100vw"
           className={cn(
             "object-cover object-center transition-opacity duration-700",
-            isVideoActive && isPlaying ? "opacity-30" : "opacity-85"
+            isVideoActive && isVideoLoaded ? "opacity-0 pointer-events-none" : "opacity-85"
           )}
         />
       </div>
@@ -135,7 +147,7 @@ export function VideoBackground({
       {canPlayVideo && !hasError && src && (
         <video
           ref={videoRef}
-          src={isVisible ? src : undefined}
+          src={src}
           poster={poster}
           autoPlay
           muted
@@ -143,6 +155,9 @@ export function VideoBackground({
           playsInline
           preload="none"
           aria-hidden="true"
+          onLoadedData={() => setIsVideoLoaded(true)}
+          onPlaying={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
           onError={() => setHasError(true)}
           className="absolute inset-0 w-full h-full object-cover object-center"
         />

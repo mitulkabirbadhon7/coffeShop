@@ -38,10 +38,9 @@ export default async function ProductsPage() {
 
           <div className="relative z-10 max-w-4xl w-full text-center">
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2C221E]/70 backdrop-blur-md border border-[#D4A373]/40 text-[#D4A373] text-xs font-semibold tracking-widest uppercase">
-                <Coffee className="w-4 h-4" />
-                <span>Dhaka Roastery Counter Menu</span>
-              </div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-[#D4A373]">
+                Dhaka Roastery Counter Menu
+              </p>
 
               <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#FDFBF7] leading-[1.1] drop-shadow-lg">
                 Artisanal Roasts &amp; Confections

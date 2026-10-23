@@ -42,7 +42,7 @@ export function AmbientAroma({ className, count = 8 }: AmbientAromaProps) {
             animationDuration: p.duration,
           }}
           className={cn(
-            "absolute rounded-full bg-gradient-to-t from-[#D4A373] to-[#FAEDCD] blur-[0.5px] animate-roast-particle",
+            "absolute rounded-full bg-gradient-to-t from-[#D4A373] to-[#FAEDCD] blur-[0.5px] animate-roast-particle pointer-events-none select-none",
             p.size,
             p.opacity
           )}

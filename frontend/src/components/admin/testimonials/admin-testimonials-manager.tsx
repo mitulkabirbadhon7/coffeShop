@@ -1,22 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Star,
-  Plus,
-  Edit2,
-  Trash2,
-  ArrowUp,
-  ArrowDown,
-  CheckCircle2,
-  AlertCircle,
-  Eye,
-  EyeOff,
-  Search,
-  Loader2,
-  Sparkles,
-  X,
-} from "lucide-react";
+import { Star, Plus, Edit2, Trash2, ArrowUp, ArrowDown, CheckCircle2, AlertCircle, Eye, EyeOff, Search, Loader2, X, ShieldCheck } from "lucide-react";
 import {
   createTestimonialAction,
   updateTestimonialAction,
@@ -425,7 +410,7 @@ export function AdminTestimonialsManager({
 
       {/* Safety Notice */}
       <div className="p-4 rounded-xl bg-[#2C221E] border border-[#5C4A3D]/40 text-xs text-[#8A8179] flex items-center gap-2">
-        <Sparkles className="w-4 h-4 text-[#D4A373] shrink-0" />
+        <ShieldCheck className="w-4 h-4 text-[#D4A373] shrink-0" />
         <span>
           Customer reviews are sanitized to block XSS and malicious scripts before rendering on the public storefront.
         </span>
@@ -456,7 +441,7 @@ export function AdminTestimonialsManager({
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Nusrat Jahan"
+                  placeholder="Enter guest name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-3.5 py-2 rounded-xl bg-[#2C221E] border border-[#5C4A3D]/40 text-xs text-[#F5E6D3] placeholder-[#8A8179] focus:outline-none focus:border-[#D4A373]"
@@ -469,7 +454,7 @@ export function AdminTestimonialsManager({
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Food Critic, Regular Guest"
+                  placeholder="Enter role or context"
                   value={roleOrContext}
                   onChange={(e) => setRoleOrContext(e.target.value)}
                   className="w-full px-3.5 py-2 rounded-xl bg-[#2C221E] border border-[#5C4A3D]/40 text-xs text-[#F5E6D3] placeholder-[#8A8179] focus:outline-none focus:border-[#D4A373]"
@@ -485,7 +470,7 @@ export function AdminTestimonialsManager({
                   rows={4}
                   required
                   maxLength={500}
-                  placeholder="Share the guest's authentic impression of the roastery..."
+                  placeholder="Enter review quote..."
                   value={quote}
                   onChange={(e) => setQuote(e.target.value)}
                   className="w-full px-3.5 py-2 rounded-xl bg-[#2C221E] border border-[#5C4A3D]/40 text-xs text-[#F5E6D3] placeholder-[#8A8179] focus:outline-none focus:border-[#D4A373] resize-y"

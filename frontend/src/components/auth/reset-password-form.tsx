@@ -67,7 +67,7 @@ export function ResetPasswordForm() {
           </label>
           <Input
             type="email"
-            placeholder="you@domain.com"
+            placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required

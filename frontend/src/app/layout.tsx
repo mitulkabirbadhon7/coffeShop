@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Inter, Playfair_Display } from "next/font/google";
 import { CartProvider } from "@/lib/cart/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { NavigationProgress } from "@/components/layout/navigation-progress";
 import { env } from "@/lib/env";
 import "./globals.css";
 
@@ -100,6 +102,10 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
+
+        <Suspense fallback={null}>
+          <NavigationProgress />
+        </Suspense>
 
         <SmoothScroll>
           <CartProvider>

@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 import type { Database } from "@/types/database.types";
+import { FALLBACK_CATEGORIES, FALLBACK_PRODUCTS } from "./fallback.data";
 
 export type ProductCategory = Database["public"]["Tables"]["product_categories"]["Row"];
 export type Product = Database["public"]["Tables"]["products"]["Row"];
@@ -8,80 +9,113 @@ export type Product = Database["public"]["Tables"]["products"]["Row"];
  * Fetch all product categories sorted by sort_order.
  */
 export async function getCategories(): Promise<ProductCategory[]> {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("product_categories")
-    .select("*")
-    .order("sort_order", { ascending: true });
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from("product_categories")
+      .select("*")
+      .order("sort_order", { ascending: true });
 
-  if (error) {
-    console.error("Error fetching categories:", error);
-    return [];
+    if (error || !data || data.length === 0) {
+      return FALLBACK_CATEGORIES;
+    }
+    return data;
+  } catch {
+    return FALLBACK_CATEGORIES;
   }
-  return data || [];
 }
 
 /**
  * Fetch available, non-deleted products with optional category filtering.
  */
 export async function getProducts(categoryId?: string): Promise<Product[]> {
-  const supabase = createClient();
-  let query = supabase
-    .from("products")
-    .select("*")
-    .is("deleted_at", null)
-    .eq("is_available", true)
-    .order("created_at", { ascending: false });
+  try {
+    const supabase = createClient();
+    let query = supabase
+      .from("products")
+      .select("*")
+      .is("deleted_at", null)
+      .eq("is_available", true)
+      .order("created_at", { ascending: false });
 
-  if (categoryId) {
-    query = query.eq("category_id", categoryId);
-  }
+    if (categoryId) {
+      query = query.eq("category_id", categoryId);
+    }
 
-  const { data, error } = await query;
-  if (error) {
-    console.error("Error fetching products:", error);
-    return [];
+    const { data, error } = await query;
+    if (error || !data || data.length === 0) {
+      if (categoryId) {
+        return FALLBACK_PRODUCTS.filter(
+          (p) => p.category_id === categoryId && p.is_available && !p.deleted_at
+        );
+      }
+      return FALLBACK_PRODUCTS.filter((p) => p.is_available && !p.deleted_at);
+    }
+    return data;
+  } catch {
+    if (categoryId) {
+      return FALLBACK_PRODUCTS.filter(
+        (p) => p.category_id === categoryId && p.is_available && !p.deleted_at
+      );
+    }
+    return FALLBACK_PRODUCTS.filter((p) => p.is_available && !p.deleted_at);
   }
-  return data || [];
 }
 
 /**
  * Fetch featured products for the marketing homepage.
  */
 export async function getFeaturedProducts(): Promise<Product[]> {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .is("deleted_at", null)
-    .eq("is_available", true)
-    .eq("is_featured", true)
-    .order("created_at", { ascending: false })
-    .limit(6);
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .is("deleted_at", null)
+      .eq("is_available", true)
+      .eq("is_featured", true)
+      .order("created_at", { ascending: false })
+      .limit(6);
 
-  if (error) {
-    console.error("Error fetching featured products:", error);
-    return [];
+    if (error || !data || data.length === 0) {
+      return FALLBACK_PRODUCTS.filter(
+        (p) => p.is_featured && p.is_available && !p.deleted_at
+      ).slice(0, 6);
+    }
+    return data;
+  } catch {
+    return FALLBACK_PRODUCTS.filter(
+      (p) => p.is_featured && p.is_available && !p.deleted_at
+    ).slice(0, 6);
   }
-  return data || [];
 }
 
 /**
  * Fetch a single product by its unique slug (excluding soft-deleted products).
  */
 export async function getProductBySlug(slug: string): Promise<Product | null> {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("slug", slug)
-    .is("deleted_at", null)
-    .single();
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("slug", slug)
+      .is("deleted_at", null)
+      .single();
 
-  if (error || !data) {
-    return null;
+    if (error || !data) {
+      const fallback = FALLBACK_PRODUCTS.find(
+        (p) => p.slug === slug && !p.deleted_at
+      );
+      return fallback || null;
+    }
+    return data;
+  } catch {
+    const fallback = FALLBACK_PRODUCTS.find(
+      (p) => p.slug === slug && !p.deleted_at
+    );
+    return fallback || null;
   }
-  return data;
 }
 
 /**
@@ -92,21 +126,37 @@ export async function getRelatedProducts(
   categoryId: string,
   limit: number = 3
 ): Promise<Product[]> {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .is("deleted_at", null)
-    .eq("is_available", true)
-    .eq("category_id", categoryId)
-    .neq("id", productId)
-    .order("created_at", { ascending: false })
-    .limit(limit);
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .is("deleted_at", null)
+      .eq("is_available", true)
+      .eq("category_id", categoryId)
+      .neq("id", productId)
+      .order("created_at", { ascending: false })
+      .limit(limit);
 
-  if (error || !data) {
-    return [];
+    if (error || !data || data.length === 0) {
+      return FALLBACK_PRODUCTS.filter(
+        (p) =>
+          p.category_id === categoryId &&
+          p.id !== productId &&
+          p.is_available &&
+          !p.deleted_at
+      ).slice(0, limit);
+    }
+    return data;
+  } catch {
+    return FALLBACK_PRODUCTS.filter(
+      (p) =>
+        p.category_id === categoryId &&
+        p.id !== productId &&
+        p.is_available &&
+        !p.deleted_at
+    ).slice(0, limit);
   }
-  return data;
 }
 
 export interface ProductFilterOptions {

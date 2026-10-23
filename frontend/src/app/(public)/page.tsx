@@ -47,15 +47,12 @@ export default function HomePage() {
 
       {/* Mobile Sticky Order Button (Visible only on small screens) */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#1A1613] via-[#1A1613]/95 to-transparent z-50 flex justify-center pb-8 pt-12 pointer-events-none">
-        <Link href="/products" className="w-full max-w-sm pointer-events-auto">
-          <Button
-            variant="primary"
-            size="lg"
-            className="w-full bg-[#D4A373] text-[#1A1613] hover:bg-[#FAEDCD] font-bold shadow-2xl h-14 rounded-full flex items-center justify-center gap-2"
-          >
-            <ShoppingBag className="w-5 h-5" />
-            <span>Explore Menu & Order</span>
-          </Button>
+        <Link
+          href="/products"
+          className="w-full max-w-sm pointer-events-auto bg-[#D4A373] text-[#1A1613] hover:bg-[#FAEDCD] font-bold shadow-2xl h-14 rounded-md flex items-center justify-center gap-2 text-base transition-all"
+        >
+          <ShoppingBag className="w-5 h-5" />
+          <span>Explore Menu & Order</span>
         </Link>
       </div>
     </div>

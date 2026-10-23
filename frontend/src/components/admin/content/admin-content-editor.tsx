@@ -1,19 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  FileText,
-  Save,
-  CheckCircle2,
-  AlertCircle,
-  Eye,
-  EyeOff,
-  Code,
-  Layout,
-  Plus,
-  Loader2,
-  Sparkles,
-} from "lucide-react";
+import { FileText, Save, CheckCircle2, AlertCircle, Eye, EyeOff, Code, Layout, Plus, Loader2, ShieldCheck } from "lucide-react";
 import {
   upsertSiteContentAction,
   toggleSiteContentPublishAction,
@@ -298,7 +286,7 @@ export function AdminContentEditor({ initialContent }: AdminContentEditorProps) 
 
           <div className="pt-3 border-t border-[#5C4A3D]/30 px-3 flex items-center justify-between text-[11px] text-[#8A8179]">
             <span className="flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-[#D4A373]" />
+              <ShieldCheck className="w-3.5 h-3.5 text-[#D4A373]" />
               <span>Sanitization Active</span>
             </span>
             <span>{contentList.length} sections</span>
@@ -433,7 +421,7 @@ export function AdminContentEditor({ initialContent }: AdminContentEditorProps) 
 
           {/* Safety & XSS notice */}
           <div className="p-3.5 rounded-xl bg-[#2C221E]/60 border border-[#5C4A3D]/30 text-[11px] text-[#8A8179] flex items-start gap-2">
-            <Sparkles className="w-4 h-4 text-[#D4A373] shrink-0 mt-0.5" />
+            <ShieldCheck className="w-4 h-4 text-[#D4A373] shrink-0 mt-0.5" />
             <p className="leading-relaxed">
               <strong>XSS Neutralization Policy:</strong> Stored content is automatically stripped of dangerous scripts, HTML tags, and event triggers before public rendering. Draft items remain strictly invisible on public storefront pages.
             </p>

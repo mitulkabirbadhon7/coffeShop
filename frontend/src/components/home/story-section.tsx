@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Coffee, ShieldCheck, HeartHandshake, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getPublishedContent } from "@/lib/data/content.data";
+import { StoryVideoCard } from "@/components/home/story-video-card";
 
 export async function StorySection() {
   const dynamicContent = await getPublishedContent("story_section");
@@ -23,45 +24,22 @@ export async function StorySection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Asymmetric Left Image Showcase (5 cols) */}
           <div className="lg:col-span-5 relative">
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-[#8A8179]/30 shadow-2xl bg-[#1A1613] group">
-              <Image
-                src="/images/story-craft.jpg"
-                alt="Artisan roaster inspecting single-origin green coffee beans"
-                fill
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              />
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-[#1A1613]/80 via-transparent to-transparent pointer-events-none"
-                aria-hidden="true"
-              />
-              <div className="absolute bottom-6 left-6 right-6 text-[#FDFBF7] pointer-events-none">
-                <p className="text-xs uppercase tracking-widest text-[#D4A373] font-medium">
-                  The Atelier • Dhaka
-                </p>
-                <p className="font-serif text-lg font-bold">
-                  Small-batch drum roasting calibrated twice a week
-                </p>
-              </div>
-            </div>
-
-            {/* Decorative Offset Badge */}
-            <div className="hidden sm:flex absolute -bottom-5 -right-5 p-4 rounded-lg bg-[#2C221E] text-[#FDFBF7] shadow-lg border border-[#D4A373]/30 items-center gap-3">
-              <Coffee className="w-6 h-6 text-[#D4A373] shrink-0" />
-              <div>
-                <p className="font-serif text-sm font-bold">88+ SCA Score</p>
-                <p className="text-[11px] text-[#8A8179]">Specialty Grade Only</p>
-              </div>
-            </div>
+            <StoryVideoCard
+              poster="/posters/finished-cup.jpg"
+              videoSrc="/videos/Ingredients.mp4"
+              startTime={6.0}
+              endTime={8.0}
+              captionTitle="The Atelier • Dhaka"
+              captionSubtitle="Small-batch drum roasting calibrated twice a week"
+            />
           </div>
 
           {/* Asymmetric Right Narrative (7 cols) */}
           <div className="lg:col-span-7 space-y-8">
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FAEDCD] text-[#5C4A3D] text-xs font-medium tracking-widest uppercase">
-                <HeartHandshake className="w-3.5 h-3.5 text-[#E07A5F]" />
-                <span>{subheading}</span>
-              </div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-[#A06C3B]">
+                {subheading}
+              </p>
 
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#2C221E] leading-[1.12]">
                 {heading}
@@ -95,15 +73,12 @@ export async function StorySection() {
             </div>
 
             <div className="pt-2">
-              <Link href="/about">
-                <Button
-                  variant="outline"
-                  size="md"
-                  className="border-[#2C221E] text-[#2C221E] hover:bg-[#2C221E] hover:text-[#FDFBF7] rounded-md font-medium inline-flex items-center gap-2 h-11 px-6"
-                >
-                  <span>Read The Full Story</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
+              <Link
+                href="/about"
+                className="border border-[#2C221E] text-[#2C221E] hover:bg-[#2C221E] hover:text-[#FDFBF7] rounded-md font-medium inline-flex items-center gap-2 h-11 px-6 transition-colors text-sm"
+              >
+                <span>Read The Full Story</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>

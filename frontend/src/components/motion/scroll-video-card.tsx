@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { Coffee, Play, Pause, Compass, Sparkles } from "lucide-react";
+import { Coffee, Play, Pause, Compass } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
 interface ScrollVideoCardProps {
@@ -145,7 +145,7 @@ export function ScrollVideoCard({
 
       {/* Top Bar: Scroll Scrub Indicator & Play Toggle */}
       <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1A1613]/80 border border-[#D4A373]/40 backdrop-blur-md text-[11px] font-medium text-[#D4A373] shadow-md">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#1A1613]/80 border border-[#D4A373]/30 backdrop-blur-md text-[11px] font-medium text-[#D4A373] shadow-md">
           <Compass className="w-3.5 h-3.5 animate-spin-slow" />
           <span>{isPlaying ? "Playing Video" : "Scroll To Scrub"}</span>
         </div>
@@ -180,9 +180,8 @@ export function ScrollVideoCard({
 
       {/* Bottom Atelier Caption */}
       <div className="absolute bottom-5 left-6 right-6 text-[#FDFBF7] z-10 pointer-events-none space-y-1">
-        <p className="text-xs uppercase tracking-widest text-[#D4A373] font-medium flex items-center gap-1.5">
-          <Sparkles className="w-3 h-3" />
-          <span>{subtitle}</span>
+        <p className="text-xs uppercase tracking-widest text-[#D4A373] font-medium">
+          {subtitle}
         </p>
         <p className="font-serif text-lg font-bold leading-snug">
           {title}

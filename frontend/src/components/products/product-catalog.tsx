@@ -293,15 +293,12 @@ export function ProductCatalog({
                     </div>
                   </div>
 
-                  <Link href={`/products/${product.slug}`}>
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      className="btn-cup-fill bg-[#2C221E] text-[#FDFBF7] hover:text-[#1A1613] rounded-md text-xs font-medium h-9 px-4 inline-flex items-center gap-1.5"
-                    >
-                      <span>Order Pickup</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Button>
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="btn-cup-fill bg-[#2C221E] text-[#FDFBF7] hover:text-[#1A1613] rounded-md text-xs font-medium h-9 px-4 inline-flex items-center gap-1.5 transition-colors"
+                  >
+                    <span>Order Pickup</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>

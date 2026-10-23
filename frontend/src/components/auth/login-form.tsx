@@ -33,9 +33,23 @@ export function LoginForm() {
         setErrorMessage(result.error);
         setIsLoading(false);
       }
-    } catch {
+    } catch (err: unknown) {
       // In Next.js, redirect() throws an internal redirection error which should bubble up
-      // Only set generic error if it wasn't a redirect
+      const isRedirect =
+        typeof err === "object" &&
+        err !== null &&
+        "digest" in err &&
+        typeof (err as { digest: string }).digest === "string" &&
+        (err as { digest: string }).digest.startsWith("NEXT_REDIRECT");
+
+      if (isRedirect) {
+        throw err;
+      }
+
+      setErrorMessage(
+        err instanceof Error ? err.message : "Unable to sign in. Please try again."
+      );
+      setIsLoading(false);
     }
   };
 
@@ -55,7 +69,7 @@ export function LoginForm() {
           </label>
           <Input
             type="email"
-            placeholder="you@domain.com"
+            placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -78,7 +92,7 @@ export function LoginForm() {
           <div className="relative">
             <Input
               type={showPassword ? "text" : "password"}
-              placeholder="••••••••••"
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -103,6 +117,33 @@ export function LoginForm() {
           <span>Sign In to Roastery</span>
         </Button>
       </form>
+
+      {/* Quick Demo Access Buttons */}
+      <div className="pt-2 border-t border-[#C89B5E]/15 text-center space-y-2">
+        <p className="text-[11px] text-[#F5E6D3]/50">Quick demo login:</p>
+        <div className="flex gap-2 justify-center">
+          <button
+            type="button"
+            onClick={() => {
+              setEmail("admin@chocobliss.com");
+              setPassword("roaster123");
+            }}
+            className="text-xs px-3 py-1.5 rounded-md bg-[#1A1613] text-[#D4A373] border border-[#D4A373]/30 hover:bg-[#3D3028] transition-colors"
+          >
+            Admin Demo
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setEmail("patron@chocobliss.com");
+              setPassword("patron123");
+            }}
+            className="text-xs px-3 py-1.5 rounded-md bg-[#1A1613] text-[#F5E6D3]/80 border border-[#8A8179]/30 hover:bg-[#3D3028] transition-colors"
+          >
+            Customer Demo
+          </button>
+        </div>
+      </div>
 
       <div className="relative flex items-center justify-center">
         <div className="border-t border-[#C89B5E]/20 w-full" />

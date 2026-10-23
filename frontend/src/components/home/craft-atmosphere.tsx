@@ -10,14 +10,13 @@ export function CraftAtmosphereSection() {
       src="/videos/Steam.mp4"
       poster="/images/hero-poster.jpg"
       posterAlt="Warm ambient steam at Chocobliss Roastery"
-      overlayClassName="bg-[#1A1613]/85"
+      overlayClassName="bg-gradient-to-t from-[#1A1613]/90 via-[#1A1613]/60 to-[#1A1613]/90"
       className="py-24 px-4 sm:px-6 lg:px-8 text-[#FDFBF7]"
     >
       <div className="relative max-w-5xl mx-auto text-center space-y-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#D4A373]/30 bg-[#2C221E]/60 text-[#D4A373] text-xs font-medium tracking-widest uppercase">
-          <Coffee className="w-3.5 h-3.5 text-[#D4A373]" />
-          <span>The Atelier Experience</span>
-        </div>
+        <p className="text-xs font-semibold tracking-widest uppercase text-[#D4A373]">
+          The Atelier Experience
+        </p>
 
         <blockquote className="font-serif text-2xl sm:text-3xl lg:text-4xl italic text-[#FDFBF7] leading-relaxed max-w-3xl mx-auto">
           &ldquo;In a world of automated rush, we built a sanctuary dedicated to
@@ -58,14 +57,11 @@ export function CraftAtmosphereSection() {
         </div>
 
         <div className="pt-4">
-          <Link href="/products">
-            <Button
-              variant="primary"
-              size="md"
-              className="bg-[#D4A373] text-[#1A1613] hover:bg-[#FAEDCD] font-medium tracking-wide rounded-md h-11 px-7 transition-transform hover:-translate-y-0.5 active:translate-y-0"
-            >
-              <span>Explore Seasonal Menu</span>
-            </Button>
+          <Link
+            href="/products"
+            className="bg-[#D4A373] text-[#1A1613] hover:bg-[#FAEDCD] font-medium tracking-wide rounded-md h-11 px-7 transition-transform hover:-translate-y-0.5 active:translate-y-0 inline-flex items-center justify-center text-sm"
+          >
+            <span>Explore Seasonal Menu</span>
           </Link>
         </div>
       </div>
